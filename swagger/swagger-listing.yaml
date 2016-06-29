@@ -163,7 +163,7 @@
           - "Listing"
         responses:
           200:
-            description: "An array of listing"
+            description: "An array of ListingResults"
             schema:
               $ref: "#/definitions/ListingResult"
     /Listing/LotteryResult/{listingID}/{lotteryNumber}:
@@ -182,15 +182,15 @@
             description: "lottery number to look up"
             required: true
             type: "string"
-         
+
 
         tags:
           - "Listing"
         responses:
           200:
-            description: "An array of listing"
+            description: "An array of PreferenceBucket"
             schema:
-              $ref: "#/definitions/ApplicationResult"
+              $ref: "#/definitions/PreferenceBucket"
 
     /ListingDetails/{sfdcid}:
       get:
@@ -677,9 +677,9 @@
         - name: BinaryData
           in: body
           required: true
-          schema: 
+          schema:
             type: string
-            format: byte 
+            format: byte
         - name: Name
           in: header
           description: ID shortForm To Delete
@@ -687,7 +687,7 @@
           required: true
         - name: ContentType
           in: header
-          description: ID shortForm To Delete  
+          description: ID shortForm To Delete
           type: string
           required: true
         tags:
@@ -899,7 +899,7 @@
           type: "number"
           format: "double"
           description: "Rollup sumary with Count of people who have been selected as winning lottery and therefore, the status of their lottery member = Winner."
-             
+
         NeighborHoodPreferenceUrl__c:
           type: "string"
           description: "neightborhood Preference URL"
@@ -1026,7 +1026,7 @@
         Status__c:
           type: string
           description: Status of the Lottery Member for the given Lottery
-          
+
     ShortForm:
       type: "object"
       description: "ShortForm for housing"
@@ -1034,7 +1034,7 @@
         ID:
           type: "string"
           description: "Sfdc ID"
-       
+
         listingID:
           type: "string"
           description: "listing ID for SFDC"
@@ -1083,7 +1083,7 @@
         workInSfPreferenceNatKey:
           type: "string"
           description: "naturalkey  = lastName,FirstName,DOB(MM.DD.YYYY) can be provided on insert as an alternate to sfdcID"
-       
+
         worksInSfPreferenceID:
           type: "string"
           description: "sfdc household_member__r.id which holds preference"
@@ -1106,7 +1106,7 @@
         neighborhoodPreferenceID:
           type: "string"
           description: "sfdc household_member__c which holds preference"
-       
+
         liveInSfPreferenceProof:
           type: "string"
           description: "picklist (telephone bill, electric bill etc)"
@@ -1127,7 +1127,7 @@
         listingID:
           type: "string"
           description: "listing ID"
-     
+
         bucketResults:
           type: array
           items:
@@ -1139,7 +1139,7 @@
         URL:
           type: "string"
           description: "randome.org url"
-        
+
         lotteryCity:
           type: "string"
           description: "listing lottery City"
@@ -1153,11 +1153,11 @@
           description: "lottery date "
         lotteryPreferences:
           type: "string"
-          description: "preferences" 
-          
+          description: "preferences"
+
         lotteryResults:
           type: "boolean"
-          description: "lotteryResults"  
+          description: "lotteryResults"
 
 
     Eligibility:
@@ -1186,11 +1186,17 @@
         PreferenceName:
           type: "string"
           description: "Preference name, (liveWork,COP,DCP,Neighborhood)"
+        totalUnits:
+          type: "integer"
+          description: "total number of units that are available for this preference"
+        totalApplications:
+          type: "integer"
+          description: "total number of applications that qualified for this preference"
         bucketResults:
           type: array
           items:
               $ref: '#/definitions/BucketResult'
-  
+
     BucketResult:
       type: "object"
       description: "ApplicationResult"
@@ -1205,12 +1211,12 @@
         preferenceRank:
           type: "number"
           description: "raw rank for this live work - which are treated as one preference"
-    
+
         lotteryRank:
           type: "integer"
           format: "int32"
           description: "raw lottery rank returned form drawing"
-       
+
     ApplicationResult:
       type: "object"
       description: "ApplicationResult"
@@ -1237,14 +1243,14 @@
         certOfPreferenceRank:
           type: "number"
           description: "raw rank for this preference"
-   
+
         neighborhoodPreference:
           type: "boolean"
           description: "true/false"
         neighborhoodPreferenceRank:
           type: "number"
           description: "raw rank for this preference"
-      
+
         lotteryNumber:
           type: "number"
           format: "double"
@@ -1253,7 +1259,7 @@
           type: "integer"
           format: "int32"
           description: "raw lottery rank returned form drawing"
-   
+
 
     Person:
       type: "object"
@@ -1347,6 +1353,3 @@
         hasSameAddressAsApplicant:
           type: "boolean"
           description: "only for household members to indicate separate address"
-
-
-
