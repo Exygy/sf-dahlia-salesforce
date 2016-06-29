@@ -163,7 +163,7 @@
           - "Listing"
         responses:
           200:
-            description: "An array of listing"
+            description: "An array of ListingResults"
             schema:
               $ref: "#/definitions/ListingResult"
     /Listing/LotteryResult/{listingID}/{lotteryNumber}:
@@ -188,9 +188,9 @@
           - "Listing"
         responses:
           200:
-            description: "An array of listing"
+            description: "An array of PreferenceBucket"
             schema:
-              $ref: "#/definitions/ApplicationResult"
+              $ref: "#/definitions/PreferenceBucket"
 
     /ListingDetails/{sfdcid}:
       get:
