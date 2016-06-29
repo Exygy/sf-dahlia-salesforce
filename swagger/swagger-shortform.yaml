@@ -179,6 +179,12 @@
         gender:
           type: "string"
           description: "gender"
+        lgbt:
+          type: "boolean"
+          description: "lgbt"
+        hiv:
+          type: "boolean"
+          description: "hiv"
         holdsCOP:
           type: "boolean"
           description: "has a certificate of preference"
