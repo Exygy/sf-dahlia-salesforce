@@ -945,18 +945,23 @@
   
     PRDescriptor:
       type: "object"
-      description: "Priority/Reserved type descriptor "
+      description: "Priority/Reserved type descriptor"
       properties:
+        id:
+          type: "string"
+          description: "id of reserved or priority type"
+
         name:
           type: "string"
-          description: "the listing id"
+          description: "name of reserved or priority type"
+
         description:
           type: "string"
-          description: "the description"
+          description: "reserved or priority type full description"
 
         shortDescription:
           type: "string"
-          description: "abbreviated description"
+          description: "reserved or priority type abbreviated description"
 
         numberOfUnits:
           type: "number"
