@@ -166,14 +166,11 @@ paths:
   '/Listing/LotteryResult/{listingID}/{lotteryNumber}':
     get:
       description: >-
-        This returns the Listing result - with 1 applicationResult inside this
-        is the Application with the appropriate lottery number.  If no
-        lotteryNumber fits, applicationsResult will be empty.  If listing
-        isIncorrect it will error.
+        This returns lottery results for a lottery number. If no lottery number is found it will return a not found response.
       parameters:
         - name: listingID
           in: path
-          description: listingID for lottery
+          description: ID of listing
           required: true
           type: string
         - name: lotteryNumber
@@ -188,6 +185,8 @@ paths:
           description: An array of listing
           schema:
             $ref: '#/definitions/LotteryResult'
+        '404':
+          description: Lottery number not found
   '/Listing/LotteryResult/{listingID}':
     get:
       description: >-
@@ -203,9 +202,10 @@ paths:
           type: string
       tags:
         - Listing
+      deprecated: true
       responses:
         '200':
-          description: An array of listing
+          description: Lottery results for an application
           schema:
             $ref: '#/definitions/LotteryResult'
   '/ListingDetails/{sfdcid}':
@@ -948,39 +948,49 @@ definitions:
       Application_Phone__c:
         type: string
         description: ''
-      Lottery_Summary__c:
-        type: string
-        description: Summary of the Lottery Results.
+      In_Lottery__c:
+        type: integer
+        description: Number of applications in the lottery
       Listing_Other_Notes__c:
         type: string
         description: Listing Other Notes.
-      Lottery_Results_Date__c:
+      LotteryResultsURL__c:
         type: string
-        format: date
-        description: Date Lottery Results are posted
-      Lottery_End__c:
-        type: string
-        format: date-time
-        description: End of the Lottery - DateTime
-      Lottery_Start_Time__c:
-        type: string
-        description: ''
-      Lottery_End_Time__c:
-        type: string
-        description: ''
-      Lottery_Venue__c:
-        type: string
-        description: ''
-      Lottery_Street_Address__c:
-        type: string
-        description: ''
+        description: Url of lottery results PDF
       Lottery_City__c:
         type: string
         description: ''
       Lottery_Date__c:
         type: string
         format: date-time
-        description: ''
+        description: Date and time of lottery
+      Lottery_Results__c:
+        type: boolean
+        description: Indicates there is at least one lottery winner
+      Lottery_Results_Date__c:
+        type: string
+        format: date
+        description: Date Lottery Results are posted
+      Lottery_Status__c:
+        type: string
+        enum: ['Not Yet Run', 'In Progress', 'Lottery Complete']
+        description: Status of lottery
+      Lottery_Street_Address__c:
+        type: string
+        description: Street address of lottery location
+      Lottery_Venue__c:
+        type: string
+        description: Location of lottery
+      Lottery_General_Pool:
+        type: object
+        description: Information about general pool of lottery
+        properties:
+          totalSubmittedApps:
+            type: integer
+            description: Total number of applications in the general lottery bucket
+          unitsAvailable:
+            type: integer
+            description: Total number of units available for general lottery
       AMI_Percentage__c:
         type: 'null'
         description: ''
@@ -1020,15 +1030,6 @@ definitions:
       Leasing_Agent_Zip__c:
         type: string
         description: ''
-      Lottery_Results__c:
-        type: boolean
-        description: Indicates there is at least one lottery winner
-      Lottery_Winners__c:
-        type: number
-        format: double
-        description: >-
-          Rollup sumary with Count of people who have been selected as winning
-          lottery and therefore, the status of their lottery member = Winner.
       NeighborHoodPreferenceUrl__c:
         type: string
         description: neightborhood Preference URL
@@ -1076,9 +1077,6 @@ definitions:
         description: >-
           Detailed Information about other costs not included with rent.
           Converted to text field from currency.
-      Lottery_Preferences__c:
-        type: string
-        description: ''
       Program_Type__c:
         type: string
         description: ''
@@ -1320,6 +1318,46 @@ definitions:
         description: 'Answer to question about disability: "Yes" or "No", defaults to blank.'
   LotteryResult:
     type: object
+    description: Lottery result for a lottery number
+    properties:
+      applicationID:
+        type: string
+        description: Id of application
+      listingID:
+        type: string
+        description: Id of listing
+      lotteryNumber:
+        type: string
+        description: Lottery number
+      lotteryRank:
+        type: integer
+        format: int32
+        description: Unfiltered lottery rank returned from drawing
+      lotteryPreferences:
+        type: array
+        items:
+          type: object
+          description: Application preferences for the applicant
+          properties:
+            listingPreferenceId:
+              type: string
+            preferenceName:
+              type: string
+            claimedPreference:
+              type: boolean
+              description: Whether or not the applicant claimed the preference on their application
+            receivesPreference:
+              type: boolean
+              description: Whether or not the applicant receives the preference in the lottery
+            preferenceRank:
+              type: integer
+              description: Applicant's ranking for the preference in the lottery
+      generalPoolRank:
+        type: integer
+        description: >-
+          Rank in general lottery if applicant did not qualify or claim any preferences
+  LotteryResultOld:
+    type: object
     description: lottery result
     properties:
       listingID:
@@ -1364,38 +1402,35 @@ definitions:
     properties:
       listingPreferenceID:
         type: string
-        description: salesforce ID
+        description: Salesforce ID of listing preference
       listingID:
         type: string
-        description: listing salesforce ID
-      name:
-        type: string
-        description: preference
+        description: Salesforce ID of listing
       preferenceName:
         type: string
-        description: preference name
+        description: Name of listing preference 
       order:
-        type: number
-        description: order to display in
+        type: integer
+        description: Priority of the preference in relation to other preferences for the listing
       pdfUrl:
         type: string
-        description: pdf url
+        description: URL of a lottery results PDF for the preference
       description:
         type: string
-        description: description
+        description: Description of the listing preference
       readMoreUrl:
         type: string
         format: url
-        description: readMore Url
-      NRHP District:
+        description: URL with more information about the preference
+      NRHPDistrict:
         type: string
-        description: 'neighborhood district '
-      appTotal:
-        type: number
-        description: 'total number of people who have applied '
+        description: District used to qualify applicants for Neighborhood Resident Housing Preference
+      totalSubmittedApps:
+        type: integer
+        description: Total number of applications claiming and qualifying for listing preference
       unitsAvailable:
-        type: number
-        description: 'total units available '
+        type: integer
+        description: Total number of units available for listing preference
   ShortFormPreference:
     type: object
     description: Application preference
