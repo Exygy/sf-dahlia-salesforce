@@ -35,7 +35,7 @@ Api_ShortForm_GetContactByID - is an example -
 
 In the Listing entries - 
 Listing is the prefix
-Listing+<Group>+Api was how we named our endpoint classes.  In the future we may rename the Listing api, but for now we are it is what it is.
+Listing+<Group>+Api was how we named our endpoint classes.  In the future we may rename the Listing api, but for now it is what it is.
 
 ### Service layer classes ###
 
