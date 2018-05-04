@@ -26,7 +26,7 @@ Types of Classes:
 
 
 ###Endpoint classes ###
-Salesforce ties a specific URL pattern to a specific class.  We created classes for all these "endpoints".  The endpoint classes are responsible exposing the url and handling the url parameters for the call.  They are also responsible for building the request into the service layer.
+Salesforce ties a specific URL pattern to a specific class.  We created classes for all these "endpoints".  The endpoint classes are responsible for exposing the url and handling the url parameters for the call.  They are also responsible for building the request into the service layer.
 
 All these classes are named as following.
 
