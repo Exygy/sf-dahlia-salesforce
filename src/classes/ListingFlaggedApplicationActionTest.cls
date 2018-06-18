@@ -91,12 +91,12 @@ public class ListingFlaggedApplicationActionTest {
 		member1.No_Email__c = false;
 		member1.No_Phone__c = false;
 		member1.Date_of_Birth__c = date.today();
-		insert member1;
+		//insert member1;
 		applicationMemberIDs.add(member1.id);
 		
 		Application__c application2= new Application__c();
         application2.Listing__c = theListing.Id;
-                application2.status__c = 'Submitted';
+        application2.status__c = 'Submitted';
         
         insert application2;
 		Application_Member__c member2 = new Application_Member__c();
@@ -115,7 +115,7 @@ public class ListingFlaggedApplicationActionTest {
 		member2.No_Address__c = false;
 		member2.No_Email__c = false;
 		member2.No_Phone__c = false;
-		insert member2;
+		//insert member2;
         
         Application__c application3= new Application__c();
         application3.Listing__c = theListing.Id;
@@ -136,7 +136,7 @@ public class ListingFlaggedApplicationActionTest {
 		member3.No_Address__c = false;
 		member3.No_Email__c = false;
 		member3.No_Phone__c = false;
-		insert member3;
+		//insert member3;
         
         Application__c application4= new Application__c();
         application4.Listing__c = theListing.Id;
@@ -157,7 +157,7 @@ public class ListingFlaggedApplicationActionTest {
 		member4.No_Address__c = false;
 		member4.No_Email__c = false;
 		member4.No_Phone__c = false;
-		insert member4;
+        insert new List<Application_Member__c>{member1, member2, member3, member4};
         
         applicationMemberIDs.add(member4.id);
         // 
@@ -199,8 +199,7 @@ public class ListingFlaggedApplicationActionTest {
         dris.add(dri3);
         upsert dris;
         system.debug('dri3: ' + dri3);
-        
-      	//Flagged_Record_Set__c flaggedRecordSet = [SELECT Id, DuplicateRecordSetID__c FROM Flagged_Record_Set__c WHERE DuplicateRecordSetID__c = : drs.Id];
+        //Flagged_Record_Set__c flaggedRecordSet = [SELECT Id, DuplicateRecordSetID__c FROM Flagged_Record_Set__c WHERE DuplicateRecordSetID__c = : drs.Id];
         //system.assert(flaggedRecordSet.DuplicateRecordSetID__c == drs.Id);
     
         //Flagged_Application__c flaggedApplication = [SELECT Id, DuplicateRecordItem__c FROM Flagged_Application__c WHERE DuplicateRecordItem__c = : dri.Id ];
@@ -209,14 +208,15 @@ public class ListingFlaggedApplicationActionTest {
     }
     
     private static testMethod void runTest(){
-    	test.startTest();
     	
     	Integer dupRecordCount = [SELECT COUNT() FROM DuplicateRecordItem];
     	system.debug('current dupRecordCount1'  + dupRecordCount);
     	
     	setupData();
 
-		dupRecordCount = [SELECT COUNT() FROM DuplicateRecordItem];
+		test.startTest();
+    	
+        dupRecordCount = [SELECT COUNT() FROM DuplicateRecordItem];
     	system.debug('final dupRecordCount1'  + dupRecordCount);
     	test.stopTest();
     	

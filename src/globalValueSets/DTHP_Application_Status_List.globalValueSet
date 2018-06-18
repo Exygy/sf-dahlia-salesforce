@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Incomplete</fullName>
+        <default>true</default>
+    </customValue>
+    <customValue>
+        <fullName>Approved</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Denied</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Cancelled</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Pending Review</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Pending Final Approval</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Application Received</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Confirmation Sent</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Not Approved</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Recalled</fullName>
+        <default>false</default>
+    </customValue>
+    <masterLabel>DTHP - Application Status List</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

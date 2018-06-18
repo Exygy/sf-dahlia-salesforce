@@ -28,19 +28,25 @@ global with sharing class ListingDetailAPI {
     global static List<ListingService.ListingDetail> doGet () {
         RestRequest req = RestContext.request;
         RestResponse res = RestContext.response;
-        
+         
         List<String> tokens =  req.requestURI.split('/');
         if (tokens.size()>2) {
-            return ListingService.getListingDetailByID(tokens[2]); 
+            if(tokens[2] instanceOf Id) {
+                return ListingService.getListingDetailByID(tokens[2],label.FOR_VIEW_QUERY_CLAUSE);
+            }
+            else {
+                return ListingService.getListingDetailByMarketingURL(tokens[2],label.FOR_VIEW_QUERY_CLAUSE);
+            }
+             
         } 
         if (req.params.containsKey('id')) {
-            return ListingService.getListingDetailByID(req.params.get('id'));
+            return ListingService.getListingDetailByID(req.params.get('id'), label.FOR_VIEW_QUERY_CLAUSE);
         }
         
         if (req.params.containsKey('ids')) {
             String ids = req.params.get('ids'); 
             List<String> idList  = ids.split(','); 
-            return ListingService.getListingDetailByIDs(idList); 
+            return ListingService.getListingDetailByIDs(idList, label.FOR_VIEW_QUERY_CLAUSE); 
         } 
         
         //householdsize && incomelevel
@@ -64,9 +70,9 @@ global with sharing class ListingDetailAPI {
                 throw new InvalidParamsException('Invalid Parameter input: Integer required for "' + HOUSEHOLD_SIZE + '", was passed value : ' + houseHoldSize + '  and Decimal required for "'+ INCOME_LEVEL + '", was passed value:' +  incomelevel +' Integer required for "' + CHILDREN_UNDER_6 + '", was passed value : '  + childrenUnder6); 
                 
             }
-            return ListingService.getListingDetailByCriteria(crit);
+            return ListingService.getListingDetailByCriteria(crit,label.FOR_VIEW_QUERY_CLAUSE);
         
         }
-        return ListingService.getAllActiveListingDetails();
+        return ListingService.getAllActiveListingDetails(label.FOR_VIEW_QUERY_CLAUSE);
     }
 }

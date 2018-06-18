@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ApexPage xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>34.0</apiVersion>
+    <availableInTouch>true</availableInTouch>
+    <confirmationTokenRequired>false</confirmationTokenRequired>
+    <description>AG_Account;AG_Opportunity;AG_Lead
+Account. Opps and Leads</description>
+    <label>AG Sales Process QG</label>
+    <packageVersions>
+        <majorNumber>1</majorNumber>
+        <minorNumber>88</minorNumber>
+        <namespace>CRMC_PP</namespace>
+    </packageVersions>
+</ApexPage>

@@ -781,5 +781,20 @@ public class SFMOHCD_DAO {
         return finAppIncomeList;
 
     }
+    
+    public static Map<ID,Lottery_Preference__c> prefMap {
+    	get {
+    		if (prefMap == null) {
+	    		prefMap = getPreferences();
+	    	}
+	    	return prefMap;
+    	}
+    	set;
+    }
+    
+    public static Map<ID,Lottery_Preference__c> getPreferences() {
+		
+		return new Map<ID, Lottery_Preference__c> ([Select id, Auto_Grants_Preference__c From Lottery_Preference__c ]);
+	}
 
 }

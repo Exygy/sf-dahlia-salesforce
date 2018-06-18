@@ -92,19 +92,19 @@ private without sharing class API_PersonTest {
         
         List<Application__c> appList = new List<Application__c>();
         Application__c app = new Application__c();
-        app.Primary_Applicant__c = c.Id;
+        //app.Primary_Applicant__c = c.Id;
         app.Status__c = 'Submitted';
         app.Listing__c = listing.Id;
         appList.add(app);
         
         Application__c app1 = new Application__c();
-        app1.Primary_Applicant__c = c.Id;
+        //app1.Primary_Applicant__c = c.Id;
         app1.Status__c = 'Draft';
         app1.Listing__c = listing.Id;
         appList.add(app1);
         
         Application__c app2 = new Application__c();
-        app2.Primary_Applicant__c = c.Id;
+        //app2.Primary_Applicant__c = c.Id;
         app2.Status__c = 'Draft';
         app2.Listing__c = listing.Id;
         appList.add(app2);

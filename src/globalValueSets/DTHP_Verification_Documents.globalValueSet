@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>NOI</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>OMI</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Landlord Letter</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Fire Verification Form</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Public Safety Offcial Letter</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+    </customValue>
+    <description>Verification document types for the DTHP workflow.</description>
+    <masterLabel>DTHP - Verification Documents</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

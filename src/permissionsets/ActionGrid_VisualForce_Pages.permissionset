@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?><PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata"><hasActivationRequired>false</hasActivationRequired><label>ActionGrid VisualForce Pages</label><pageAccesses>
+        <apexPage>AG_Sales_Process_QG</apexPage>
+        <enabled>true</enabled>
+    </pageAccesses></PermissionSet>

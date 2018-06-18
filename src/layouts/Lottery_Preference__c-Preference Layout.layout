@@ -23,6 +23,14 @@
                 <behavior>Edit</behavior>
                 <field>Read_More_URL__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Auto_Grants_Preference__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Preference_Proof_Requirement_Description__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -68,6 +76,10 @@
         <fields>Order__c</fields>
         <fields>NAME</fields>
         <relatedList>Listing_Lottery_Preference__c.Lottery_Preference__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Lottery_Preference__c.Auto_Grants_Preference__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

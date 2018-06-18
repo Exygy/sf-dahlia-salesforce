@@ -5,6 +5,7 @@
 // Author: Vertiba
 // Date: 03/08/16
 // Description: API used to return the Lottery results
+//				GET: /services/apexrest/Listing/LotteryResult/{listingID}
 //				GET: /services/apexrest/Listing/LotteryResult/{listingID}/{lotteryNumber}
 // *
 
@@ -14,7 +15,7 @@ global class ListingLotteryResultApi {
 	public class NoRecordMatchException extends Exception {}
 	
 	@HttpGet
-	global static ListingService.ListingResult doGet () {
+	global static ListingService.LotteryResult doGet () {
 		RestRequest req = RestContext.request;
 		RestResponse res = RestContext.response;
 		
@@ -31,11 +32,11 @@ global class ListingLotteryResultApi {
 		if (tokens.size() > 4) {
 			lotteryNumber = tokens[4]; 
 		} 
-		if (lotteryNumber == null) {
+		/*if (lotteryNumber == null) {
 			throw new InvalidParamsException('"lotteryNumber" parameter is required');
-		}
+		}*/
 		
-		return ListingService.getListingResultsByListingIDAndLotteryNumber(id, lotteryNumber);
+		return ListingService.getListingResults(id, lotteryNumber,label.FOR_VIEW_QUERY_CLAUSE);
 		
 	}
 }

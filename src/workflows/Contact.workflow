@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fieldUpdates>
+<?xml version="1.0" encoding="utf-8"?><Workflow xmlns="http://soap.sforce.com/2006/04/metadata"><fieldUpdates>
         <fullName>CONTACT_Copy_Household_Address</fullName>
         <field>Mailing_Address_same_as_Current_Address__c</field>
         <literalValue>0</literalValue>
@@ -9,8 +7,7 @@
         <operation>Literal</operation>
         <protected>false</protected>
         <reevaluateOnChange>true</reevaluateOnChange>
-    </fieldUpdates>
-    <fieldUpdates>
+    </fieldUpdates><fieldUpdates>
         <fullName>UpdateMailingCity</fullName>
         <field>MailingCity</field>
         <formula>Account.BillingCity</formula>
@@ -18,8 +15,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
+    </fieldUpdates><fieldUpdates>
         <fullName>UpdateMailingCountry</fullName>
         <field>MailingCountry</field>
         <formula>Account.BillingCountry</formula>
@@ -27,8 +23,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
+    </fieldUpdates><fieldUpdates>
         <fullName>UpdateMailingState</fullName>
         <field>MailingState</field>
         <formula>Account.BillingState</formula>
@@ -36,8 +31,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
+    </fieldUpdates><fieldUpdates>
         <fullName>UpdateMailingStreet</fullName>
         <field>MailingStreet</field>
         <formula>Account.BillingStreet</formula>
@@ -45,8 +39,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
-    </fieldUpdates>
-    <fieldUpdates>
+    </fieldUpdates><fieldUpdates>
         <fullName>UpdateMailingZip</fullName>
         <field>MailingPostalCode</field>
         <formula>Account.BillingPostalCode</formula>
@@ -54,8 +47,7 @@
         <notifyAssignee>false</notifyAssignee>
         <operation>Formula</operation>
         <protected>false</protected>
-    </fieldUpdates>
-    <rules>
+    </fieldUpdates><rules>
         <fullName>CopyBillingAddressToMailingAddress</fullName>
         <actions>
             <name>UpdateMailingCity</name>
@@ -85,5 +77,4 @@
         </criteriaItems>
         <description>Copy Billing Address To Mailing Address on Contact object</description>
         <triggerType>onAllChanges</triggerType>
-    </rules>
-</Workflow>
+    </rules></Workflow>

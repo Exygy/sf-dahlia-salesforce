@@ -33,16 +33,16 @@ global without sharing class ListingApi {
         
         //sample uri = /listing/<sfdcid>
         if (tokens.size()>2) {
-            return ListingService.getListingByID(tokens[2]); 
+            return ListingService.getListingByID(tokens[2], label.FOR_VIEW_QUERY_CLAUSE); 
         } 
         if (req.params.containsKey('id')) {
-            return ListingService.getListingByID(req.params.get('id'));
+            return ListingService.getListingByID(req.params.get('id'),label.FOR_VIEW_QUERY_CLAUSE);
         }
         
         if (req.params.containsKey('ids')) {
             String ids = req.params.get('ids');
             List<String> idList  = ids.split(','); 
-            return ListingService.getListingByIDs(idList); 
+            return ListingService.getListingByIDs(idList,label.FOR_VIEW_QUERY_CLAUSE); 
         } 
         
         //householdsize && incomelevel
@@ -67,7 +67,7 @@ global without sharing class ListingApi {
                 throw new InvalidParamsException('Invalid Parameter input: Integer required for "' + HOUSEHOLD_SIZE + '", was passed value : ' + houseHoldSize + '  and Decimal required for "'+ INCOME_LEVEL + '", was passed value:' +  incomelevel +' Integer required for "' + CHILDREN_UNDER_6 + '", was passed value : '  + childrenUnder6); // put friendly message here
                 
             }
-            return ListingService.getListingByCriteria(crit);
+            return ListingService.getListingByCriteria(crit,label.FOR_VIEW_QUERY_CLAUSE);
         
         } 
         /*
@@ -78,7 +78,7 @@ global without sharing class ListingApi {
     		}
         }
         */
-        return ListingService.getAllActiveListings();
+        return ListingService.getAllActiveListings(label.FOR_VIEW_QUERY_CLAUSE);
     }
    
 }

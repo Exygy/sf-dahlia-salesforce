@@ -26,12 +26,16 @@
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Unit_Tenure__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Required</behavior>
                 <field>Property__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Number_of_bedrooms_formula__c</field>
+                <field>Building_Name__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -45,6 +49,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Unit_Type__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Alternative_Min_Occupancy__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Alternative_Max_Occupancy__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -195,6 +207,10 @@
         <fields>Listing__c.Lottery_Status__c</fields>
         <fields>NAME</fields>
         <relatedList>Listing_Unit__c.Unit__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>Lease__c.Unit__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

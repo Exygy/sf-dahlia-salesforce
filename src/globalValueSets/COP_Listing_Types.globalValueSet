@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Rental</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Purchase</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Re-Rental</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Re-Sale</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Waitlist</fullName>
+        <default>false</default>
+    </customValue>
+    <masterLabel>COP - Listing Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -8,7 +8,7 @@
 //
 // *****************************************************************************
 
-public without sharing virtual class HOP_ControllerBase {
+global with sharing virtual class HOP_ControllerBase {
 
     // Current User's record is queried for the licence name and Account Id.
     // Available to all the controllers that implement this base class.
@@ -23,15 +23,17 @@ public without sharing virtual class HOP_ControllerBase {
     public HOP_ControllerBase() {
         // Queries the current User's licence name and Account Id
         myUser = [SELECT Id, Contact.AccountId, Profile.UserLicense.Name,TimeZoneSidKey FROM User WHERE Id = :UserInfo.getUserId()];
+    	system.debug('user license:::'+myUser.Profile.UserLicense.Name);
     }
-     @RemoteAction
-    public static dataTableResponse getRecords(string objectName,string fieldList,string whereClause) {
+    @RemoteAction
+    global static dataTableResponse getRecords(string objectName,string fieldList,string whereClause) {
         User myUser = [SELECT Id, Contact.AccountId, Profile.UserLicense.Name,TimeZoneSidKey  FROM User WHERE Id = :UserInfo.getUserId()];
         
         string queryString ='select '+fieldList+' from '+objectName;
         if(whereClause != null && whereClause != ''){
             queryString +=' where '+whereClause;
         }
+        system.debug('queryString:::'+queryString);
         list<sobject> sobjList=database.query(queryString);
         List<rowHeaders> rowHeadersList = new List<rowHeaders>();
         Map<String, Schema.SObjectField> dfr = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap();
@@ -53,12 +55,12 @@ public without sharing virtual class HOP_ControllerBase {
         //system.debug(dataTableResponseObj);
         return dataTableResponseObj;
     }
-    public class dataTableResponse{
+    global class dataTableResponse{
         public list<sobject> dataRows;
         public List<rowHeaders> dataColumns;
         
     }
-    public class rowHeaders{
+    global class rowHeaders{
         public String title;
         public String data;
         public string type;
@@ -81,7 +83,7 @@ public without sharing virtual class HOP_ControllerBase {
                 type='date';
             }
             if(FldType==schema.displaytype.datetime){
-                type='datetime';
+                type='date';
             }
             if(FldType==schema.displaytype.boolean){
                 type='boolean';

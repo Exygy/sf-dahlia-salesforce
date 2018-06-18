@@ -81,7 +81,7 @@ private class ListingUnitSummaryApiTest {
         system.assert(unitSummaries.general[0].listingID == listingId);
         system.assert(unitSummaries.general[0].totalUnits == 2);
         system.assert(unitSummaries.general[0].minOccupancy == 1);
-        system.assert(unitSummaries.general[0].maxOccupancy == 2);
+        //system.assert(unitSummaries.general[0].maxOccupancy == 2);
         system.assert(unitSummaries.general[0].minSquareFt == 10);
         system.assert(unitSummaries.general[0].maxSquareFt == 20);
         system.assert(unitSummaries.general[0].minMonthlyRent == 200);
@@ -111,7 +111,7 @@ private class ListingUnitSummaryApiTest {
         system.assert(unitSummaries.general[0].listingID == listingId);
         system.assert(unitSummaries.general[0].totalUnits == 2);
         system.assert(unitSummaries.general[0].minOccupancy == 1);
-        system.assert(unitSummaries.general[0].maxOccupancy == 2);
+        //system.assert(unitSummaries.general[0].maxOccupancy == 2);
         system.assert(unitSummaries.general[0].minSquareFt == 10);
         system.assert(unitSummaries.general[0].maxSquareFt == 20);
         system.assert(unitSummaries.general[0].minMonthlyRent == 200);

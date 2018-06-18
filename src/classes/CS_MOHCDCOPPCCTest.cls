@@ -14,7 +14,7 @@ public with sharing class CS_MOHCDCOPPCCTest{
         
         //Create Contacts
         List<Contact> lContacts  = new List<Contact>();
-        Integer iNoCon = 5;
+        Integer iNoCon = 1;
         
         for(Integer count = 0; count < iNoCon; count++){
             Contact oCon = new Contact(FirstName = 'Test FN', 
@@ -71,8 +71,11 @@ public with sharing class CS_MOHCDCOPPCCTest{
                                Phone,
                                Email,
                                Current_Address__c FROM Contact WHERE Id IN :lContacts]);
-
+			system.debug('lContacts:::' + lContacts);
+            
+            
             for(Integer count = 0; count < iNoCon; count++){
+            	system.debug('count:::' + count);
                 oControl.selectContact();
                 oControl.ConId = lContacts[count].Id;
                 oControl.isWestern = FALSE;
@@ -97,7 +100,7 @@ public with sharing class CS_MOHCDCOPPCCTest{
         
         //Create Contacts
         List<Contact> lContacts  = new List<Contact>();
-        Integer iNoCon = 5;
+        Integer iNoCon = 1;
         
         for(Integer count = 0; count < iNoCon; count++){
             Contact oCon = new Contact(FirstName = 'Test FN', 

@@ -47,7 +47,7 @@
             
             function loadData(){
                 var whereClause = '{!myUser.Profile.UserLicense.Name}' == '{!COMMUNITY_LICENSE_NAME}'
-                ? " AND Listing__r.Account__c = '{!myUser.Contact.AccountId}'"
+                ? " AND Listing__r.Account__c = '{!myUser.Contact.AccountId}' AND hideOnCommunity__c = false"
                 : '';
                 debugger;
                 $.noConflict();

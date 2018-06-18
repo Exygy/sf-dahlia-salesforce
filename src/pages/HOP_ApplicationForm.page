@@ -98,6 +98,11 @@
 				hr {
 					border-top-color: #ddd;
 				}
+				img.form-control {
+					border: transparent;
+					display:initial;
+				   
+				}
 			</style>
 		</apex:define>
 
@@ -109,7 +114,7 @@
 
 		<apex:define name="body">
 		<div id="myFormWrapper">
-			<apex:form styleClass="form-horizontal" rendered="{! !hasErrors }" id="myForm">
+			<apex:form styleClass="form-horizontal" rendered="{! !hasErrors || (hasErrors && isValidationError) }" id="myForm">
 				<apex:actionFunction name="rerenderPicklists" reRender="neighborhoodPreference, dthpPreference, copPreference, liveInSfPreference, workInSfPreference" />
 				<apex:actionFunction name="saveApplicationForm" action="{!saveApplicationForm}" />
 				<apex:actionFunction name="saveApplicationFormAndNew" action="{!saveApplicationFormAndNew}" />
@@ -130,24 +135,30 @@
 							<h4>{! 'Application ' + appName.Name }</h4>
 						</apex:outputPanel>
 						<apex:commandButton styleClass="btn btn-primary" value="Save"
-											onclick="sanitizeFields(); checkRequiredFields_primaryApplicant(saveApplicationForm); return false;" />
+							onclick="sanitizeFields(); checkRequiredFields_primaryApplicant(saveApplicationForm); return false;" />
 						<apex:commandButton styleClass="btn btn-primary" value="Save & New"
-											onclick="sanitizeFields(); checkRequiredFields_primaryApplicant(saveApplicationFormAndNew); return false;" />
+							onclick="sanitizeFields(); checkRequiredFields_primaryApplicant(saveApplicationFormAndNew); return false;" />
 					</div>
 				</div>
 				<div style="padding-top: 15px;">
 					<h4>Name of Listing:&nbsp;<apex:outputText value="{!listingName}" /></h4>
 				</div>
+				<br/>
+				<div class="form-group">
+					<div class="col-xs-12 sectionHeader">
+						<h5>Application Data</h5>
+					</div>
+				</div>
 				<div class="section form-group-section">
 					<div class="row">
-						<div class="col-sm-6">
+						<!-- <div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-sm-6 control-label">Lottery Number (Paper Ticket)</label>
 								<div class="col-sm-6">
 										<apex:inputField value="{!app.Lottery_Number_Manual__c}" styleClass="form-control" />
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="col-sm-6">
 							<div class="form-group">
 								<label class="col-sm-6 control-label">Language of Application</label>
@@ -157,12 +168,11 @@
 							</div>
 						</div>
 					</div>
-					<div class="row">
+					<!--<div class="row">
 						<div class="col-sm-6">
 							<div class="form-group">
-								<label class="col-sm-6 control-label">Household Annual Income</label>
+								<label class="col-sm-6 control-label"></label>
 								<div class="col-sm-6">
-									<apex:inputField value="{!app.Annual_Income__c}" styleClass="form-control" />
 								</div>
 							</div>
 						</div>
@@ -175,10 +185,22 @@
 							</div>
 						</div>
 					</div>
+					 <apex:outputPanel rendered="{!isTotalMonthlyRentEditable}" layout="none">
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Total Monthly Rent</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!app.Total_Monthly_Rent__c}" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+					</apex:outputPanel> -->
 				</div>
 				<div class="form-group">
 					<div class="col-xs-12 sectionHeader">
-						<h5>Primary Applicant Information</h5>
+						<h5>Primary Applicant</h5>
 					</div>
 				</div>
 				<div id="primaryApplicantSection" class="section form-group-section">
@@ -217,6 +239,29 @@
 										<apex:inputField value="{!primaryApplicant.Date_of_Birth__c}" id="dateOfBirth" />
 									</div>
 									<input type="text" class="form-control required" id="dateOfBirth" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<div class="col-sm-6">
+									<label class="control-label pull-left" style="margin-right: 5px;">Phone</label>
+									<div style="overflow: hidden;">
+										<apex:inputField value="{!primaryApplicant.Phone_Type__c}" styleClass="form-control" style="display: inline-block; width: 100%;" />
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<apex:inputField value="{!primaryApplicant.Phone__c}" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Email</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!primaryApplicant.Email__c}" styleClass="form-control" />
 								</div>
 							</div>
 						</div>
@@ -303,17 +348,62 @@
 							</div>
 						</div>
 					</div>
+					
+				</div>
+				
+				<div class="form-group">
+					<div class="col-xs-12 sectionHeader">
+						<h5>Alternate Contact</h5>
+					</div>
+				</div>
+				<div id="alternateApplicantSection" class="section form-group-section">
 					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">First Name</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!alternateContact.First_Name__c}" styleClass="form-control" id="altContactFirstName"/>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Middle Name</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!alternateContact.Middle_Name__c}" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Last Name</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!alternateContact.Last_Name__c}" styleClass="form-control" id="altContactLastName"/>
+								</div>
+							</div>
+						</div>
 						<div class="col-sm-6">
 							<div class="form-group">
 								<div class="col-sm-6">
 									<label class="control-label pull-left" style="margin-right: 5px;">Phone</label>
 									<div style="overflow: hidden;">
-										<apex:inputField value="{!primaryApplicant.Phone_Type__c}" styleClass="form-control" style="display: inline-block; width: 100%;" />
+										<apex:inputField value="{!alternateContact.Phone_Type__c}" styleClass="form-control" style="display: inline-block; width: 100%;" />
 									</div>
 								</div>
 								<div class="col-sm-6">
-									<apex:inputField value="{!primaryApplicant.Phone__c}" styleClass="form-control" />
+									<apex:inputField value="{!alternateContact.Phone__c}" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Agency Name</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!alternateContact.Agency_Name__c}" styleClass="form-control" />
 								</div>
 							</div>
 						</div>
@@ -321,209 +411,704 @@
 							<div class="form-group">
 								<label class="col-sm-6 control-label">Email</label>
 								<div class="col-sm-6">
-									<apex:inputField value="{!primaryApplicant.Email__c}" styleClass="form-control" />
+									<apex:inputField value="{!alternateContact.Email__c}" styleClass="form-control" />
 								</div>
 							</div>
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Relationship</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!alternateContact.Alternate_Contact_Type__c}" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Relationship - Other</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!alternateContact.Alternate_Contact_Type_Other__c}" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+						
+					</div>
 				</div>
+				
 				<div class="form-group">
 					<div class="col-xs-12 sectionHeader">
 						<h5>Household Members</h5>
 					</div>
 				</div>
 
-			<apex:actionRegion >
-				<apex:outputPanel layout="block" styleClass="section text-center" id="householdMembersSection">
-					<div class="form-group">
-						<div class="col-xs-12">
-							<div class="section">
-								<apex:outputPanel layout="none" rendered="{!householdMembers.size == 0}">
-									<p style="margin: 0;">No Household Members</p>
-								</apex:outputPanel>
-								<apex:outputPanel layout="none" rendered="{!householdMembers.size > 0}">
-									<table class="table table-striped table-bordered" id="householdMembersTable">
-										<thead>
-											<tr>
-												<th>First Name</th>
-												<th>Middle Name</th>
-												<th>Last Name</th>
-												<th>Date of Birth</th>
-												<th>Street</th>
-												<th>City</th>
-												<th>State</th>
-												<th>Zip Code</th>
-											</tr>
-										</thead>
-										<tbody>
-											<apex:repeat value="{!householdMembersIndexes}" var="idx">
-												<tr onclick="onHouseholdMemberRowClick(this, {!idx});">
-													<td><apex:outputField value="{!householdMembers[idx].First_Name__c}" /></td>
-													<td><apex:outputField value="{!householdMembers[idx].Middle_Name__c}" /></td>
-													<td><apex:outputField value="{!householdMembers[idx].Last_Name__c}" /></td>
-													<td><apex:outputField value="{!householdMembers[idx].Date_of_Birth__c}" /></td>
-													<td><apex:outputField value="{!householdMembers[idx].Street__c}" /></td>
-													<td><apex:outputField value="{!householdMembers[idx].City__c}" /></td>
-													<td><apex:outputField value="{!householdMembers[idx].State__c}" /></td>
-													<td><apex:outputField value="{!householdMembers[idx].Zip_Code__c}" /></td>
+				<apex:actionRegion >
+					<apex:outputPanel layout="block" styleClass="section text-center" id="householdMembersSection">
+						<div class="form-group">
+							<div class="col-xs-12">
+								<div class="section">
+									<apex:outputPanel layout="none" rendered="{!householdMembers.size == 0}">
+										<p style="margin: 0;">No Household Members</p>
+									</apex:outputPanel>
+									<apex:outputPanel layout="none" rendered="{!householdMembers.size > 0}">
+										<table class="table table-striped table-bordered" id="householdMembersTable">
+											<thead>
+												<tr>
+													<th>First Name</th>
+													<th>Middle Name</th>
+													<th>Last Name</th>
+													<th>Date of Birth</th>
+													<th>Street</th>
+													<th>City</th>
+													<th>State</th>
+													<th>Zip Code</th>
 												</tr>
-											</apex:repeat>
-										</tbody>
-									</table>
-								</apex:outputPanel>
+											</thead>
+											<tbody>
+												<apex:repeat value="{!householdMembersIndexes}" var="idx">
+													<tr onclick="onHouseholdMemberRowClick(this, {!idx});">
+														<td><apex:outputField value="{!householdMembers[idx].First_Name__c}" /></td>
+														<td><apex:outputField value="{!householdMembers[idx].Middle_Name__c}" /></td>
+														<td><apex:outputField value="{!householdMembers[idx].Last_Name__c}" /></td>
+														<td><apex:outputField value="{!householdMembers[idx].Date_of_Birth__c}" /></td>
+														<td><apex:outputField value="{!householdMembers[idx].Street__c}" /></td>
+														<td><apex:outputField value="{!householdMembers[idx].City__c}" /></td>
+														<td><apex:outputField value="{!householdMembers[idx].State__c}" /></td>
+														<td><apex:outputField value="{!householdMembers[idx].Zip_Code__c}" /></td>
+													</tr>
+												</apex:repeat>
+											</tbody>
+										</table>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</div>
+	
+						<apex:inputHidden id="selectedHouseholdMemberIdx" value="{!selectedHouseholdMemberIdx}" />
+	
+						<apex:commandButton styleClass="btn btn-primary" value="New"
+											rendered="{!currentHouseholdMember == null}"
+											action="{!newHouseholdMember}" reRender="householdMembersSection, errorMessages"
+											oncomplete="afterNewHouseholdMemberClick()" />
+						<apex:commandButton styleClass="btn btn-primary" value="Edit"
+											rendered="{!currentHouseholdMember == null && householdMembers.size > 0}"
+											action="{!editHouseholdMember}" reRender="householdMembersSection, errorMessages"
+											oncomplete="afterEditHouseholdMemberClick()"
+											id="householdMemberEdit" />
+						<apex:commandButton styleClass="btn btn-primary" value="Delete"
+											onclick="beforeDeleteHouseholdMember(); return false;"
+											rendered="{!currentHouseholdMember == null && householdMembers.size > 0}"
+											id="householdMemberDelete" />
+	
+						<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null}">
+							<div id="householdMemberSection">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">First Name</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentHouseholdMember.First_Name__c}" styleClass="form-control required"
+																 id="householdMemberFirstName" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Middle Name</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentHouseholdMember.Middle_Name__c}" styleClass="form-control" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Last Name</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentHouseholdMember.Last_Name__c}" styleClass="form-control required" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Date of Birth</label>
+											<div class="col-sm-6">
+												<div class="hidden">
+													<apex:inputField value="{!currentHouseholdMember.Date_of_Birth__c}" id="dateOfBirth_chm" />
+												</div>
+												<input type="text" class="form-control required" id="dateOfBirth_chm" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Street</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentHouseholdMember.Street__c}" styleClass="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">City</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentHouseholdMember.City__c}" styleClass="form-control" />
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">State</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentHouseholdMember.State__c}" styleClass="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Zip Code</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentHouseholdMember.Zip_Code__c}" styleClass="form-control" />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</apex:outputPanel>
+	
+						<apex:actionFunction name="addHouseholdMember" action="{!addHouseholdMember}"
+											 reRender="householdMembersSection, specialProgramPreferencesSection, errorMessages"
+											 oncomplete="afterAddHouseholdMemberClick()" />
+						<apex:actionFunction name="addHouseholdMemberAndNew" action="{!addHouseholdMemberAndNew}"
+											 reRender="householdMembersSection, specialProgramPreferencesSection, errorMessages"
+											 oncomplete="afterAddHouseholdMemberAndNewClick()" />
+						<apex:actionFunction name="saveHouseholdMember" action="{!saveHouseholdMember}"
+											 reRender="householdMembersSection, specialProgramPreferencesSection, errorMessages"
+											 oncomplete="cancelHouseholdMember()" />
+						<apex:actionFunction name="cancelHouseholdMember" action="{!cancelHouseholdMember}"
+											 reRender="householdMembersSection, errorMessages" immediate="true"
+											 oncomplete="afterCancelHouseholdMemberClick()" />
+						<apex:actionFunction name="deleteHouseholdMember" action="{!deleteHouseholdMember}"
+											 reRender="householdMembersSection, errorMessages"
+											 oncomplete="afterDeleteHouseholdMember()" />
+	
+						<!--
+						<apex:commandButton styleClass="btn btn-primary" value="Add"
+											rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}"
+											onclick="checkRequiredFields_householdMember(addHouseholdMember); return false;" />
+						<apex:commandButton styleClass="btn btn-primary" value="Add & New"
+											rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}"
+											onclick="checkRequiredFields_householdMember(addHouseholdMemberAndNew); return false;" />
+						<apex:commandButton styleClass="btn btn-primary" value="Save"
+											rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx != -1}"
+											onclick="checkRequiredFields_householdMember(saveHouseholdMember); return false;" />
+						<apex:commandButton styleClass="btn btn-primary" value="Cancel"
+											rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx != -1}"
+											onclick="cancelHouseholdMember(); return false;" />
+						-->
+	
+						<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}">
+							<button type="button" class="btn btn-primary" onclick="sanitizeFields(); checkRequiredFields_householdMember(addHouseholdMember);">Add</button>
+						</apex:outputPanel>
+						<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}">
+							<button type="button" class="btn btn-primary" onclick="sanitizeFields(); checkRequiredFields_householdMember(addHouseholdMemberAndNew);">Add &amp; New</button>
+						</apex:outputPanel>
+						<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx != -1}">
+							<button type="button" class="btn btn-primary" onclick="sanitizeFields(); checkRequiredFields_householdMember(saveHouseholdMember);">Save</button>
+						</apex:outputPanel>
+						<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null}">
+							<button type="button" class="btn btn-primary" onclick="cancelHouseholdMember();">Cancel</button>
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:actionRegion>
+				
+				<div class="form-group">
+					<div class="col-xs-12 sectionHeader">
+						<h5>Reserved and Priority Qualifying Information</h5>
+					</div>
+				</div>
+				<div class="section form-group-section">
+					<div class="row">
+						<div class="col-sm-12">
+							<p>QUALIFYING INFORMATION FOR A RESERVED UNIT</p>
+						</div>
+					</div>
+					<div class="row">
+						<apex:outputPanel rendered="{!hasDevelopmentalDisabilitiesUnits}">
+							<div class="col-sm-6">
+								<p>One or more units is reserved for applicants who are developmentally disabled.<br/>
+									Select "Yes" below if a household member is developmentally disabled.</p>
+								<div class="form-group">
+									<label class="col-sm-6 control-label">Reserved - Developmentally Disabled</label>
+									<div class="col-sm-6">
+										<apex:inputField value="{!app.Has_DevelopmentalDisability__c}" styleClass="form-control" />
+									</div>
+								</div>
+							</div>
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!hasVeteransUnits}">
+							<div class="row">
+								<div class="col-sm-6">
+									<p style="padding-left: 25px;">One or more units is reserved for applicants who are U.S. Military.<br/>
+									Select "Yes" below if a household member is U.S. Military.</p>
+									<div class="form-group">
+										<label class="col-sm-6 control-label">Reserved - U.S. Military</label>
+										<div class="col-sm-6">
+											<apex:inputField value="{!app.Has_Military_Service__c}" styleClass="form-control" />
+										</div>
+									</div>
+								</div>
+							</div>
+						</apex:outputPanel>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-12">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">ADA Priorities Selected</label>
+								<div class="col-sm-9">
+									<apex:inputField value="{!app.Has_ADA_Priorities_Selected__c}" styleClass="form-control" />
+								</div>
 							</div>
 						</div>
 					</div>
-
-					<apex:inputHidden id="selectedHouseholdMemberIdx" value="{!selectedHouseholdMemberIdx}" />
-
-					<apex:commandButton styleClass="btn btn-primary" value="New"
-										rendered="{!currentHouseholdMember == null}"
-										action="{!newHouseholdMember}" reRender="householdMembersSection, errorMessages"
-										oncomplete="afterNewHouseholdMemberClick()" />
-					<apex:commandButton styleClass="btn btn-primary" value="Edit"
-										rendered="{!currentHouseholdMember == null && householdMembers.size > 0}"
-										action="{!editHouseholdMember}" reRender="householdMembersSection, errorMessages"
-										oncomplete="afterEditHouseholdMemberClick()"
-										id="householdMemberEdit" />
-					<apex:commandButton styleClass="btn btn-primary" value="Delete"
-										onclick="beforeDeleteHouseholdMember(); return false;"
-										rendered="{!currentHouseholdMember == null && householdMembers.size > 0}"
-										id="householdMemberDelete" />
-
-					<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null}">
-						<div id="householdMemberSection">
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">First Name</label>
-										<div class="col-sm-6">
-											<apex:inputField value="{!currentHouseholdMember.First_Name__c}" styleClass="form-control required"
-															 id="householdMemberFirstName" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">Middle Name</label>
-										<div class="col-sm-6">
-											<apex:inputField value="{!currentHouseholdMember.Middle_Name__c}" styleClass="form-control" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">Last Name</label>
-										<div class="col-sm-6">
-											<apex:inputField value="{!currentHouseholdMember.Last_Name__c}" styleClass="form-control required" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">Date of Birth</label>
-										<div class="col-sm-6">
-											<div class="hidden">
-												<apex:inputField value="{!currentHouseholdMember.Date_of_Birth__c}" id="dateOfBirth_chm" />
-											</div>
-											<input type="text" class="form-control required" id="dateOfBirth_chm" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">Street</label>
-										<div class="col-sm-6">
-											<apex:inputField value="{!currentHouseholdMember.Street__c}" styleClass="form-control" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">City</label>
-										<div class="col-sm-6">
-											<apex:inputField value="{!currentHouseholdMember.City__c}" styleClass="form-control" />
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">State</label>
-										<div class="col-sm-6">
-											<apex:inputField value="{!currentHouseholdMember.State__c}" styleClass="form-control" />
-										</div>
-									</div>
-								</div>
-								<div class="col-sm-6">
-									<div class="form-group">
-										<label class="col-sm-6 control-label">Zip Code</label>
-										<div class="col-sm-6">
-											<apex:inputField value="{!currentHouseholdMember.Zip_Code__c}" styleClass="form-control" />
-										</div>
+					
+					<apex:outputPanel rendered="{!!ISBLANK(listing.Reserved_community_type__c)}">
+						<hr />
+						<div class="row">
+							<div class="col-sm-6">
+								<p>QUALIFYING INFORMATION FOR THE BUILDING COMMUNITY TYPE<br/><br/>
+								This building is a senior and/or veteran community. Select "Yes" below if the applicant or household qualifies for the community.</p>
+								<div class="form-group">
+									<label class="col-sm-6 control-label">Meets Community Requirements</label>
+									<div class="col-sm-6">
+										<apex:inputField value="{!app.Answered_Community_Screening__c}" styleClass="form-control" />
 									</div>
 								</div>
 							</div>
 						</div>
 					</apex:outputPanel>
-
-					<apex:actionFunction name="addHouseholdMember" action="{!addHouseholdMember}"
-										 reRender="householdMembersSection, specialProgramPreferencesSection, errorMessages"
-										 oncomplete="afterAddHouseholdMemberClick()" />
-					<apex:actionFunction name="addHouseholdMemberAndNew" action="{!addHouseholdMemberAndNew}"
-										 reRender="householdMembersSection, specialProgramPreferencesSection, errorMessages"
-										 oncomplete="afterAddHouseholdMemberAndNewClick()" />
-					<apex:actionFunction name="saveHouseholdMember" action="{!saveHouseholdMember}"
-										 reRender="householdMembersSection, specialProgramPreferencesSection, errorMessages"
-										 oncomplete="cancelHouseholdMember()" />
-					<apex:actionFunction name="cancelHouseholdMember" action="{!cancelHouseholdMember}"
-										 reRender="householdMembersSection, errorMessages" immediate="true"
-										 oncomplete="afterCancelHouseholdMemberClick()" />
-					<apex:actionFunction name="deleteHouseholdMember" action="{!deleteHouseholdMember}"
-										 reRender="householdMembersSection, errorMessages"
-										 oncomplete="afterDeleteHouseholdMember()" />
-
-					<!--
-					<apex:commandButton styleClass="btn btn-primary" value="Add"
-										rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}"
-										onclick="checkRequiredFields_householdMember(addHouseholdMember); return false;" />
-					<apex:commandButton styleClass="btn btn-primary" value="Add & New"
-										rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}"
-										onclick="checkRequiredFields_householdMember(addHouseholdMemberAndNew); return false;" />
-					<apex:commandButton styleClass="btn btn-primary" value="Save"
-										rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx != -1}"
-										onclick="checkRequiredFields_householdMember(saveHouseholdMember); return false;" />
-					<apex:commandButton styleClass="btn btn-primary" value="Cancel"
-										rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx != -1}"
-										onclick="cancelHouseholdMember(); return false;" />
-					-->
-
-					<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}">
-						<button type="button" class="btn btn-primary" onclick="sanitizeFields(); checkRequiredFields_householdMember(addHouseholdMember);">Add</button>
-					</apex:outputPanel>
-					<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx == -1}">
-						<button type="button" class="btn btn-primary" onclick="sanitizeFields(); checkRequiredFields_householdMember(addHouseholdMemberAndNew);">Add &amp; New</button>
-					</apex:outputPanel>
-					<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null && selectedHouseholdMemberIdx != -1}">
-						<button type="button" class="btn btn-primary" onclick="sanitizeFields(); checkRequiredFields_householdMember(saveHouseholdMember);">Save</button>
-					</apex:outputPanel>
-					<apex:outputPanel layout="none" rendered="{!currentHouseholdMember != null}">
-						<button type="button" class="btn btn-primary" onclick="cancelHouseholdMember();">Cancel</button>
-					</apex:outputPanel>
-				</apex:outputPanel>
-			</apex:actionRegion>
-
+				</div>
+				
+				
 				<div class="form-group">
+					<div class="col-xs-12 sectionHeader">
+						<h5>Preferences</h5>
+					</div>
+				</div>
+				
+				<apex:actionRegion >
+					<apex:outputPanel layout="block" styleClass="section" id="specialProgramPreferencesSection">
+						<div class="form-group">
+							<div class="col-xs-12">
+								<div class="section">
+									<apex:outputPanel layout="none" rendered="{!shortFormPreferences.size == 0}">
+										<p style="margin: 0;">No Preferences</p>
+									</apex:outputPanel>
+									<apex:outputPanel layout="none" rendered="{!shortFormPreferences.size > 0}">
+										<table class="table table-bordered" id="shortFormPreferencesTable2">
+											<thead>
+												<tr>
+													<!-- <th>Preference</th>
+													<th>Individual Preference</th>
+													<th>Application Member Name</th>
+													<th>Type of Proof</th>
+													<th>Applicant Opted Out</th>
+													<th>Pre-Lottery Validation</th>
+													<th>Preference Rank</th> -->
+													
+													<th>Receives Preference</th>
+													<th>Preference Name</th>
+													<th>Pre-Lottery Validation</th>
+													<th>Person Who Claimed</th>
+													<th>Type of Proof</th>
+													<th>Lottery Rank</th>
+													<th>Opt Out</th>
+												</tr>
+											</thead>
+											<tbody>
+												<apex:repeat value="{!shortFormPreferencesIndexes}" var="idx">
+													<tr onclick="onShortFormPreferenceRowClick(this, {!idx});" style="background-color: {!IF(shortFormPreferences[idx].receivesPreference,'','#F9F9F9')}">
+														<!-- <td><apex:outputText value="{!shortFormPreferences[idx].receivesPreference}" /></td> -->
+														<td style="text-align: center;">
+															<apex:outputPanel rendered="{!shortFormPreferences[idx].prefOrder = 0}" layout="none">
+																<span class="glyphicon glyphicon-ok-sign text-success"></span>
+															</apex:outputPanel>
+															<apex:outputPanel rendered="{!shortFormPreferences[idx].prefOrder = 1}" layout="none">
+																<span class="glyphicon glyphicon-remove-sign" style="color: red;"></span>
+															</apex:outputPanel>
+															<apex:outputPanel rendered="{!shortFormPreferences[idx].prefOrder >= 2}" layout="none">
+																<span class="glyphicon glyphicon-remove-sign" style="color: grey;"></span>
+															</apex:outputPanel>
+														</td>
+														<td><apex:outputText value="{!shortFormPreferences[idx].listingPrefName}" /></td>
+														<td><apex:outputText value="{!shortFormPreferences[idx].lotteryStatus}" /></td>
+														<!-- <td><apex:outputField value="{!shortFormPreferences[idx].sfp.Individual_preference__c}" /></td> -->
+														<td><apex:outputText value="{!shortFormPreferences[idx].personWhoClaimed}" /></td>
+														<td><apex:outputField value="{!shortFormPreferences[idx].sfp.Type_of_proof__c}" /></td>
+														<td><apex:outputField value="{!shortFormPreferences[idx].sfp.Preference_Lottery_Rank__c}" /></td>
+														<!-- <td><apex:outputField value="{!shortFormPreferences[idx].sfp.Opt_Out__c}" /></td> -->
+														<td style="text-align: center;">
+															<apex:outputPanel rendered="{!shortFormPreferences[idx].sfp.Opt_Out__c}" layout="none">
+																<span class="glyphicon glyphicon-ok"></span>
+															</apex:outputPanel>
+														</td>
+													</tr>
+												</apex:repeat>
+											</tbody>
+										</table>
+									</apex:outputPanel>
+								</div>
+							</div>
+						</div>
+	
+					<apex:outputPanel layout="block" styleClass="section text-center">
+						<apex:inputHidden id="selectedShortFormPreferenceIdx" value="{!selectedShortFormPreferenceIdx}" />
+	
+						<apex:outputPanel layout="block" id="newPrefBtn">
+							<apex:commandButton styleClass="btn btn-primary" value="New"
+												rendered="{!listingPreferenceSO.size > 1 && currentShortFormPreference == null}"
+												action="{!newShortFormPreference}" reRender="specialProgramPreferencesSection, errorMessages" />
+							<apex:commandButton styleClass="btn btn-primary" value="Edit"
+												rendered="{!currentShortFormPreference == null && shortFormPreferences.size > 0}"
+												action="{!editShortFormPreference}" reRender="specialProgramPreferencesSection, errorMessages"
+												id="shortFormPreferenceEdit" /><!-- oncomplete="afterEditShortFormPreferenceClick()" -->
+							<apex:commandButton styleClass="btn btn-primary" value="Delete"
+												onclick="beforeDeleteShortFormPreference(); return false;"
+												rendered="{!currentShortFormPreference == null && shortFormPreferences.size > 0}"
+												id="shortFormPreferenceDelete" />
+						</apex:outputPanel>
+
+						<apex:outputPanel layout="block" rendered="{!currentShortFormPreference != null}">
+							<div id="shortFormPreferenceSection">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Preference Name</label>
+											<div class="col-sm-6">
+												<apex:selectList value="{!selectedListingPreference}"
+																 id="prefName" styleClass="form-control required" size="1"
+																 onchange="rerenderSpecialProgramPreferencesSection();">
+													<apex:selectOptions value="{!listingPreferenceSO}"/>  
+												</apex:selectList>
+											</div>
+										</div>
+									</div>
+									<apex:outputPanel layout="block" rendered="{!showHHMember}" styleClass="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Which HH Member is on the Proof?</label>
+											<div class="col-sm-6">
+												<apex:selectList value="{!selectedApplicationMember}"
+																 id="hhMember" styleClass="form-control required" size="1">
+													<apex:selectOptions value="{!householdMembersSO}"/>
+												</apex:selectList>
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel id="rentBurdenName" layout="none">
+										<apex:outputPanel layout="block" rendered="{!showRentBurden && currentShortFormPreference.sfp.Individual_preference__c != 'Assisted Housing'}" styleClass="col-sm-6">
+											<div class="form-group">
+												<label class="col-sm-6 control-label"></label>
+												<div class="col-sm-6" style="height:35px;">
+												</div>
+											</div>
+										</apex:outputPanel>
+										<apex:outputPanel layout="block" rendered="{!showRentBurden && currentShortFormPreference.sfp.Individual_preference__c == 'Assisted Housing'}" styleClass="col-sm-6">
+											<div class="form-group">
+												<label class="col-sm-6 control-label">Name on Lease</label>
+												<div class="col-sm-6">
+													<apex:selectList value="{!selectedApplicationMember}"
+																	 id="nameOnLease" size="1" styleClass="form-control required">
+														<apex:selectOptions value="{!householdMembersSO}"/>
+													<!--	<apex:actionSupport event="onchange" rerender="preferenceBtns"/> -->
+													</apex:selectList>
+												</div>
+											</div>
+										</apex:outputPanel>
+									</apex:outputPanel>
+									<apex:outputPanel layout="block" rendered="{!showIndividualPreference}" styleClass="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Individual Preference Name</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentShortFormPreference.sfp.Individual_preference__c}"
+																 id="individualPreference" styleClass="form-control required">
+													<apex:actionSupport event="onchange" oncomplete="checkPref(this)" rerender="typeOfProof,rentBurdenName,rentBurden,rentBurdenHelpText"/>
+												</apex:inputField>
+												<!-- <apex:selectList value="{!currentShortFormPreference.sfp.Individual_preference__c}" size="1"
+																 id="individualPreference" styleClass="form-control required">
+													<apex:selectOptions value="{!IndividualPrefs}"/>
+													<apex:actionSupport event="onchange" oncomplete="checkPref(this)" rerender="typeOfProof,rentBurdenName,rentBurden,rentBurdenHelpText"/>
+												</apex:selectList> -->
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel layout="block" rendered="{!showNRHP || showAntiDTHP}" styleClass="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label"></label>
+											<div class="col-sm-6">
+												<!-- empty space -->
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel layout="block" rendered="{!showTypeOfProof}" styleClass="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Type of Proof</label>
+											<div class="col-sm-6">
+												<!-- <apex:selectList value="{!currentShortFormPreference.sfp.Type_of_proof__c}"
+																 id="typeOfProof" styleClass="form-control required" size="1">
+													<apex:selectOptions value="{!typeOfProofs}"/>
+												</apex:selectList> -->
+												<apex:outputPanel rendered="{!!showLiveWork}" layout="none">
+													<apex:inputField value="{!currentShortFormPreference.sfp.Type_of_proof__c}"
+																	 id="typeOfProof" styleClass="form-control required">
+													</apex:inputField>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!showLiveWork}" layout="none">
+													<apex:inputField value="{!currentShortFormPreference.sfp.LW_Type_of_Proof__c}"
+																	 id="lwTypeOfProof" styleClass="form-control required">
+													</apex:inputField>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel layout="block" rendered="{!showCOPHolder}" styleClass="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Name of COP holder</label>
+											<div class="col-sm-6">
+												<apex:selectList value="{!selectedApplicationMember}"
+																 id="copHolder" styleClass="form-control required" size="1">
+													<apex:selectOptions value="{!householdMembersSO}"/>
+												</apex:selectList>
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel layout="block" rendered="{!showPersonWhoClaimed}" styleClass="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Person Who Claimed</label>
+											<div class="col-sm-6">
+												<apex:selectList value="{!selectedApplicationMember}"
+																 id="personWhoClaimed" size="1" styleClass="form-control required">
+													<apex:selectOptions value="{!householdMembersSO}"/>
+												</apex:selectList>
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel layout="block" rendered="{!showDTHP || showCOPHolder}" styleClass="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">{!IF(showCOPHolder,'COP', 'DTHP')} Certificate Number</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentShortFormPreference.sfp.Certificate_Number__c}"
+																 id="certNumber" styleClass="form-control">
+												</apex:inputField>
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel id="rentBurden" layout="block">
+										<apex:outputPanel layout="block" rendered="{!showRentBurden && currentShortFormPreference.sfp.Individual_preference__c == 'Rent Burdened'}" styleClass="col-sm-6">
+											<div class="form-group">
+												<label class="col-sm-6 control-label">Total Household Monthly Rent</label>
+												<div class="col-sm-6">
+													<apex:inputField value="{!app.Total_Monthly_Rent__c}" styleClass="form-control required">
+														 <apex:actionSupport event="onkeyup" action="{!getMonthlyRentPecentage}" rerender="rentBurdenHelpText" oncomplete="eligibleForRBP({!monthlyRentPecentage})"/>
+													</apex:inputField> <p id="demo">
+                                                    
+                                                    </p>
+												</div>
+											</div>
+										</apex:outputPanel>
+									</apex:outputPanel>
+								</div>
+								<apex:outputPanel layout="block" rendered="{!showCOPHolder || showDTHP}">
+									<div class="row">
+										<div class="col-sm-12">
+											<p style="text-align: left;">MOHCD will verify that the applicant holds a valid certificate. No proof is required.</p>
+										</div>
+									</div>
+								</apex:outputPanel>
+								<apex:outputPanel layout="block" rendered="{!showLiveWork}">
+									<div class="row">
+										<div class="col-sm-12">
+											<p style="text-align: left;">Please check to make sure that a document proving the preference address was attached to the application. If no proof document was attached, do not select this preference.</p>
+										</div>
+									</div>
+								</apex:outputPanel>
+								<apex:outputPanel layout="block" rendered="{!showNRHP || showAntiDTHP}">
+									<div class="row">
+										<div class="col-sm-12">
+											<p style="text-align: left;">
+												Please check to make sure that a document proving the preference address was attached to the application. If no proof document was attached, do not select this preference.<br/>
+												If the HH member name on the proof is not the primary applicant, you must enter their residence address in the Household Members table above. MOHCD will verify that their address qualifies for this preference.
+											</p>
+										</div>
+									</div>
+								</apex:outputPanel>
+								<apex:outputPanel id="rentBurdenHelpText">
+									<apex:outputPanel layout="block" rendered="{!showRentBurden && currentShortFormPreference.sfp.Individual_preference__c == 'Assisted Housing'}">
+										<div class="row">
+											<div class="col-sm-12">
+												<p style="text-align: left;">
+													Do not give this preference unless applicant has provided a lease.<br/>
+													If the person who lives in assisted housing is not the primary applicant, enter their address in the Household Members table above.<br/>
+													
+													<div class="form-inline" style="text-align: left; padding-left: 10px;">
+														<div class="form-group">
+															<div class="checkbox">
+																<label>
+																	<apex:inputCheckbox value="{!providedLease}" styleClass="form-control" id="provideLease" >
+																		<apex:actionSupport event="onchange" oncomplete="toggleButtonsRBPAHP(this.checked)" rerender="preferenceBtns"/>
+																	</apex:inputCheckbox>
+																	&nbsp;Did applicant provide a lease showing this household member's name?
+																</label>
+															</div>
+														</div>
+													</div>
+												</p>
+											</div>
+										</div>
+									</apex:outputPanel>
+									<apex:outputPanel layout="block" rendered="{!showRentBurden && currentShortFormPreference.sfp.Individual_preference__c == 'Rent Burdened'}">
+										<div class="row">
+											<div class="col-sm-12">
+												<apex:outputPanel rendered="{!app.Annual_Income__c == null}" layout="block">
+													<div style="width: 100%; height: 50px; background-color: #EFE4B0; padding:15px;">
+														Total Household Income has not been entered. Enter above to calculate if applicant is eligible to apply for Rent Burdened preference.
+													</div><br/>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!app.Annual_Income__c != null && app.Total_Monthly_Rent__c != null && monthlyRentPecentage < 50}" layout="block">
+													<div style="width: 100%; height: 50px; background-color: #FBC8CA; padding:15px;">
+														Total Household rent is less than 50% of income. Applicant is not allowed to apply for this preference.
+													</div><br/>
+												</apex:outputPanel>
+												<apex:outputPanel rendered="{!app.Total_Monthly_Rent__c != null && monthlyRentPecentage >= 50}" layout="block">
+													<div style="width: 100%; height: 50px; background-color: #ACF0C0; padding:15px;">
+														Total Household rent is 50% or more of Total Household Income. Applicant is allowed to apply for Rent Burdened preference.
+													</div><br/>
+													<p style="text-align: left;">
+														Do not give this preference unless applicant has provided a lease and proof of rent payment.<br/>
+														
+														<div class="form-inline" style="text-align: left; padding-left: 10px;">
+															<div class="form-group">
+																<div class="checkbox">
+																	<label>
+																		<apex:inputCheckbox id="includeLease" value="{!includedLease}" styleClass="form-control" >
+																			<apex:actionSupport event="onchange" oncomplete="toggleButtonsRBPAHP(this)" rerender="preferenceBtns"/>
+																		</apex:inputCheckbox>
+																		&nbsp;Did applicant include lease(s) showing this Total Household Rent?
+																	</label>
+																</div>
+															</div>
+															<br/>
+															<div class="form-group">
+																<div class="checkbox">
+																	<label>
+																		<apex:inputCheckbox id="rentProof" value="{!providedProof}" styleClass="form-control" >
+																			<apex:actionSupport event="onchange" oncomplete="toggleButtonsRBPAHP(this)" rerender="preferenceBtns"/>
+																		</apex:inputCheckbox>
+																		&nbsp;Did applicant provide 3 months of rent payment proof showing the Total Household Rent reported?
+																	</label>
+																</div>
+															</div>
+														</div>
+														
+														
+													</p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</apex:outputPanel>
+								</apex:outputPanel>
+								<!-- <div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Type of Proof</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentShortFormPreference.sfp.Type_of_proof__c}" styleClass="form-control" />
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Opt Out</label>
+											<div class="col-sm-6">
+												<apex:inputField value="{!currentShortFormPreference.sfp.Opt_Out__c}" styleClass="form-control" />
+											</div>
+										</div>
+									</div>
+								</div> -->
+							</div>
+						</apex:outputPanel>
+	
+						<apex:actionFunction name="addShortFormPreference" action="{!addShortFormPreference}"
+											 reRender="specialProgramPreferencesSection, errorMessages, preferenceBtns, newPrefBtn"
+											 oncomplete="afterAddShortFormPreferenceClick()" />
+						<apex:actionFunction name="addShortFormPreferenceAndNew" action="{!addShortFormPreferenceAndNew}"
+											 reRender="specialProgramPreferencesSection, errorMessages, preferenceBtns, newPrefBtn"
+											 oncomplete="afterAddShortFormPreferenceAndNewClick()" />
+						<apex:actionFunction name="cancelShortFormPreference" action="{!cancelShortFormPreference}"
+											 reRender="specialProgramPreferencesSection, errorMessages, preferenceBtns, newPrefBtn" />
+						<apex:actionFunction name="saveShortFormPreference" action="{!saveShortFormPreference}"
+											 reRender="specialProgramPreferencesSection, errorMessages"
+											 oncomplete="cancelShortFormPreference()" />
+						<apex:actionFunction name="cancelShortFormPreference" action="{!cancelEditShortFormPreference}"
+											 reRender="specialProgramPreferencesSection, errorMessages" immediate="true"
+											 oncomplete="afterCancelShortFormPreferenceClick()" />
+						<apex:actionFunction name="deleteShortFormPreference" action="{!deleteShortFormPreference}"
+											 reRender="specialProgramPreferencesSection, errorMessages"
+											 oncomplete="afterDeleteShortFormPreference()" />
+						<apex:actionFunction name="rerenderSpecialProgramPreferencesSection" action="{!refreshShortFormPreference}"
+											 reRender="specialProgramPreferencesSection" />
+						<apex:actionFunction name="disablePrefBtn" action="{!getMonthlyRentPecentage}" 
+											 rerender="preferenceBtns,rentBurdenHelpText"
+											 oncomplete="disableButton()" >
+							<!-- <apex:param name="isDisabled" value=""/> -->
+						</apex:actionFunction>
+						
+						<apex:outputPanel id="preferenceBtns" layout="block">
+							<apex:outputPanel layout="none" rendered="{!listingPreferenceSO.size > 1 && currentShortFormPreference != null && selectedShortFormPreferenceIdx == -1}">
+								<button type="button" id="add" class="btn btn-primary"
+										onclick="sanitizeFields(); checkRequiredFields_shortFormPreference(addShortFormPreference);">
+									Add
+								</button>
+							</apex:outputPanel>
+							<apex:outputPanel layout="none" rendered="{!listingPreferenceSO.size > 2 && currentShortFormPreference != null && selectedShortFormPreferenceIdx == -1}">
+								<button type="button" id = "addNew" class="btn btn-primary"
+										onclick="sanitizeFields(); checkRequiredFields_shortFormPreference(addShortFormPreferenceAndNew);">
+									Add &amp; New
+								</button>
+							</apex:outputPanel>
+							<apex:outputPanel layout="none" rendered="{!currentShortFormPreference != null && selectedShortFormPreferenceIdx != -1}">
+								<button type="button" id="saveButton" class="btn btn-primary"
+										onclick="sanitizeFields(); checkRequiredFields_shortFormPreference(saveShortFormPreference);">
+									Save
+								</button>
+							</apex:outputPanel>
+							<apex:outputPanel layout="none" rendered="{!currentShortFormPreference != null}">
+								<button type="button" class="btn btn-primary"
+										onclick="cancelShortFormPreference();">
+									Cancel
+								</button>
+							</apex:outputPanel>
+						</apex:outputPanel>
+						
+						</apex:outputPanel>
+					</apex:outputPanel>
+				</apex:actionRegion>
+
+				<!-- <div class="form-group">
 					<div class="col-xs-12 sectionHeader">
 						<h5>Special Program Preferences</h5>
 					</div>
 				</div>
-				<apex:outputPanel layout="block" styleClass="section form-group-section" id="specialProgramPreferencesSection">
+				<apex:outputPanel layout="block" styleClass="section form-group-section" id="specialProgramPreferencesSection1">
 					<p class="doubleSpacing">Please check to make sure that a document proving the preference address was attached to the application. If no proof document was attached, do not enter anything below.</p>
 					<div class="row">
 						<div class="col-sm-6">
@@ -538,9 +1123,6 @@
 							<div class="form-group">
 								<label class="col-sm-6 control-label">What type of document is the Live in SF proof?</label>
 								<div class="col-sm-6">
-									<!-- <apex:selectList id="liveInSfPreferenceProof" value="{!liveInSfPreferenceProof}" size="1" styleClass="form-control">
-										<apex:selectOptions value="{!householdMembersSO}"/>
-									</apex:selectList> -->
 									<apex:inputField value="{!app.Live_in_SF_Preference_Proof__c}" styleClass="form-control"/>
 								</div>
 							</div>
@@ -555,9 +1137,6 @@
 							<div class="form-group">
 								<label class="col-sm-6 control-label">What type of document is the Work in SF proof?</label>
 								<div class="col-sm-6">
-									<!-- <apex:selectList id="workInSfPreferenceProof" value="{!workInSfPreferenceProof}" size="1" styleClass="form-control">
-										<apex:selectOptions value="{!householdMembersSO}"/>
-									</apex:selectList> -->
 									<apex:inputField value="{!app.Work_in_SF_Preference_Proof__c}" styleClass="form-control"/>
 								</div>
 							</div>
@@ -575,9 +1154,6 @@
 							<div class="form-group">
 								<label class="col-sm-6 control-label">What type of document is the NRHP proof?</label>
 								<div class="col-sm-6">
-									<!-- <apex:selectList id="neighborhoodPreferenceProof" value="{!neighborhoodPreferenceProof}" size="1" styleClass="form-control">
-										<apex:selectOptions value="{!householdMembersSO}"/>
-									</apex:selectList> -->
 									<apex:inputField value="{!app.Neighborhood_Preference_Proof__c}" styleClass="form-control"/>
 								</div>
 							</div>
@@ -607,7 +1183,38 @@
 							</div>
 						</div>
 					</div>
-				</apex:outputPanel>
+				</apex:outputPanel> -->
+				
+				
+				<div class="form-group">
+					<div class="col-xs-12 sectionHeader">
+						<h5>Declared Household Income</h5>
+					</div>
+				</div>
+				<div class="section form-group-section">
+					<div class="row">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Annual Income</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!app.Annual_Income__c}" styleClass="form-control" onblur="rerenderPicklists()">
+										<apex:actionSupport event="onkeyup" action="{!getMonthlyRentPecentage}" rerender="rentBurdenHelpText" oncomplete="eligibleForRBP({!monthlyRentPecentage})"/>
+									</apex:inputField>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+								<label class="col-sm-6 control-label">Housing Voucher / Subsidy</label>
+								<div class="col-sm-6">
+									<apex:inputField value="{!app.Housing_Voucher_or_Subsidy__c}" styleClass="form-control" />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
 				<div class="form-group">
 					<div class="col-xs-12 sectionHeader">
 						<h5>Demographic Information</h5>
@@ -684,9 +1291,9 @@
 				<div class="col-xs-12">
 					<div class="form-inline">
 						<div class="form-group" style="padding: 10px 0;">
-							<label>Signature on Terms of Agreement&ensp;</label>
 							<div class="checkbox">
 								<label>
+									Signature on Terms of Agreement&ensp;&nbsp;
 									<apex:inputField value="{!app.Terms_Acknowledged__c}" styleClass="form-control" />
 								</label>
 							</div>
@@ -736,7 +1343,7 @@
 					var toFocus;
 					$('#' + wrapperId + ' .required').each(function() {
 						var $e = $(this);
-						if (!$e.val()) {
+						if (!$e.val() || $e.val() == -1) {
 							$e.addClass('input-error');
 							(function($e) {
 								window.setTimeout( function() { $e.removeClass('input-error'); }, 1000 );
@@ -746,7 +1353,10 @@
 					});
 					if (toFocus) {
 						toFocus.focus();
+                        return false;
 					} else {
+                        if(wrapperId == 'primaryApplicantSection')
+                            return true;
 						postCheckRun();
 					}
 				}
@@ -758,11 +1368,17 @@
 				}
 
 				function checkRequiredFields_primaryApplicant(postCheckRun) {
-					checkRequiredFields('primaryApplicantSection', postCheckRun);
+					var primary = checkRequiredFields('primaryApplicantSection', postCheckRun);
+                    if(primary)
+                        checkRequiredFields('alternateApplicantSection', postCheckRun);
 				}
 
 				function checkRequiredFields_householdMember(postCheckRun) {
 					checkRequiredFields('householdMemberSection', postCheckRun);
+				}
+				
+				function checkRequiredFields_shortFormPreference(postCheckRun) {
+					checkRequiredFields('shortFormPreferenceSection', postCheckRun);
 				}
 
 				/*
@@ -882,6 +1498,191 @@
 						rebuildDataTable();
 					}
 				});
+				
+				//preferences
+				function shortFormPreferenceRowSelect($row, idx) {
+					$row.parent().children('tr.selected').removeClass('selected');
+					$row.addClass('selected');
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:shortFormPreferenceEdit').prop('disabled', false);
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:shortFormPreferenceDelete').prop('disabled', false);
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:selectedShortFormPreferenceIdx').val(idx);
+				}
+
+				function shortFormPreferenceRowDeselect($row) {
+					if ($row) $row.removeClass('selected');
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:shortFormPreferenceEdit').prop('disabled', true);
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:shortFormPreferenceDelete').prop('disabled', true);
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:selectedShortFormPreferenceIdx').val(-1);
+				}
+				
+				function disableBtn(isDisabled) {
+					console.log('disable btn');
+					console.log('{!disableAddBtn}');
+					console.log(isDisabled);
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:householdMemberEdit').prop('disabled', true);
+					
+				}
+
+				function onShortFormPreferenceRowClick(row, idx) {
+					var $row = $(row);
+					
+					if ($row.hasClass('selected')) {
+						shortFormPreferenceRowDeselect($row);
+					} else {
+						shortFormPreferenceRowSelect($row, idx)
+					}
+				}
+
+				/*function afterEditHouseholdMemberClick() {
+					rebuildDateTimePicker('dateOfBirth_chm');
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:householdMemberFirstName').focus();
+				}*/
+
+				function afterAddShortFormPreferenceClick() {
+					rebuildShortFormPreferenceDataTable();
+				}
+
+				function afterAddShortFormPreferenceAndNewClick() {
+					rebuildDateTimePicker('dateOfBirth_chm');
+					rebuildShortFormPreferenceDataTable();
+					$('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:householdMemberFirstName').focus();
+				}
+
+				function afterSaveShortFormPreferenceClick() {
+					rebuildShortFormPreferenceDataTable();
+				}
+
+				function afterCancelShortFormPreferenceClick() {
+					rebuildShortFormPreferenceDataTable();
+				}
+
+				function beforeDeleteShortFormPreference() {
+					bootbox.confirm({ 
+						size: 'small',
+						closeButton: false,
+						message: 'Are you sure you want to delete this member?', 
+						callback: function(result) {
+							if (result) deleteShortFormPreference();
+						}
+					});
+				}
+
+				function afterDeleteShortFormPreference() {
+					rebuildShortFormPreferenceDataTable();
+				}
+	
+				function rebuildDateTimePicker(id) {
+					var $elem = $('#' + id);
+					var $VFelem = $('#HOP_ApplicationForm\\:HOP_Template\\:myForm\\:' + id);
+					var val = $VFelem.val();
+					$elem.datetimepicker({
+						timepicker: false,
+						scrollMonth: false,
+						format: 'M/D/YYYY',
+						formatDate: 'M/D/YYYY',
+						closeOnDateSelect: true,
+						value: val || null,
+						onChangeDateTime: function() {
+							$VFelem.val($elem.val());
+						}
+					});
+				}
+
+				function rebuildShortFormPreferenceDataTable() {
+					$('#shortFormPreferencesTable').DataTable({
+						'paging': true,
+						'ordering': true,
+						'info': true,
+						'searching': true
+					});
+					shortFormPreferenceRowDeselect();
+				}
+
+				$(document).ready(function() {
+					rebuildDateTimePicker('dateOfBirth');
+					if ({!shortFormPreferences.size > 0}) {
+						rebuildShortFormPreferenceDataTable();
+					}
+				});
+            
+            function toggleButtons(check) {
+                if(check == true) {
+                if(document.getElementById('add') != null)
+            		document.getElementById('add').disabled = false;
+                if(document.getElementById('addNew') != null)
+                	document.getElementById('addNew').disabled = false;
+				if(document.getElementById('saveButton') != null)
+                	document.getElementById('saveButton').disabled = false;
+                }
+                else {
+                if(document.getElementById('add') != null)
+                	document.getElementById('add').disabled = true;
+                if(document.getElementById('addNew') != null)
+                	document.getElementById('addNew').disabled = true;
+                if(document.getElementById('saveButton') != null)
+                	document.getElementById('saveButton').disabled = true;   
+                }
+            }
+            
+			 function toggleButtonsRBPAHP(comp) {
+                if((comp.id).includes('rentProof') || (comp.id).includes('includeLease'))
+                    rentBurdenProof();
+                else assistedHousing();                   
+            }        
+            
+            function checkPref(curr) {
+                if(curr.options[curr.selectedIndex].value == 'Assisted Housing') 
+					assistedHousing();
+                
+                if(curr.options[curr.selectedIndex].value == 'Rent Burdened') 
+               		rentBurdenProof();
+				}
+            
+            function rentBurdenProof() {
+            	var rentProof = document.getElementById('{!$Component.myForm.rentProof}') != null ? document.getElementById('{!$Component.myForm.rentProof}').checked : false;
+                var includeLease = document.getElementById('{!$Component.myForm.includeLease}') != null ? document.getElementById('{!$Component.myForm.includeLease}').checked : false;
+                    if(rentProof && includeLease) 
+                        toggleButtons(true); 
+                    else toggleButtons(false);  
+            	}
+            
+            function assistedHousing() {
+            		var provideLease = document.getElementById('{!$Component.myForm.provideLease}') != null ? document.getElementById('{!$Component.myForm.provideLease}').checked : false;
+                    console.log('provideLease ' + provideLease);
+                	if(provideLease) 
+                        toggleButtons(true); 
+                    else toggleButtons(false); 
+            	}
+            
+            function eligibleForRBP(rentPercent) {
+            	if(rentPercent > 50)
+                    rentBurdenProof();
+                else toggleButtons(false);
+            }
+            
+            function requiredAltContFields() {
+                var valid = false;
+            	$("[id$=alternateApplicantSection] input").each (function() {
+ 						 if ($(this).val().length > 0) {
+    					valid = true;
+  						}
+					});
+                
+                setRequiredFields(valid);
+            }
+            
+            function setRequiredFields(valid) {
+            	if(valid) {
+                	$("[id$=altContactFirstName]").addClass('required');
+                    $("[id$=altContactLastName]").addClass('required');
+                }
+                else {
+                	$("[id$=altContactFirstName]").removeClass('required');
+                    $("[id$=altContactLastName]").removeClass('required');
+                }
+            }
+            
+            $("[id$=alternateApplicantSection] input").keyup( requiredAltContFields );
 			</script>
 		</apex:define>
 	</apex:composition>

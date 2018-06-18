@@ -146,15 +146,36 @@ private class HOP_ApplicationFormControllerTest {
 			Application_Member__c householdMember = new Application_Member__c(	Application__c = someApplication.Id,
 																				First_Name__c = 'Household', Last_Name__c = 'Member', Date_of_Birth__c = Date.today());
 			insert householdMember;
+        
+        	Lottery_Preference__c lotPref = new Lottery_Preference__c(Name = 'Neighborhood Resident Housing Preference (NRHP)');
+            Lottery_Preference__c lotPref2 = new Lottery_Preference__c(Name = 'Live or Work in San Francisco Preference');
+            Lottery_Preference__c lotPref3 = new Lottery_Preference__c(Name = 'Certificate of Preference (COP)');
+            Lottery_Preference__c lotPref4 = new Lottery_Preference__c(Name = 'Displaced Tenant Housing Preference (DTHP)');
+            List<Lottery_Preference__c> lotPrefList = new List<Lottery_Preference__c>{lotPref,lotPref2,lotPref3,lotPref4};
+            insert lotPrefList;
+            
+            Listing_Lottery_Preference__c listingPref = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[0].Id);
+            Listing_Lottery_Preference__c listingPref2 = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[1].Id);
+            Listing_Lottery_Preference__c listingPref3 = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[2].Id);
+            Listing_Lottery_Preference__c listingPref4 = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[3].Id);
+            List<Listing_Lottery_Preference__c> listingPrefList = new List<Listing_Lottery_Preference__c>{listingPref, listingPref2, listingPref3, listingPref4};
+            insert listingPrefList;
+            
+            Application_Preference__c appPref = new Application_Preference__c(Application__c = someApplication.Id, Listing_Preference_ID__c = listingPrefList[0].Id, Application_Member__c = householdMember.Id);
+            Application_Preference__c appPref2 = new Application_Preference__c(Application__c = someApplication.Id, Listing_Preference_ID__c = listingPrefList[1].Id, Application_Member__c = alternateContact.Id);
+            Application_Preference__c appPref3 = new Application_Preference__c(Application__c = someApplication.Id, Listing_Preference_ID__c = listingPrefList[2].Id, Application_Member__c = primaryApplicant.Id);
+            Application_Preference__c appPref4 = new Application_Preference__c(Application__c = someApplication.Id, Listing_Preference_ID__c = listingPrefList[3].Id, Application_Member__c = primaryApplicant.Id);
+            List<Application_Preference__c> appPrefs = new List<Application_Preference__c>{appPref,appPref2,appPref3,appPref4};
+            insert appPrefs;
 			
-			someApplication.Applicant__c = primaryApplicant.Id;
+			/*someApplication.Applicant__c = primaryApplicant.Id;
 			someApplication.Alternate_Contact__c = alternateContact.Id;
 			someApplication.Neighborhood_Preference_Member__c = householdMember.Id;
 			someApplication.DTHP_Preference_Member__c = householdMember.Id;
 			someApplication.COP_Preference_Member__c = householdMember.Id;
 			someApplication.Live_in_SF_Preference_Member__c = householdMember.Id;
 			someApplication.Work_in_SF_Preference_Member__c = householdMember.Id;
-			update someApplication;
+			update someApplication;*/
 			
 			ApexPages.currentPage().getParameters().put('id', someApplication.Id);
 			HOP_ApplicationFormController cnt = new HOP_ApplicationFormController();
@@ -165,7 +186,13 @@ private class HOP_ApplicationFormControllerTest {
 			System.assert(householdMembersIndexes.size() == 1);
 			
 			List<SelectOption> householdMembersSO = cnt.householdMembersSO;
-			System.assert(householdMembersSO.size() == 3);
+			System.assert(householdMembersSO.size() == 2);
+        
+        	List<Integer> shortFormPreferencesIndexes = cnt.shortFormPreferencesIndexes;
+			System.assert(shortFormPreferencesIndexes.size() == 4);
+			
+			List<SelectOption> listingPreferenceSO = cnt.listingPreferenceSO;
+			System.assert(listingPreferenceSO.size() == 1);
 
 			cnt.newHouseholdMember();
 			cnt.currentHouseholdMember.First_Name__c = 'Neww';
@@ -183,14 +210,56 @@ private class HOP_ApplicationFormControllerTest {
 			System.assert(householdMembersIndexes.size() == 2);
 			
 			householdMembersSO = cnt.householdMembersSO;
-			System.assert(householdMembersSO.size() == 4);
+			System.assert(householdMembersSO.size() == 3);
 			
-			cnt.saveApplicationFormAndNew();
+			//cnt.saveApplicationFormAndNew();
 
 			List<Application_Member__c> applicationMembers = [SELECT Id FROM Application_Member__c WHERE Application__c = :someApplication.Id];
-			System.assert(applicationMembers.size() == 4);
+			System.assert(applicationMembers.size() == 3);
+        
+            cnt.currentShortFormPreference = new HOP_ApplicationFormController.ShortFormPreferenceWrapper(new Application_Preference__c());
+            cnt.currentShortFormPreference.sfp.Application__c = someApplication.Id;
+            cnt.addShortFormPreferenceAndNew();
+        	System.assert(cnt.shortFormPreferences.size() == 5);
+        	
+        	cnt.selectedShortFormPreferenceIdx = 4;
+        	cnt.editShortFormPreference();
+        	System.assertEquals(cnt.currentShortFormPreference.sfp.Application__c, someApplication.Id);
+        	Boolean providedLease = cnt.providedLease;
+            Boolean includedLease = cnt.includedLease;
+        	Boolean providedProof = cnt.providedProof;
+        	cnt.currentShortFormPreference.listingPrefName = 'Live or Work in San Francisco Preference';
+        	//List<SelectOption> selOpList = cnt.getIndividualPrefs();
+        	//System.assertEquals(selOpList.size(), 3);
+        	//List<SelectOption> getTypeOfProofs = cnt.getTypeOfProofs();
+        	//System.assertEquals(getTypeOfProofs.size(), 10);
+        
+        	cnt.saveShortFormPreference();
+        	System.assertEquals(cnt.currentShortFormPreference, null);
+        
+        	cnt.alternateContact = alternateContact;
+        	cnt.primaryApplicant = primaryApplicant;
+        	//cnt.saveApplicationFormAndNew();
+        	System.assertEquals(cnt.app.Listing__c, someListing.Id);
+        	Boolean showHHMember = cnt.showHHMember;
+        	Boolean showIndividualPreference = cnt.showIndividualPreference;
+        	Boolean showTypeOfProof = cnt.showTypeOfProof;
+            Boolean showCOPHolder = cnt.showCOPHolder;
+            Boolean showDTHP = cnt.showDTHP;
+            Boolean showAntiDTHP = cnt.showAntiDTHP;
+            Boolean showNRHP = cnt.showNRHP;
+            Boolean showLiveWork = cnt.showLiveWork;
+            Boolean showRentBurden = cnt.showRentBurden;
+        	Boolean showPersonWhoClaimed = cnt.showPersonWhoClaimed;
+        	Decimal monthlyRentPecentage = cnt.monthlyRentPecentage;
+            
+        	Boolean disableAddBtn = cnt.disableAddBtn;
+        	cnt.getMonthlyRentPecentage();
+        	Boolean isTotalMonthlyRentEditable = cnt.isTotalMonthlyRentEditable;
+        	
+        	
 
 		Test.stopTest();
-	}
+	} 
 	
 }

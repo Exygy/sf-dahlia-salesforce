@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Mail</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Email</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>In-Person</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Fax</fullName>
+        <default>false</default>
+    </customValue>
+    <masterLabel>DTHP - Application Submission Method</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

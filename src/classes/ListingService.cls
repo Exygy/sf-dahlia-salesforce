@@ -10,17 +10,10 @@
 global  class ListingService {
 	
 	private static final String LOTTERY_QUERY = 'SELECT Lottery_Number__c, Rank__c FROM Lottery_Members__c where Status__c = \'Winner\'';
-	private static final String APPLICATION_QUERY = 'SELECT id, Lottery_Number__c, Live_Work_Preference_Rank__c, Lottery_Rank__c, Lottery_Status__c, General_Lottery__c, General_Lottery_Rank__c, Live_Work_Preference__c, Live_in_SF_Preference_Member__c, Work_in_SF_Preference_Member__c, DTHP_Preference__c, DTHP_Preference_Member__c, DTHP_Preference_Rank__c, COP_Preference__c, COP_Preference_Member__c, COP_Preference_Rank__c, Neighborhood_Preference__c, Neighborhood_Preference_Member__c, Neighborhood_Preference_Rank__c FROM Application__c';
-	private static final String LISTING_QUERY ='SELECT Name, Units_Available__c, SASE_Required_for_Lottery_Ticket__c, Listing_Other_Notes__c,Office_Hours__c, Lottery_Status__c, Building_Name__c, Project_ID__c, Building_Street_Address__c, Building_City__c, Building_State__c, Building_Zip_Code__c, Developer__c, Description__c, Neighborhood__c, Year_Built__c, LastModifiedDate, Application_Due_Date__c, Building_URL__c, Legal_Disclaimers__c, Application_Organization__c, Application_Street_Address__c, Application_City__c, Application_State__c, Application_Postal_Code__c, Application_Phone__c, Lottery_Summary__c, Lottery_Results_Date__c, Lottery_End__c, Lottery_Start_Time__c, Lottery_End_Time__c, Lottery_Venue__c, Lottery_Street_Address__c, Lottery_City__c, Lottery_Date__c, Lottery_Preferences__c, Lottery_Results__c, Lottery_URL__c, LotteryResultsURL__c, Accepting_Online_Applications__c, COP_App_Total__c, COPUnitsAvailable__c, DTHP_App_Total__c, DTHPUnitsAvailable__c, Live_Work_App_Total__c, LiveWorkUnitsAvailable__c, Neighborhood_App_Total__c, NeighborhoodUnitsAvailable__c, General_App_Total__c, Lottery_Winners__c, AMI_Percentage__c,  Preference_Detail__c, Credit_Rating__c, Criminal_History__c, Eviction_History__c,  Leasing_Agent_Name__c, Leasing_Agent_Title__c, Leasing_Agent_Email__c, Leasing_Agent_Phone__c, Leasing_Agent_Street__c, Leasing_Agent_City__c, Leasing_Agent_State__c, Leasing_Agent_Zip__c, Office_Open__c, Office_Closed__c,  Organization_URL__c, Download_URL__c, Download_URL_Cantonese__c, Download_URL_Spanish__c, Download_URL_Tagalog__c, Accepting_applications_at_leasing_agent__c, Accepting_applications_by_PO_Box__c, Blank_paper_application_can_be_picked_up__c,Fee__c, Deposit_Min__c, Deposit_Max__c, Costs_Not_Included__c, Rental_Assistance__c, Amenities__c, Accessibility__c, Building_Selection_Criteria__c, Required_Documents__c,Smoking_Policy__c, Pet_Policy__c, NeighborHoodPreferenceUrl__c, Reserved_community_maximum_age__c, Reserved_community_minimum_age__c, Reserved_community_type__c, Reserved_community_type_description__c, hasWaitlist__c, Number_of_people_currently_on_waitlist__c, Maximum_waitlist_size__c, Total_waitlist_openings__c, Total_number_of_building_units__c, Services_Onsite__c, (SELECT Date__c, Start_Time__c, End_Time__c, Venue__c, Street_Address__c, City__c FROM Information_Sessions__r), (SELECT Date__c, Start_Time__c, End_Time__c FROM Open_Houses__r), (SELECT Id, Lottery_Preference__r.Id, Lottery_Preference__r.Name FROM Listing_Lottery_Preferences__r), (SELECT Unit_Type__c, BMR_Rent_Monthly__c, BMR_Rental_Minimum_Monthly_Income_Needed__c, Status__c, Rent_percent_of_income__c, Property_Type__c, Priority_Type__c, Priority_Grouping__c, Reserved_Type__c, isReservedCommunity__c, AMI_chart_type__c, AMI_chart_year__c, of_AMI_for_Pricing_Unit__c FROM Units__r ORDER BY Unit_Type__c), (SELECT id, Name, Image_URL__c FROM Listing_Images__r) from Listing__c';//, (SELECT Id, Rent_percent_of_income__c, Priority_Type__c, Reserved_Type__c, AMI_chart_type__c, AMI_chart_year__c, AMI_Percent__c, Unit__r.Status__c FROM Listing_Units__r)
-	private static final String LISTING_PREFERENCE_QUERY ='SELECT Name, Available_Units__c, Description__c, Listing__c, NRHP_District__c, Order__c, Lottery_Preference__c, Lottery_Preference__r.Name, Preference_Name__c, Read_More_URL__c from Listing_Lottery_Preference__c';
-	// 01/25/2016 - 'Select Building_Name__c, Building_Street_Address__c, Building_City__c, Building_State__c, Building_Zip_Code__c, Developer__c, Description__c, Neighborhood__c, Year_Built__c, LastModifiedDate, Application_Due_Date__c, Building_URL__c, Legal_Disclaimers__c, Application_Organization__c, Application_Street_Address__c, Application_City__c, Application_State__c, Application_Postal_Code__c, Application_Phone__c, Lottery_Summary__c, Lottery_Results_Date__c, Lottery_End__c, Lottery_Start_Time__c, Lottery_End_Time__c, Lottery_Venue__c, Lottery_Street_Address__c, Lottery_City__c, Lottery_Date__c, AMI_Percentage__c,  Preference_Detail__c, Credit_Rating__c, Criminal_History__c, Eviction_History__c,  Leasing_Agent_Name__c, Leasing_Agent_Title__c, Leasing_Agent_Email__c, Leasing_Agent_Phone__c, Lottery_Results__c, Lottery_Winners__c, Office_Open__c, Office_Closed__c,  Organization_URL__c, Download_URL__c, Fee__c, Deposit_Min__c, Deposit_Max__c, Costs_Not_Included__c, Lottery_Preferences__c, Rental_Assistance__c, Amenities__c, Accessibility__c, Building_Selection_Criteria__c, Required_Documents__c,Smoking_Policy__c, Pet_Policy__c,(SELECT Date__c, Start_Time__c, End_Time__c, Venue__c, Street_Address__c, City__c FROM Information_Sessions__r), (SELECT Date__c, Start_Time__c, End_Time__c FROM Open_Houses__r),(SELECT Lottery_Number__c, Rank__c FROM Lottery_Members__r where Status__c = \'Winner\'),(SELECT Unit_Type__c, BMR_Rent_Monthly__c, BMR_Rental_Minimum_Monthly_Income_Needed__c, Unit_Square_Footage__c,  Unit_Number__c, Unit_Floor__c, Number_of_Bathrooms__c FROM Units__r ORDER BY Unit_Type__c),  (SELECT Id, Lottery_Preference__r.Id, Lottery_Preference__r.Name FROM Listing_Lottery_Preferences__r) from Listing__c';
-	// 02/19/2016 - 'Select Building_Name__c, Building_Street_Address__c, Building_City__c, Building_State__c, Building_Zip_Code__c, Developer__c, Application_Due_Date__c, Building_URL__c, Legal_Disclaimers__c, (SELECT Unit_Type__c, BMR_Rent_Monthly__c, BMR_Rental_Minimum_Monthly_Income_Needed__c FROM Units__r ORDER BY Unit_Type__c), Application_Phone__c, Lottery_Summary__c, Lottery_Results_Date__c, Lottery_Date__c, AMI_Percentage__c,  Preference_Detail__c, Credit_Rating__c, Criminal_History__c, Eviction_History__c,  Leasing_Agent_Name__c, Leasing_Agent_Title__c, Leasing_Agent_Email__c, Leasing_Agent_Phone__c, Lottery_Results__c, Lottery_Winners__c, (SELECT Id, Lottery_Preference__r.Id, Lottery_Preference__r.Name FROM Listing_Lottery_Preferences__r) from Listing__c';
-	private static final String LISTING_QUERY_ORDER = ' ORDER BY Unit_Type__c';
-	
-	
-	//private static final String LISTING_PREFERENCE_QUERY = 'SELECT Id, NAME, Listing__c, Lottery_Preference__c FROM Listing_Lottery_Preference__c ';
-	//private static final String LOTTERY_PREFERENCE_QUERY = 'SELECT Id, Name, Description__c FROM Lottery_Preference__c ';
-	
+	private static final String APPLICATION_QUERY = 'SELECT id, Lottery_Number__c, Lottery_Rank__c, Lottery_Status__c, General_Lottery__c, General_Lottery_Rank__c, (SELECT Id, Preference_Lottery_Rank__c, Preference_Name__c, Receives_Preference__c, Listing_Preference_ID__c, Listing_Preference_ID__r.Total_Submitted_Apps__c, Listing_Preference_ID__r.Available_Units__c FROM Application_Preferences__r) FROM Application__c';
+	private static final String LISTING_QUERY ='SELECT Name, In_Lottery__c, Program_Type__c, Units_Available__c, SASE_Required_for_Lottery_Ticket__c, nGeneral_Application_Total__c, Listing_Other_Notes__c, Reserved_Community_Requirement__c, Office_Hours__c, Lottery_Status__c, Building_Name__c, Project_ID__c, Building_Street_Address__c, Building_City__c, Building_State__c, Building_Zip_Code__c, Developer__c, Description__c, Neighborhood__c, Year_Built__c, LastModifiedDate, Marketing_URL__c, Marketing_Short_Code__c, Application_Due_Date__c, Building_URL__c, Legal_Disclaimers__c, Application_Organization__c, Application_Street_Address__c, Application_City__c, Application_State__c, Application_Postal_Code__c, Application_Phone__c, Lottery_Summary__c, Lottery_Results_Date__c, Lottery_End__c, Lottery_End_Time__c, Lottery_Venue__c, Lottery_Street_Address__c, Lottery_City__c, Lottery_Date__c, Lottery_Preferences__c, Lottery_Results__c, Lottery_URL__c, LotteryResultsURL__c, Accepting_Online_Applications__c, General_App_Total__c, Lottery_Winners__c, AMI_Percentage__c, Credit_Rating__c, Criminal_History__c, Eviction_History__c,  Leasing_Agent_Name__c, Leasing_Agent_Title__c, Leasing_Agent_Email__c, Leasing_Agent_Phone__c, Leasing_Agent_Street__c, Leasing_Agent_City__c, Leasing_Agent_State__c, Leasing_Agent_Zip__c, Organization_URL__c, Download_URL__c, Download_URL_Cantonese__c, Download_URL_Spanish__c, Download_URL_Tagalog__c, Accepting_applications_at_leasing_agent__c, Accepting_applications_by_PO_Box__c, Blank_paper_application_can_be_picked_up__c,Fee__c, Deposit_Min__c, Deposit_Max__c, Costs_Not_Included__c, Amenities__c, Accessibility__c, Building_Selection_Criteria__c, Required_Documents__c,Smoking_Policy__c, Pet_Policy__c, Reserved_community_maximum_age__c, Reserved_community_minimum_age__c, Reserved_community_type__c, Reserved_community_type_description__c, hasWaitlist__c, Number_of_people_currently_on_waitlist__c, Maximum_waitlist_size__c, Total_waitlist_openings__c, Total_number_of_building_units__c, Services_Onsite__c, Units_Building_Special_Message__c, (SELECT Date__c, Start_Time__c, End_Time__c, Venue__c, Street_Address__c, City__c FROM Information_Sessions__r), (SELECT Date__c, Start_Time__c, End_Time__c FROM Open_Houses__r), (SELECT Id, Total_Submitted_Apps__c, Order__c, Available_Units__c, PDF_URL__c, Lottery_Preference__r.Id, Lottery_Preference__r.Name FROM Listing_Lottery_Preferences__r), (SELECT Unit_Type__c, BMR_Rent_Monthly__c, BMR_Rental_Minimum_Monthly_Income_Needed__c, Status__c, Rent_percent_of_income__c, Property_Type__c, Priority_Type__c, Priority_Grouping__c, Reserved_Type__c, isReservedCommunity__c, AMI_chart_type__c, AMI_chart_year__c, of_AMI_for_Pricing_Unit__c FROM Units__r ORDER BY Unit_Type__c), (SELECT id, Name, Image_URL__c FROM Listing_Images__r) from Listing__c';//, (SELECT Id, Rent_percent_of_income__c, Priority_Type__c, Reserved_Type__c, AMI_chart_type__c, AMI_chart_year__c, AMI_Percent__c, Unit__r.Status__c FROM Listing_Units__r)
+	private static final String LISTING_PREFERENCE_QUERY ='SELECT Name, Available_Units__c, Description__c, Listing__c, Requires_Proof__c, NRHP_District__c, Order__c, Lottery_Preference__c, PDF_URL__c, Lottery_Preference__r.Name, Preference_Name__c, Read_More_URL__c, Preference_Proof_Requirement_Description__c from Listing_Lottery_Preference__c';
+	private static final String LISTING_QUERY_ORDER = ' ORDER BY Unit_Type__c';	
 	
 	private static final String UNIT_BY_LISTING_QUERY = 'SELECT Unit_Type__c, BMR_Rent_Monthly__c, BMR_Rental_Minimum_Monthly_Income_Needed__c, Unit_Square_Footage__c,  Unit_Number__c, Unit_Floor__c, Number_of_Bathrooms__c, Status__c, Rent_percent_of_income__c, Property_Type__c, Priority_Type__c, Priority_Grouping__c, Reserved_Type__c, isReservedCommunity__c, AMI_chart_type__c, AMI_chart_year__c, of_AMI_for_Pricing_Unit__c FROM Unit__c where Listing__c = :listingID  ORDER BY Unit_Type__c ';
 	
@@ -30,22 +23,11 @@ global  class ListingService {
 	private static final String DTHP_PREFERENCE = 'displacedPreference';
 	private static final String NEIGHBORHOOD_PREFERENCE = 'neighborhoodPreference';
 	private static final String GENERAL_PREFERENCE = 'generalLottery';
-	private static final Map<String, String> APP_FIELD_TO_PREFERENCE_NAME_MAP = new Map<String,String> {
-																			'Live_Work_Preference__c' => LIVE_WORK_PREFERENCE,
-																			'COP_Preference__c' => COP_PREFERENCE,
-																			'DTHP_Preference__c' => DTHP_PREFERENCE,
-																			'Neighborhood_Preference__c' => NEIGHBORHOOD_PREFERENCE,
-																			'General_Lottery__c' => GENERAL_PREFERENCE
-																		};
-	private static final Map<String, String> APP_FIELD_TO_APP_FIELD_RANK_MAP = new Map<String,String> {
-																			'Live_Work_Preference__c' => 'Live_Work_Preference_Rank__c',
-																			'COP_Preference__c' => 'COP_Preference_Rank__c',
-																			'DTHP_Preference__c' =>'DTHP_Preference_Rank__c',
-																			'Neighborhood_Preference__c' => 'Neighborhood_Preference_Rank__c',
-																			'General_Lottery__c' => 'General_Lottery_Rank__c'
-																		};
+	private static final String LIVE_WORK_PREFERENCE_NAME = 'Live or Work in San Francisco Preference';
+	private static final String COP_PREFERENCE_NAME = 'Certificate of Preference (COP)';
+	private static final String DTHP_PREFERENCE_NAME = 'Displaced Tenant Housing Preference (DTHP)';
+	private static final String NEIGHBORHOOD_PREFERENCE_NAME = 'Neighborhood Resident Housing Preference (NRHP)';
 				
-	//static String UNIT_QUERY = 'SELECT Listing__c, Unit_Type__c,count(id)Total, MIN(BMR_Rental_Minimum_Monthly_Income_Needed__c) minRentalMinIncome,  MAX(BMR_Rental_Minimum_Monthly_Income_Needed__c) maxRentalMinIncome, MIN(BMR_Rent_Monthly__c) minMonthlyRent ,   MAX(BMR_Rent_Monthly__c) maxMonthlyRent , MIN(Min_Occupancy__c)Min_Occupancy, Max(Max_Occupancy__c)Max_Occupancy, MIN(Unit_Square_Footage__c)Sq_Footage_Min, MAX(Unit_Square_Footage__c)Sq_Footage_Max  FROM UNIT__C ';
 	static String UNIT_QUERY = 'SELECT listing__c, unit__r.Unit_Type__c,count(id)Total, MIN(unit__r.BMR_Rental_Minimum_Monthly_Income_Needed__c) minRentalMinIncome,  MAX(unit__r.BMR_Rental_Minimum_Monthly_Income_Needed__c) maxRentalMinIncome, MIN(unit__r.BMR_Rent_Monthly__c) minMonthlyRent, MAX(unit__r.BMR_Rent_Monthly__c) maxMonthlyRent, MIN(unit__r.Min_Occupancy__c)Min_Occupancy, Max(unit__r.Max_Occupancy__c)Max_Occupancy, MIN(unit__r.Unit_Square_Footage__c)Sq_Footage_Min, MAX(unit__r.Unit_Square_Footage__c)Sq_Footage_Max, MIN(unit__r.Rent_percent_of_income__c)minPercentIncome, MAX(unit__r.Rent_percent_of_income__c)maxPercentIncome FROM listing_unit__c';
 	static String AMI_UNIT_QUERY = 'SELECT listing__c, unit__r.AMI_chart_type__c,unit__r.AMI_chart_year__c, unit__r.of_AMI_for_Pricing_Unit__c FROM listing_unit__c';
 	static String LISTING_UNIT_QUERY = 'SELECT listing__c, Priority_Type__c, Reserved_Type__c FROM listing_unit__c';
@@ -102,7 +84,7 @@ global  class ListingService {
 		
 	}
 	
-	global class ListingResult {
+	/*global class ListingResult {
 		public Id listingId;
 		public List<PreferenceBucket> bucketResults;
 		public List<ApplicationResult> applicationResults;
@@ -125,10 +107,75 @@ global  class ListingService {
 		public String officeHours;
 		
 		public ListingResult() {}
+	}*/
+	
+	global class LotteryResult {
+		public Id listingId;
+		public List<LotteryBucket> lotteryBuckets;
+		public String URL;
+		public String lotteryResultsURL;
+		public Decimal lotteryAppTotal;
+		public String lotteryCity;
+		public Datetime lotteryDate;
+		public String lotteryEndTime;
+		public String lotteryPreferences;
+		public boolean lotteryResults;
+		public String officeHours;
+		
+		public LotteryResult() {}
+	}
+	
+	global class LotteryBucket implements comparable {
+		public String preferenceName;
+		public Decimal preferenceOrder;
+		public Decimal totalSubmittedApps;
+		public Decimal unitsAvailable;
+		public List<PreferenceResult> preferenceResults;
+		
+		public LotteryBucket() {}
+		
+		public Integer compareTo(Object compareTo) {
+			LotteryBucket pr = (LotteryBucket) compareTo;
+			
+			if(this.preferenceOrder == null) {
+				return 1;
+			}
+			if(this.preferenceOrder < pr.preferenceOrder) {
+				return -1;
+			}
+			if(this.preferenceOrder > pr.preferenceOrder) {
+				return 1;
+			}
+			return 0;
+		}
+	}
+	
+	global class PreferenceResult implements comparable {
+		public String applicationID;
+		public String lotteryNumber;
+		public Decimal preferenceRank;
+		public Decimal lotteryRank;
+		
+		public PreferenceResult() {}
+		
+		public Integer compareTo(Object compareTo) {
+			PreferenceResult pr = (PreferenceResult) compareTo;
+			
+			if(this.preferenceRank == null) {
+				return 1;
+			}
+			if(this.preferenceRank < pr.preferenceRank) {
+				return -1;
+			}
+			if(this.preferenceRank > pr.preferenceRank) {
+				return 1;
+			}
+			return 0;
+		}
 	}
 	
 	
-	global class ApplicationResult {
+	/*global class ApplicationResult {
 		public Id applicationId;
 		public boolean liveWorkPreference;
 		public decimal liveWorkPreferenceRank;
@@ -148,7 +195,7 @@ global  class ListingService {
 		public decimal lotteryRank;
 		
 		public ApplicationResult() {}
-	}
+	}*/
 	
 	global class PRDescriptor {
 		public String listingId;
@@ -157,7 +204,7 @@ global  class ListingService {
 		public decimal numberOfUnits;
 	}
 	
-	global class PreferenceBucket {
+	/*global class PreferenceBucket {
 		public String preferenceName;
 		public List<BucketResult> bucketResults;
 	}
@@ -182,7 +229,7 @@ global  class ListingService {
 			}
 			return 0;
 		}
-	}
+	}*/
 	
 	global class ListingPreference {
 		public String listingPreferenceID;
@@ -190,11 +237,14 @@ global  class ListingService {
 		public String name;
 		public String preferenceName;
 		public Decimal order;
+		public String pdfUrl;
 		public String description;
 		public String readMoreUrl;
 		public String NRHPDistrict;
+		public Boolean requiresProof;
 		public Decimal appTotal;
 		public Decimal unitsAvailable;
+		public String preferenceProofRequirementDescription;
 	}
 	
 	global class UnitSummary{
@@ -350,10 +400,12 @@ global  class ListingService {
 			listingPref.listingId = listPref.Listing__c;
 			listingPref.name = listPref.Name;
 			listingPref.order = listPref.Order__c;
+			listingPref.pdfUrl = listPref.PDF_URL__c;
 			listingPref.description = listPref.Description__c;
 			listingPref.readMoreUrl = listPref.Read_More_URL__c;
 			listingPref.NRHPDistrict = listPref.NRHP_District__c;
-			//listingPref.appTotal = listPref.Id;
+			listingPref.requiresProof = listPref.Requires_Proof__c;
+			listingPref.preferenceProofRequirementDescription = listPref.Preference_Proof_Requirement_Description__c;
 			listingPref.unitsAvailable = listPref.Available_Units__c;
 			listingPref.preferenceName = listPref.Lottery_Preference__r.Name;
 			listingPreferences.add(listingPref);
@@ -363,28 +415,33 @@ global  class ListingService {
 	
 	global static List<Listing__c>  getListingByID(String listingID)
 	{ 
+		return getListingByID(listingID,null);
+	}
+	
+	global static List<Listing__c>  getListingByID(String listingID,String otherclause)
+	{ 
 		system.debug('listingID:::' + listingID);
 		ID theID = ID.valueof(listingID);
 		Set<ID> listingIDs = new Set<ID> {theID};
-		return getListingByIDs(listingIDs);
+		return getListingByIDs(listingIDs,otherclause);
 		
 	} 
-	global static List<Listing__c>  getListingByIDs(List<String> sListingIDS){
+	global static List<Listing__c>  getListingByIDs(List<String> sListingIDS,String otherclause){
 		Set<ID> listingIDS = new Set<ID>();
 		for (String sID : sListingIDS) {
 			ID theID = ID.valueof(sID);
 			listingIDS.add(theID);  
 		}
-		return getListingByIDs(listingIDS);
+		return getListingByIDs(listingIDS,otherclause);
 	}
 		
 	
-	global static List<Listing__c>  getListingByIDs(Set<ID> listingIds)
+	global static List<Listing__c>  getListingByIDs(Set<ID> listingIds,String otherclause)
 	{
-		return  getListingByFilter(listingIds,null);
+		return  getListingByFilter(listingIds,null,otherclause);
 	}
 	
-	global static List<Listing__c> getListingByFilter(Set<ID> listingIDs,String filter)
+	global static List<Listing__c> getListingByFilter(Set<ID> listingIDs,String filter,String otherclause)
 	{ 
 		String query = LISTING_QUERY;
 		String queryFilter='';
@@ -398,7 +455,21 @@ global  class ListingService {
 			queryFilter += filter; 
 		}
 		query += (queryFilter.length()>0)? ' where ' + queryFilter: '';
-		//system.debug('query:::' + query) ;
+		query += otherclause != null ? ' ' + otherclause : '';
+		system.debug('query:::' + query) ;
+		List<Listing__c> listings = (List<Listing__c>) Database.Query(query);
+		return listings;
+	} 
+    
+    global static List<Listing__c> getListingByMarketingURL(String marketURL,String otherclause)
+	{ 
+		String query = LISTING_QUERY;
+		String queryFilter='';
+		if (marketURL!=null) {
+			queryFilter+= ' Marketing_URL__c = :marketURL';
+		}
+		query += (queryFilter.length()>0)? ' where ' + queryFilter: '';
+		query += otherclause != null ? ' ' + otherclause : '';
 		List<Listing__c> listings = (List<Listing__c>) Database.Query(query);
 		return listings;
 	} 
@@ -417,17 +488,17 @@ global  class ListingService {
 		return listings;
 	}
 	*/
-	global static List<Listing__c>  getAllActiveListings()
+	global static List<Listing__c>  getAllActiveListings(String otherclause)
 	{
-		return getListingByFilter(new Set<ID>(), ' Status__c = \'Active\'');
+		return getListingByFilter(new Set<ID>(), ' Status__c = \'Active\'', otherclause);
  
 	} 
 	
-	public static List<ListingDetail> getListingDetailByCriteria(Criteria crit)
+	public static List<ListingDetail> getListingDetailByCriteria(Criteria crit,String otherclause)
 	{
 		Set<ID> ids = findMatching(crit);
 		system.debug('ids:::' + ids);
-		List<Listing__c> listings = getAllActiveListings();
+		List<Listing__c> listings = getAllActiveListings(otherclause);
 		Map<Id,Listing__c> listingMap = new Map<Id,Listing__c>();
 		
 		for (Listing__c listing: listings){ // can and probably should move this to listing detail
@@ -445,7 +516,7 @@ global  class ListingService {
 			}
 		}
 		
-		List<ListingDetail> listingDetails = getListingDetails(getListingByCriteria(crit));
+		List<ListingDetail> listingDetails = getListingDetails(getListingByCriteria(crit, otherclause));
 		for (ListingDetail detail : listingDetails) {
 			detail.doesMatch =  (ids.contains(detail.listingID))? true:false;
 			//check if preference was met
@@ -465,29 +536,33 @@ global  class ListingService {
 		return listingDetails;
 	
 	}
+    
+    global static  List<ListingDetail> getListingDetailByMarketingURL (String marketURL,String otherclause ) {
+		return getListingDetails(getListingByMarketingURL(marketURL, otherclause));
+	}
 	
-	global static  List<ListingDetail> getListingDetailByID (String listingID ) {
-		List<ListingDetail> listingDetailList = getListingDetailByIDs(new List<String> {listingID} );
+	global static  List<ListingDetail> getListingDetailByID (String listingID,String otherclause ) {
+		List<ListingDetail> listingDetailList = getListingDetailByIDs(new List<String> {listingID},otherclause );
 		listingDetailList.sort();
 		return listingDetailList;
 	}
 	
-	global static  List<ListingDetail> getListingDetailByIDs (List<String> sIDs ) {
-		return getListingDetails(getListingByIDs(sIDs));
+	global static  List<ListingDetail> getListingDetailByIDs (List<String> sIDs,String otherclause ) {
+		return getListingDetails(getListingByIDs(sIDs, otherclause));
 	}
 	
-	global static  List<ListingDetail> getAllActiveListingDetails ( ) {
-		return getListingDetails(getAllActiveListings());
+	global static  List<ListingDetail> getAllActiveListingDetails (String otherclause ) {
+		return getListingDetails(getAllActiveListings( otherclause));
 	}
 	
-	public static List<Listing__c> getListingByCriteria(Criteria crit)
+	public static List<Listing__c> getListingByCriteria(Criteria crit,String otherclause)
 	{
 	 
 		Set<ID> ids = findMatching(crit);
 		List<Listing__c> listings = new List<Listing__c>();
 		List<Listing__c> matchedListings = new List<Listing__c>();
 		
-		listings = getAllActiveListings();
+		listings = getAllActiveListings(otherclause);
 		
 		for (Listing__c listing: listings){ // can and probably should move this to listing detail
 			listing.Does_Match__c = (ids.contains(listing.id))? true:false;
@@ -712,7 +787,7 @@ global  class ListingService {
 		return (List<Unit__c>) Database.query(query);
 	} 
 	
-	global static ListingResult getListingResultsByListingID(String listingID)
+	/*global static ListingResult getListingResultsByListingID(String listingID)
 	{
 		return getListingResults(listingID, null, false);
 	}
@@ -720,13 +795,13 @@ global  class ListingService {
 	global static ListingResult getListingResultsByListingIDAndLotteryNumber(String listingID, String lotteryNumber)
 	{
 		return getListingResults(listingID, lotteryNumber, false);
-	}
+	}*/
 	
-	global static ListingResult getListingResults(String listingID, String lotteryNumber, Boolean isBucket)
+	global static LotteryResult getListingResults(String listingID, String lotteryNumber,String otherclause)
 	{ 
-		List<Listing__c> currentListing = getListingByID(listingID);
+		List<Listing__c> currentListing = getListingByID(listingID,otherclause);
 		
-		ListingResult listingResult = new ListingResult();
+		LotteryResult lotteryResult = new LotteryResult();
 		if (currentListing != null && currentListing.size() == 1) {
 			
 			//retrieve all application related to listing
@@ -739,99 +814,86 @@ global  class ListingService {
 			
 			system.debug('appResultList:::' + appResultList);
 			//get listing results on each bucket
-			if (isBucket) {
-				Map<String,List<BucketResult>> bucketResultMap = new Map<String,List<BucketResult>>();
-				//intialize bucketResultMap with all preferences
-				for (String fieldAPI : APP_FIELD_TO_PREFERENCE_NAME_MAP.keySet()) {
-					if (!bucketResultMap.containsKey(APP_FIELD_TO_PREFERENCE_NAME_MAP.get(fieldAPI))) {
-						bucketResultMap.put(APP_FIELD_TO_PREFERENCE_NAME_MAP.get(fieldAPI), new List<BucketResult>());
-					}
-				}
-				
-				BucketResult bucketRes;
-				for (Application__c app : appResultList) {
-					
-					//return only opplication with Lottery Rank filled in
-					if (app.Lottery_Rank__c == null) continue;
-					
-					for (String fieldAPI : APP_FIELD_TO_PREFERENCE_NAME_MAP.keySet()) {
-						//if preference it is checked then add it to the bucket
-						if ((Boolean)app.get(fieldAPI)) {
-							bucketRes = new BucketResult();
-							bucketRes.applicationID = app.Id;
-							bucketRes.lotteryNumber = app.Lottery_Number__c;
-							bucketRes.preferenceRank = (Decimal)app.get(APP_FIELD_TO_APP_FIELD_RANK_MAP.get(fieldAPI));
-							bucketRes.lotteryRank = (Decimal)app.Lottery_Rank__c;
-							bucketResultMap.get(APP_FIELD_TO_PREFERENCE_NAME_MAP.get(fieldAPI)).add(bucketRes);
-						}
-					}
-				}
-				
-				List<PreferenceBucket> prefBucketList = new List<PreferenceBucket>();
-				PreferenceBucket prefBucket;
-				for (String preferenceNameKey : bucketResultMap.keySet()) {
-					prefBucket = new PreferenceBucket();
-					prefBucket.preferenceName = preferenceNameKey;
-					List<BucketResult> bucketResList = bucketResultMap.get(preferenceNameKey);
-					bucketResList.sort();
-					prefBucket.bucketResults = bucketResList;
-					prefBucketList.add(prefBucket);
-				}
-				listingResult.bucketResults = prefBucketList;
+			Map<String,List<PreferenceResult>> prefResultsMap = new Map<String,List<PreferenceResult>>();
 			
-			//get listing results on each application
-			} else {
-				List<ApplicationResult> appList = new List<ApplicationResult>();
-				ApplicationResult appRes;
-				for (Application__c app : appResultList) {
+			//build map with listing preferences for getting Available_Units__c and App_Total__c info
+			Map<String,Listing_Lottery_Preference__c> listingPrefMap = new Map<String,Listing_Lottery_Preference__c>();
+			for (Listing_Lottery_Preference__c listingPref : currentListing[0].Listing_Lottery_Preferences__r) {
+				listingPrefMap.put(listingPref.Lottery_Preference__r.Name, listingPref);
+				//intialize prefResultsMap with all listing preferences
+				if (!prefResultsMap.containsKey(listingPref.Lottery_Preference__r.Name)) {
+					prefResultsMap.put(listingPref.Lottery_Preference__r.Name, new List<PreferenceResult>());
+				}
+			}
+			//add General Lottery bucket
+			prefResultsMap.put(GENERAL_PREFERENCE,new List<PreferenceResult>());
+			
+			PreferenceResult prefResult;
+			//
+			for (Application__c app : appResultList) {
+				
+				//return only opplication with Lottery Rank filled in
+				if (app.Lottery_Rank__c == null) continue;
+				
+				//if (app.Application_Preferences__r == null || app.Application_Preferences__r.size() == 0) {
+				if (app.General_Lottery__c) {
+					prefResult = new PreferenceResult();
+					prefResult.applicationID = app.Id;
+					prefResult.lotteryNumber = app.Lottery_Number__c;
+					prefResult.preferenceRank = (Decimal)app.General_Lottery_Rank__c;
+					prefResult.lotteryRank = (Decimal)app.Lottery_Rank__c;
+					prefResultsMap.get(GENERAL_PREFERENCE).add(prefResult);
 					
-					if (app.Lottery_Rank__c == null) continue;
-					
-					appRes = new ApplicationResult();
-					appRes.applicationId = app.Id;
-					appRes.lotteryNumber = app.Lottery_Number__c;
-					appRes.lotteryRank = app.Lottery_Rank__c;
-					
-					appRes.liveWorkPreference = app.Live_Work_Preference__c;
-					appRes.liveWorkPreferenceRank = app.Live_Work_Preference_Rank__c;
-					
-					appRes.displacedPreference = app.DTHP_Preference__c;
-					appRes.displacedPreferenceRank = app.DTHP_Preference_Rank__c;
-					
-					appRes.certOfPreference = app.COP_Preference__c;
-					appRes.certOfPreferenceRank = app.COP_Preference_Rank__c;
-					
-					appRes.neighborhoodPreference = app.Neighborhood_Preference__c;
-					appRes.neighborhoodPreferenceRank = app.Neighborhood_Preference_Rank__c;
-					
-					appRes.generalLotteryRank = app.General_Lottery_Rank__c;
-					
-					appList.add(appRes);
+					continue;
 				}
 				
-				listingResult.applicationResults = appList;
+				for (Application_Preference__c appPref : app.Application_Preferences__r) {
+					if (!appPref.Receives_Preference__c) continue;
+					
+					prefResult = new PreferenceResult();
+					prefResult.applicationID = app.Id;
+					prefResult.lotteryNumber = app.Lottery_Number__c;
+					prefResult.preferenceRank = appPref.Preference_Lottery_Rank__c;
+					prefResult.lotteryRank = (Decimal)app.Lottery_Rank__c;
+					prefResultsMap.get(appPref.Preference_Name__c).add(prefResult);
+				}
 			}
 			
-			listingResult.listingId = currentListing[0].Id;
-			listingResult.URL = currentListing[0].Lottery_URL__c;
-			listingResult.lotteryResultsURL = currentListing[0].LotteryResultsURL__c;
-			listingResult.liveWorkPreferenceAppTotal = currentListing[0].Live_Work_App_Total__c;
-			listingResult.liveWorkPreferenceUnitsAvailable = currentListing[0].LiveWorkUnitsAvailable__c;
-			listingResult.certOfPreferenceAppTotal = currentListing[0].COP_App_Total__c;
-			listingResult.certOfPreferenceUnitsAvailable = currentListing[0].COPUnitsAvailable__c;
-			listingResult.displacedPreferenceAppTotal = currentListing[0].DTHP_App_Total__c;
-			listingResult.displacedPreferenceUnitsAvailable = currentListing[0].DTHPUnitsAvailable__c;
-			listingResult.neighborhoodPreferenceAppTotal = currentListing[0].Neighborhood_App_Total__c ;
-			listingResult.neighborhoodPreferenceUnitsAvailable = currentListing[0].NeighborhoodUnitsAvailable__c;
-			listingResult.generalLotteryAppTotal = currentListing[0].General_App_Total__c;
-			listingResult.lotteryCity = currentListing[0].Lottery_City__c;
-			listingResult.lotteryDate = currentListing[0].Lottery_Date__c;
-			listingResult.lotteryEndTime = currentListing[0].Lottery_End_Time__c;
-			listingResult.lotteryPreferences = currentListing[0].Lottery_Preferences__c;
-			listingResult.lotteryResults = currentListing[0].Lottery_Results__c;
-			listingResult.officeHours = currentListing[0].Office_Hours__c;
+			
+			List<LotteryBucket> lotBucketList = new List<LotteryBucket>();
+			LotteryBucket lotBucket;
+			for (String preferenceNameKey : prefResultsMap.keySet()) {
+				lotBucket = new LotteryBucket();
+				lotBucket.preferenceName = preferenceNameKey;
+				if (listingPrefMap.containsKey(preferenceNameKey)) {
+					lotBucket.preferenceOrder = listingPrefMap.get(preferenceNameKey).Order__c;
+					lotBucket.unitsAvailable = listingPrefMap.get(preferenceNameKey).Available_Units__c;
+					lotBucket.totalSubmittedApps = listingPrefMap.get(preferenceNameKey).Total_Submitted_Apps__c;
+				}
+				if (preferenceNameKey == GENERAL_PREFERENCE) {
+					lotBucket.unitsAvailable = currentListing[0].Units_Available__c;
+					lotBucket.totalSubmittedApps = currentListing[0].nGeneral_Application_Total__c;
+				}
+				List<PreferenceResult> prefResList = prefResultsMap.get(preferenceNameKey);
+				prefResList.sort();
+				lotBucket.preferenceResults = prefResList;
+				lotBucketList.add(lotBucket);
+			}
+			lotBucketList.sort();
+			lotteryResult.lotteryBuckets = lotBucketList;
+			
+			lotteryResult.listingId = currentListing[0].Id;
+			lotteryResult.URL = currentListing[0].Lottery_URL__c;
+			lotteryResult.lotteryResultsURL = currentListing[0].LotteryResultsURL__c;
+			lotteryResult.lotteryAppTotal = currentListing[0].In_Lottery__c;
+			lotteryResult.lotteryCity = currentListing[0].Lottery_City__c;
+			lotteryResult.lotteryDate = currentListing[0].Lottery_Date__c;
+			lotteryResult.lotteryEndTime = currentListing[0].Lottery_End_Time__c;
+			lotteryResult.lotteryPreferences = currentListing[0].Lottery_Preferences__c;
+			lotteryResult.lotteryResults = currentListing[0].Lottery_Results__c;
+			lotteryResult.officeHours = currentListing[0].Office_Hours__c;
 		}
-		return listingResult;
+		return lotteryResult;
 	} 
 	
 	private static Map<ID,List<UnitSummary>>  processUnitSummaryResults(AggregateResult[] results) {

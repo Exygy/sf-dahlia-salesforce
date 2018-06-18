@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Bisexual</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Gay/Lesbian/Same-Gender Loving</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Questioning/Unsure</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Straight/Heterosexual</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Not Listed</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Declined to Answer</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Question Not Asked</fullName>
+        <default>false</default>
+    </customValue>
+    <description>This list does not include the &quot;not listed&quot; option, which has to be added as another field.</description>
+    <masterLabel>MOHCD - SOGI Sexual Orientation List</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

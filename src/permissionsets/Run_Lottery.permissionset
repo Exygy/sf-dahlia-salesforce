@@ -1,0 +1,1 @@
+﻿<?xml version="1.0" encoding="utf-8"?><PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata"><description>Only certain individuals have an active Run Lottery button when signed in (others get an error message if the Run Lottery button is clicked)</description><hasActivationRequired>false</hasActivationRequired><label>Run Lottery</label></PermissionSet>

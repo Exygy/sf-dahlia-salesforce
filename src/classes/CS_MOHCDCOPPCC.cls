@@ -83,7 +83,7 @@ public with sharing class CS_MOHCDCOPPCC{
         if (fetchCon != null && ! fetchCon.isEmpty() && isError==FALSE) {
             List<Certificate_Program__c> certAppList = new List<Certificate_Program__c>();
             Certificate_Program__c certApp = new Certificate_Program__c();
-            Recordtype recTypeId = [SELECT Id from Recordtype where Name=:StringConstants.CERT_RECTYPE_COP ];
+            Recordtype recTypeId = [SELECT Id from Recordtype where Name=:StringConstants.CERT_RECTYPE_COP AND SObjectType = 'Certificate_Program__c'];
 
             certApp.RecordTypeId = recTypeId.Id;
             certApp.Household_Contact__c = fetchCon[0].Id;

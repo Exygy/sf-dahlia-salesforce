@@ -10,9 +10,11 @@
 
 public without sharing class HOP_Constants {
 
-	public static final String COMMUNITY_LICENSE_NAME = 'Customer Community Login';
+	public static final String COMMUNITY_LICENSE_NAME = 'Partner Community';//'Customer Community Login';
 	public static final String DRAFT_APPLICATION = 'Draft';
 	public static final String PAPER_APPLICATION = 'Paper';
+	public static final String UNIT_VETERAN = 'Veteran';
+	public static final String UNIT_DEVELOPMENTAL_DISABILITIES = 'Developmental disabilities';
 	
 	public static final String ERROR_ID_OR_LISTINGID = 'You must specify either an id or a listingId URL parameter';
 	public static final String ERROR_APPLICATION_NOT_FOUND = 'Application record with provided Id was not found';

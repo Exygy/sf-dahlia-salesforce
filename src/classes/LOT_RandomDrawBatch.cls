@@ -21,7 +21,9 @@ global class LOT_RandomDrawBatch implements Database.Batchable<String>, Database
     }
     
     global void finish(Database.BatchableContext BC){
-        LOT_RandomDrawService.preferenceLottery(listingId);
+    	  LOT_RandomDrawService.calculateLotteryRanks(listingId);
+    	
+        //LOT_RandomDrawService.preferenceLottery(listingId);
     }
     
     public void calculateRank(List<String> winnerList){

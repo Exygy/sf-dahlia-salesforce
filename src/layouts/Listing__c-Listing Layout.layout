@@ -27,8 +27,24 @@
                 <field>Project_ID__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Supervisor_District__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Marketing_Short_Code__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Marketing_URL__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Account__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>nGeneral_Application_Total__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -46,7 +62,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Status__c</field>
+                <field>Accepting_Online_Applications__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -54,11 +70,15 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Accepting_Online_Applications__c</field>
+                <field>Status__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Units_Available__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Share_Listing__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -71,21 +91,25 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Submitted_Applications__c</field>
+                <field>nSubmitted_Applications__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>In_Lottery__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Lease_Signed_Application__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Flagged_Applications__c</field>
+                <field>nFlagged_Applications__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>Removed_from_Lottery__c</field>
+                <field>nRemoved_from_Lottery__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -96,26 +120,6 @@
         <editHeading>true</editHeading>
         <label>Availability</label>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>COPUnitsAvailable__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>COP_App_Total__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DTHPUnitsAvailable__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DTHP_App_Total__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>General_App_Total__c</field>
-            </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
@@ -133,22 +137,6 @@
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>LiveWorkUnitsAvailable__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Live_Work_App_Total__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NeighborhoodUnitsAvailable__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Neighborhood_App_Total__c</field>
-            </layoutItems>
             <layoutItems>
                 <emptySpace>true</emptySpace>
             </layoutItems>
@@ -198,6 +186,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Reserved_community_type_description__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Units_Building_Special_Message__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -339,6 +331,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>Number_of_Applications__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>Lottery_Results__c</field>
             </layoutItems>
             <layoutItems>
@@ -354,14 +350,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Lottery_Summary__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Lottery_Start_Time__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>NeighborHoodPreferenceUrl__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -411,28 +399,12 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Number_of_Applications__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Application_Phone__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Organization_URL__c</field>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Office_Hours__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Office_Open__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Office_Closed__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -520,14 +492,6 @@
                 <behavior>Edit</behavior>
                 <field>Building_Selection_Criteria__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Preference_Detail__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Rental_Assistance__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -587,10 +551,6 @@
                 <behavior>Readonly</behavior>
                 <field>LastModifiedById</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>sfxId__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -612,6 +572,7 @@
         <fields>Application_Submitted_Date__c</fields>
         <fields>Status__c</fields>
         <fields>Lottery_Rank__c</fields>
+        <fields>General_Lottery__c</fields>
         <relatedList>Application__c.Listing__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -629,6 +590,9 @@
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Date__c</fields>
+        <fields>Start_Time__c</fields>
+        <fields>End_Time__c</fields>
         <relatedList>Open_Houses__c.Listing__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -659,12 +623,13 @@
         <fields>Preference_Name__c</fields>
         <fields>Order__c</fields>
         <fields>Available_Units__c</fields>
-        <fields>Description__c</fields>
+        <fields>Total_Submitted_Apps__c</fields>
         <relatedList>Listing_Lottery_Preference__c.Listing__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>NAME</fields>
         <fields>Application__c</fields>
+        <fields>Flagged_Application_Member__c</fields>
         <fields>Manually_Flagged__c</fields>
         <fields>System_Flagged__c</fields>
         <fields>Review_Status__c</fields>
@@ -673,6 +638,9 @@
     <relatedLists>
         <fields>NAME</fields>
         <relatedList>Flagged_Record_Set__c.Listing__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>

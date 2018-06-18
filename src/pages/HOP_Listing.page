@@ -127,7 +127,7 @@
                                                     <apex:inputField value="{!lst.Number_of_Applications__c}" styleClass="form-control" />
                                                 </apex:outputPanel>
                                                 <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Submitted_Applications__c}" /></p>
+                                                    <p class="form-control-static"><apex:outputField value="{!lst.nSubmitted_Applications__c}" /></p>
                                                 </apex:outputPanel>
                                             </div>
                                         </div>
@@ -281,36 +281,24 @@
 </div>
 </div>
 </div> -->
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Neighborhood Preference PDF URL</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.NeighborHoodPreferenceUrl__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.NeighborHoodPreferenceUrl__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">AMI Percentage</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.AMI_Percentage__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.AMI_Percentage__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="row">
+								</div>
+								<div class="row">
+									<!-- <div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Neighborhood Preference PDF URL</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.NeighborHoodPreferenceUrl__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.NeighborHoodPreferenceUrl__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div> -->
+									
+								</div>
+								<!-- <div class="row">
 
 </div> -->
                             </div>
@@ -470,196 +458,223 @@
 </div>
 </div>
 </div> -->
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12 sectionHeader">
-                                    <h4>Listing Preferences</h4>
-                                </div>
-                            </div>
-                            <div id="SFDT_ListingPreferences" class="section" style="overflow: auto;">
-                                <table id="listingPreferencesTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12 sectionHeader">
-                                    <h4>Accessibility, Amenities, Fees</h4>
-                                </div>
-                            </div>
-                            <div class="section" style="padding-bottom: 0;">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Accessibility</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Accessibility__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Accessibility__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Application Fee</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Fee__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Fee__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Amenities</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Amenities__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Amenities__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Deposit Min</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Deposit_Min__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Deposit_Min__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Costs Not Included</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Costs_Not_Included__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Costs_Not_Included__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Deposit Max</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Deposit_Max__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Deposit_Max__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12 sectionHeader">
-                                    <h4>Lottery Information</h4>
-                                </div>
-                            </div>
-                            <div class="section" style="padding-bottom: 0;">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Lottery Date</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Lottery_Date__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Lottery_Date__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Lottery Results Date</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Lottery_Results_Date__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Lottery_Results_Date__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Lottery Venue</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Lottery_Venue__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Lottery_Venue__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Lottery Status</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Lottery_Status__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Lottery_Status__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Lottery Street Address</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Lottery_Street_Address__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Lottery_Street_Address__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label class="col-sm-6 control-label">Lottery Summary</label>
-                                            <div class="col-sm-6">
-                                                <apex:outputPanel layout="none" rendered="{! editMode }">
-                                                    <apex:inputField value="{!lst.Lottery_Summary__c}" styleClass="form-control" />
-                                                </apex:outputPanel>
-                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
-                                                    <p class="form-control-static"><apex:outputField value="{!lst.Lottery_Summary__c}" /></p>
-                                                </apex:outputPanel>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-sm-6">
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 sectionHeader">
+									<h4>Listing Preferences</h4>
+								</div>
+							</div>
+							<div id="SFDT_ListingPreferences" class="section" style="overflow: auto;">
+								<!-- <table id="listingPreferencesTable" class="table table-striped table-bordered" cellspacing="0" width="100%"></table> -->
+								<apex:outputPanel layout="none" rendered="{!listingPreferences.size == 0}">
+									<p style="margin: 0;">No Preferences</p>
+								</apex:outputPanel>
+								<apex:outputPanel layout="none" rendered="{!listingPreferences.size > 0}">
+									<table class="table table-bordered" id="shortFormPreferencesTable">
+										<thead>
+											<tr>
+												<th>Preference Name</th>
+												<th>Description for this listing</th>
+												<th>PDF URL</th>
+												<th>Order</th>
+												<th>Available units</th>
+											</tr>
+										</thead>
+										<tbody>
+											<apex:repeat value="{!listingPreferences}" var="listingPreference">
+												<tr>
+													<td><apex:outputField value="{!listingPreference.Preference_Name__c}" /></td>
+													<td><apex:outputField value="{!listingPreference.Description__c}" /></td>
+													<td><apex:outputField value="{!listingPreference.PDF_URL__c}" /></td>
+													<td><apex:outputField value="{!listingPreference.Order__c}" /></td>
+													<td><apex:outputField value="{!listingPreference.Available_Units__c}" /></td>
+												</tr>
+											</apex:repeat>
+										</tbody>
+									</table>
+								</apex:outputPanel>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 sectionHeader">
+									<h4>Accessibility, Amenities, Fees</h4>
+								</div>
+							</div>
+							<div class="section" style="padding-bottom: 0;">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Accessibility</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Accessibility__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Accessibility__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Application Fee</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Fee__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Fee__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Amenities</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Amenities__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Amenities__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Deposit Min</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Deposit_Min__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Deposit_Min__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Costs Not Included</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Costs_Not_Included__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Costs_Not_Included__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Deposit Max</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Deposit_Max__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Deposit_Max__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-xs-12 sectionHeader">
+									<h4>Lottery Information</h4>
+								</div>
+							</div>
+							<div class="section" style="padding-bottom: 0;">
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Lottery Date</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Lottery_Date__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Lottery_Date__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Lottery Results Date</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Lottery_Results_Date__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Lottery_Results_Date__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Lottery Venue</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Lottery_Venue__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Lottery_Venue__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Lottery Status</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Lottery_Status__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Lottery_Status__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Lottery Street Address</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Lottery_Street_Address__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Lottery_Street_Address__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-group">
+											<label class="col-sm-6 control-label">Lottery Summary</label>
+											<div class="col-sm-6">
+												<apex:outputPanel layout="none" rendered="{! editMode }">
+													<apex:inputField value="{!lst.Lottery_Summary__c}" styleClass="form-control" />
+												</apex:outputPanel>
+												<apex:outputPanel layout="none" rendered="{! !editMode }">
+													<p class="form-control-static"><apex:outputField value="{!lst.Lottery_Summary__c}" /></p>
+												</apex:outputPanel>
+											</div>
+										</div>
+									</div>
+									<!-- <div class="col-sm-6">
 <div class="form-group">
 <label class="col-sm-6 control-label">Lottery Start Time</label>
 <div class="col-sm-6">
@@ -1218,7 +1233,7 @@
                 Visualforce.remoting.Manager.invokeAction(
                     '{!$RemoteAction.HOP_ListingController.getRecords}', 
                     "Listing_Lottery_Preference__c",
-                    "Id,Preference_Name__c, Description__c, Order__c, Available_Units__c",
+					"Id,Preference_Name__c, Description__c, PDF_URL__c, Order__c, Available_Units__c",
                     "Listing__c = '" + lstId + "'",                        
                     function(result, event){
                         debugger;

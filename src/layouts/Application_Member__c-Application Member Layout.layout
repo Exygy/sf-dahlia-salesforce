@@ -31,6 +31,18 @@
                 <behavior>Readonly</behavior>
                 <field>Contact_WebappID__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Candidate_Score__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>Marital_Status__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Income_Annual__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -47,6 +59,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Nickname__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Date_of_Birth__c</field>
             </layoutItems>
             <layoutItems>
@@ -56,6 +72,14 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Primary_Language_Other__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Minor__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Is_Senior__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -112,6 +136,15 @@
                 <field>Second_Phone_Type__c</field>
             </layoutItems>
         </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Current Contact Information</label>
+        <layoutColumns/>
+        <layoutColumns/>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
     <layoutSections>
@@ -211,16 +244,16 @@
         <label>System Information - Matching</label>
         <layoutColumns>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Listing_Name__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Listing_ID__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DOB_Text__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Candidate_Score__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -276,6 +309,22 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <excludeButtons>New</excludeButtons>
+        <fields>Preference_Name__c</fields>
+        <fields>Lottery_Status__c</fields>
+        <fields>Preference_Lottery_Rank__c</fields>
+        <fields>Opt_Out__c</fields>
+        <fields>NAME</fields>
+        <relatedList>Application_Preference__c.Application_Member__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>Document_Type__c</fields>
+        <fields>UPDATEDBY_USER</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>Attachment__c.Related_Application_Member__c</relatedList>
+    </relatedLists>
     <relatedLists>
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>

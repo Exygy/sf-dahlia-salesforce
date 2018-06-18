@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Mr.</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Mrs.</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Ms.</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Dr.</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Rev.</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>-None-</fullName>
+        <default>true</default>
+    </customValue>
+    <description>Mr., Mrs., Ms., Dr., Rev.</description>
+    <masterLabel>Titles or Salutations</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

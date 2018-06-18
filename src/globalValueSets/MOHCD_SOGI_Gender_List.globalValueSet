@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Female</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Male</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Genderqueer/Gender Non-Binary</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Trans Female</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Trans Male</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Not Listed</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Declined/Not Stated</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Question Not Asked</fullName>
+        <default>false</default>
+    </customValue>
+    <description>This list does not include the &quot;not listed&quot; option, which has to be added as another field.</description>
+    <masterLabel>MOHCD - SOGI Gender List</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -1,0 +1,95 @@
+<apex:page standardcontroller="Application__c" extensions="AppPreferenceRelatedListController" id="customAppPref">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        /*    	var jQuery = jQuery.noConflict();
+		
+    jQuery(document).ready(function() {
+		    jQuery( "#checkInList" ).resizable({
+		       stop: function(event, ui) 
+		       { 
+		           console.log(ui.size.height); 
+		           jQuery( "#tableContainer" ).height(ui.size.height-10)
+		       }
+		    });
+    }); */
+	</script>
+    
+    <style>
+    	.pencil {
+        height: 12px;
+        right: 1.5rem;
+        }
+    </style>
+    <apex:form target="_top">
+    	<apex:commandButton value="New Application Preference" id="newButton" action="{!createNewApplicationPreference}"
+                                        style="margin-left:400px;margin-bottom:10px;" rendered="{!IF(appPreferencesList.size>0,true,false)}"/>
+    </apex:form>
+    <apex:form id="appform" target="_top">
+		<apex:pageBlock title="Application Preferences" id="block">
+            <div style="height:230px; overflow:hidden;" id="checkInList">
+                <div style="height:200px; overflow:hidden" id="tableContainer">
+                    <!--<apex:commandButton value="New Application Preference" id="newButton"
+                                        onclick="window.top.location.href = '{!'/a0w/e?CF00N0P0000066s5Z='+appPreferencesList[0].Application__r.Name+'&CF00N0P0000066s5Z_lkid='+appPreferencesList[0].Application__c+'&retURL='+appPreferencesList[0].Application__c}';"
+                                        style="margin-left:400px;margin-bottom:10px;" rendered="{!IF(appPreferencesList.size>0,true,false)}"/>-->
+                    
+                    <apex:outputLabel rendered="{!IF(appPreferencesList.size>0,false,true)}">No records to display</apex:outputLabel>
+                    <div style="overflow:auto;height:150px">
+                        
+                    
+                    <apex:pageblockTable value="{!appPreferencesList}" var="appPref" id="table1" rendered="{!IF(appPreferencesList.size>0,true,false)}">
+                       
+                        <apex:column >
+                            <div style="padding:0px 25px;">
+                         		<apex:facet name="header">Action</apex:facet>   
+                        	</div>
+                            <apex:outputLink value="/{!appPref.Id}/e?retURL=/{!appPref}" target="_parent" style="text-decoration: none; color: #086A87;">Edit</apex:outputLink>
+                            |
+                            <apex:commandLink action="{!DelApp}" value="Del" target="_parent" style="color: #086A87; text-decoration: none">
+                                <apex:param name="currentApplication" value="{!appPref.Id}" assignTo="{!currentAppPrefId}"/>
+                            </apex:commandLink>
+                        </apex:column>
+                        
+                        <apex:column value="{!appPref.Receives_Preference__c}"/>
+                        <apex:column value="{!appPref.Preference_Name__c}"/>
+                        <apex:column value="{!appPref.Individual_preference__c}"/>
+                        
+                        <apex:column >
+                            <apex:facet name="header">Application Preference Number</apex:facet>
+                            <apex:outputLink value="/{!appPref.Id}" target="_parent">{!appPref.Name}</apex:outputLink>
+                        </apex:column>
+                        
+                        <apex:column headerValue="">
+                            <apex:facet name="header">
+                                <apex:outputLabel >Pre-Lottery Validation &nbsp;
+                                <apex:image url="http://res.freestockphotos.biz/pictures/14/14223-illustration-of-a-pencil-pv.png" styleClass="pencil" /> &nbsp;
+                                </apex:outputLabel>
+                            </apex:facet>
+                            <apex:outputField value="{!appPref.Lottery_Status__c}"/> 
+                        </apex:column>
+                        <apex:inlineEditSupport event="ondblClick" 
+                        	showOnEdit="saveButton,cancelButton" hideOnEdit="newButton"/>
+                        
+                        <apex:column value="{!appPref.Person_who_claimed_Name__c}"/>
+                        <apex:column >
+                            <apex:facet name="header">Application Member Number</apex:facet>
+                            <apex:outputLink value="/{!appPref.Application_Member__c}" target="_parent">{!appPref.Application_Member__r.Name}</apex:outputLink>
+                        </apex:column>
+                        <apex:column value="{!appPref.Preference_Lottery_Rank__c}"/>
+                        <apex:column value="{!appPref.Opt_Out__c}"/>
+                        <apex:column >
+                            <apex:facet name="header">Listing Preference</apex:facet>
+                            <apex:outputLink value="/{!appPref.Listing_Preference_ID__c}" target="_parent">{!appPref.Listing_Preference_ID__r.Name}</apex:outputLink>
+                        </apex:column>
+                        
+                    </apex:pageblockTable>
+                        </div>
+                    <apex:pageBlockButtons >
+                    	<apex:commandButton value="Save" action="{!saveAppPref}" id="saveButton" style="display: none;" status="complete"/>
+                        <apex:actionStatus id="complete" onstart="" onstop="location.reload();"></apex:actionStatus>
+                		<apex:commandButton value="Cancel" id="cancelButton" style="display: none;" reRender="table1" onclick="location.reload();"/>
+                    </apex:pageBlockButtons>
+                </div>
+            </div>  
+		</apex:pageBlock>
+	</apex:form>
+</apex:page>

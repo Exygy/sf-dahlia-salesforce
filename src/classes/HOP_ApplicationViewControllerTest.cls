@@ -54,6 +54,26 @@ private class HOP_ApplicationViewControllerTest {
 
 			Application__c myDraftApp = new Application__c(Listing__c = myListing.Id, Status__c = HOP_Constants.DRAFT_APPLICATION);
 			insert myDraftApp;
+        	
+            Development__c dev = new Development__c();
+            dev.Name_of_Development__c = 'amli';
+            dev.Project_ID__c = '123';
+            insert dev;
+          
+            Building__c build = new Building__c();
+            build.Development__c = dev.Id;
+            build.Developer__c = cuAccount.Id;
+            insert build;
+        
+        	Unit__c unit = new Unit__c();
+            unit.property__c  = build.id;
+            unit.BMR_Rent_Monthly__c = 400;
+            unit.Rent_Multiple__c=3;
+            unit.of_AMI_for_Pricing_Unit__c=55;
+            unit.Listing__c = myListing.id;
+            unit.Number_of_Bedrooms__c = 3;
+        	unit.Reserved_Type__c = 'Developmental disabilities';
+            insert unit;
 
 	        Id LENDING_AGENT_CONTACT_RTID = [SELECT Id FROM RecordType WHERE SObjectType = 'Contact' AND DeveloperName = 'Lending_Agent'].Id;
 			Contact cuContact = new Contact(RecordTypeId = LENDING_AGENT_CONTACT_RTID, AccountId = cuAccount.Id, LastName = 'PMC');
@@ -85,7 +105,21 @@ private class HOP_ApplicationViewControllerTest {
         	
 			Listing__c someListing = new Listing__c(Name = 'someListing', Account__c = someAccount.Id);
 			insert someListing;
-
+			
+        	Lottery_Preference__c lotPref = new Lottery_Preference__c(Name = 'Neighborhood Resident Housing Preference (NRHP)',Record_Type_For_App_Preferences__c = 'NRHP');
+            Lottery_Preference__c lotPref2 = new Lottery_Preference__c(Name = 'Live or Work in San Francisco Preference',Record_Type_For_App_Preferences__c = 'L_W');
+            Lottery_Preference__c lotPref3 = new Lottery_Preference__c(Name = 'Certificate of Preference (COP)',Record_Type_For_App_Preferences__c = 'COP');
+            Lottery_Preference__c lotPref4 = new Lottery_Preference__c(Name = 'Displaced Tenant Housing Preference (DTHP)',Record_Type_For_App_Preferences__c = 'DTHP');
+            List<Lottery_Preference__c> lotPrefList = new List<Lottery_Preference__c>{lotPref,lotPref2,lotPref3,lotPref4};
+            insert lotPrefList;
+            
+            Listing_Lottery_Preference__c listingPref = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[0].Id);
+            Listing_Lottery_Preference__c listingPref2 = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[1].Id);
+            Listing_Lottery_Preference__c listingPref3 = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[2].Id);
+            Listing_Lottery_Preference__c listingPref4 = new Listing_Lottery_Preference__c(Listing__c = someListing.Id, Lottery_Preference__c = lotPrefList[3].Id);
+            List<Listing_Lottery_Preference__c> listingPrefList = new List<Listing_Lottery_Preference__c>{listingPref, listingPref2, listingPref3, listingPref4};
+            insert listingPrefList;
+            
 			Application__c someApplication = new Application__c(Listing__c = someListing.Id);
 			insert someApplication;
 
@@ -110,7 +144,24 @@ private class HOP_ApplicationViewControllerTest {
 			System.assert(cnt.hasErrors == false);
 			System.assert(cnt.app.Id == someApplication.Id);
 			System.assert(cnt.flaggedRecordSetString == '\'' + someFlaggedRecordSet.Id + '\'');
-
+			
+        	cnt.currentRecId = cnt.appPreferences[0].appPref.Id;
+        	cnt.toggleDetails();
+        	for (HOP_ApplicationViewController.ApplicationPreference ap : cnt.appPreferences) {
+                if (ap.appPref.Preference_Name__c == 'Neighborhood Resident Housing Preference (NRHP)') {
+                	System.assert(ap.showHHMember == true);
+                    system.debug('ap.showIndividualPreference:::' + ap.showIndividualPreference);
+                	System.assert(ap.showIndividualPreference == false);
+                	System.assert(ap.showTypeOfProof == true);
+                	System.assert(ap.showCOPHolder == false);
+                	System.assert(ap.showDTHP == false);
+                	System.assert(ap.showAntiDTHP == false);
+                	System.assert(ap.showNRHP == true);
+                	System.assert(ap.showLiveWork == false);
+            		System.assert(ap.showRentBurden == false);
+            		System.assert(ap.showPersonWhoClaimed == false);
+            	}
+            }
 		Test.stopTest();
 	}
 	

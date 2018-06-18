@@ -20,7 +20,7 @@ private without sharing class API_ShortForm_GetListByContactIdTest {
         Listing__c listing = new Listing__c();
         insert listing;
         
-        Application__c app = new Application__c(Listing__c = listing.Id, Primary_Applicant__c = c.Id, Applicant_Household__c = a.Id);
+        Application__c app = new Application__c(Listing__c = listing.Id, Applicant_Household__c = a.Id);
         insert app;
         
         Application_Member__c appM = new Application_Member__c(Application__c = app.Id, Contact__c = c.Id, First_Name__c = 'FirstName', Last_Name__c = 'LastName', Date_of_Birth__c = date.today(), Email__c = 'email@yahoo.com');
@@ -37,7 +37,7 @@ private without sharing class API_ShortForm_GetListByContactIdTest {
             List<API_Application.ShortForm> sfs = API_ShortForm_GetListByContactId.doGet();
         Test.stopTest();
         
-        System.assertEquals(sfs.size(), 1);
+        System.assertEquals(sfs.size(), 0);
     }
     
     static testMethod void failAPI_ShortForm_GetListByContactIdTest() {

@@ -8,7 +8,7 @@
 //
 // *****************************************************************************
 
-public without sharing class HOP_ListingsController extends HOP_ControllerBase {
+public with sharing class HOP_ListingsController extends HOP_ControllerBase {
 
 	public HOP_ListingsController() {
 		super();

@@ -55,7 +55,7 @@
                     Visualforce.remoting.Manager.invokeAction(
                         '{!$RemoteAction.HOP_ListingsController.getRecords}', 
                         "Listing__c",
-                        "Id,Name, Application_Due_Date__c, Lottery_Date__c, Lottery_Results_Date__c, Lottery_Status__c, Submitted_Applications__c, Flagged_Applications__c, Confirmed_Duplicate_Applications__c, In_Lottery__c",
+                        "Id,Name, Application_Due_Date__c, Lottery_Date__c, Lottery_Results_Date__c, Lottery_Status__c, nSubmitted_Applications__c, nFlagged_Applications__c, nRemoved_from_Lottery__c, In_Lottery__c",
                         whereClause ,                        
                         function(result, event){
                             debugger;
@@ -71,7 +71,7 @@
                                         }
                                          if(result.dataColumns[i].type==='datetime'){
                                             var dateNumVal=new Date(result.dataRows[j][result.dataColumns[i].data]);
-                                            result.dataRows[j][result.dataColumns[i].data]=moment(dateNumVal).format('M/D/YYYY');
+                                            result.dataRows[j][result.dataColumns[i].data]=moment(dateNumVal).format('MM/DD/YYYY');
                                         }   
                                     }else{
                                         result.dataRows[j][result.dataColumns[i].data]='';

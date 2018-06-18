@@ -13,30 +13,127 @@ global without sharing class API_Application {
 	public static final String PRIMARY_APPLICANT = 'Primary Applicant';
 	public static final String ALTERNATE_CONTACT = 'Alternate Contact';
 	private static final String HOUSEHOLD_MEMBER = 'Household Member';
-	
+	private static final integer InsertRetry = Integer.valueOf(Label.INSERT_RETRY_NUMBER);
 	private static final String CONTACT_APPLICANT_RT_DEVELOPER_NAME = 'Applicant';
 	private static final String ACCOUNT_HOUSEHOLD_RT_DEVELOPER_NAME = 'Household';
+	private static final String BMR_RT_DEVELOPER_NAME = 'Rental_Short_Form';
+	//private static final String MULTI_RT_DEVELOPER_NAME = 'Multi_Family_Rental_Short_Form';
+	
+	//application preference record types
+	public static final String ADHP_RT_DEVELOPER_NAME = 'ADHP';
+	public static final String COP_RT_DEVELOPER_NAME = 'COP';
+	public static final String CUSTOM_RT_DEVELOPER_NAME = 'Custom';
+	public static final String DTHP_RT_DEVELOPER_NAME = 'DTHP';
+	public static final String L_W_RT_DEVELOPER_NAME = 'L_W';
+	public static final String NRHP_RT_DEVELOPER_NAME = 'NRHP';
+	public static final String RB_AHP_RT_DEVELOPER_NAME = 'RB_AHP';
+    public static final String AG_RT_DEVELOPER_NAME = 'AG';
+	
+	private static final ID APPLICATION_BMR_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application__c',BMR_RT_DEVELOPER_NAME);
+	//private static final ID APPLICATION_MULTI_RT_ID =  RecordTypeUtil.getRecordTypeIDByDevName('Application__c',MULTI_RT_DEVELOPER_NAME);
 	private static final ID CONTACT_APPLICANT_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Contact',CONTACT_APPLICANT_RT_DEVELOPER_NAME);
 	private static final ID ACCOUNT_HOUSEHOLD_RT_ID =  RecordTypeUtil.getRecordTypeIDByDevName('Account',ACCOUNT_HOUSEHOLD_RT_DEVELOPER_NAME);
+	
+	//application preference record type ids
+	public static final ID APP_PREF_ADHP_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',ADHP_RT_DEVELOPER_NAME);
+	public static final ID APP_PREF_COP_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',COP_RT_DEVELOPER_NAME);
+	public static final ID APP_PREF_CUSTOM_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',CUSTOM_RT_DEVELOPER_NAME);
+	public static final ID APP_PREF_DTHP_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',DTHP_RT_DEVELOPER_NAME);
+	public static final ID APP_PREF_L_W_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',L_W_RT_DEVELOPER_NAME);
+	public static final ID APP_PREF_NRHP_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',NRHP_RT_DEVELOPER_NAME);
+	public static final ID APP_PREF_RB_AHP_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',RB_AHP_RT_DEVELOPER_NAME);
+    public static final ID APP_PREF_AG_RT_ID = RecordTypeUtil.getRecordTypeIDByDevName('Application_Preference__c',AG_RT_DEVELOPER_NAME);
+	
+	public static final Map<String,String> APP_PREF_RT_DEVNAME_TO_ID = new Map<String,String> {
+																			ADHP_RT_DEVELOPER_NAME => APP_PREF_ADHP_RT_ID,
+																			COP_RT_DEVELOPER_NAME => APP_PREF_COP_RT_ID,
+																			CUSTOM_RT_DEVELOPER_NAME => APP_PREF_CUSTOM_RT_ID,
+																			DTHP_RT_DEVELOPER_NAME => APP_PREF_DTHP_RT_ID,
+																			L_W_RT_DEVELOPER_NAME => APP_PREF_L_W_RT_ID,
+																			NRHP_RT_DEVELOPER_NAME => APP_PREF_NRHP_RT_ID,
+																			RB_AHP_RT_DEVELOPER_NAME => APP_PREF_RB_AHP_RT_ID,
+                                                                            AG_RT_DEVELOPER_NAME => APP_PREF_AG_RT_ID
+																		};
+	
+	public static final Map<String,String> APP_PREF_RT_ID_TO_DEVNAME = new Map<String,String> {
+																			APP_PREF_ADHP_RT_ID => ADHP_RT_DEVELOPER_NAME,
+																			APP_PREF_COP_RT_ID => COP_RT_DEVELOPER_NAME,
+																			APP_PREF_CUSTOM_RT_ID => CUSTOM_RT_DEVELOPER_NAME,
+																			APP_PREF_DTHP_RT_ID => DTHP_RT_DEVELOPER_NAME,
+																			APP_PREF_L_W_RT_ID => L_W_RT_DEVELOPER_NAME,
+																			APP_PREF_NRHP_RT_ID => NRHP_RT_DEVELOPER_NAME,
+																			APP_PREF_RB_AHP_RT_ID => RB_AHP_RT_DEVELOPER_NAME,
+                                                                            APP_PREF_AG_RT_ID => AG_RT_DEVELOPER_NAME
+																		};
 	
 	private static boolean isNullorBlank(String value) {
 		return (value == null || value.length() == 0) ? true: false;
 	}
+	/* this is how you would stub out a new form/and/or short form
+	global class Multi_ShortForm extends ShortForm {
+		global String prioritiesSelected;
+		global String qualifyingDevelopmentalDisability;
+		global String qualifyingRentBurdenHUD;
+		global String qualifyingServedInMilitary;
+		global String totalMonthlyRent;
+		global Person primaryApplicant;
+		global Multi_ShortForm(Application__c app, List<Application_Member__c> hms) {
+			super(app,hms); 
+	//		this.qualifyingDevelopmentalDisability=app.Qualifying_Developmental_Disability__c;
+			system.debug('this will never get called');
+		} 
+		global override Application__c toApplication() {
+			Application__c app = super.toApplication();
+		//	app.Qualifying_Developmental_Disability__c=  this.qualifyingDevelopmentalDisability;
+			return app;
+		}
+	} */
 	
-	global class ShortForm {
+	global static ShortForm newShortForm(Application__c app,List<Application_Member__c> hms){
+		ShortForm theForm;
+		if (app.recordTypeID== APPLICATION_BMR_RT_ID){
+			theForm = new ShortForm(app,hms);
+			return theForm;
+			
+		}
+		/*
+		if (app.recordTypeID== APPLICATION_MULTI_RT_ID){
+			theForm = new Multi_ShortForm(app,hms);
+			return theForm;
+			
+		}*/
+		return null;
+	}
+	  
+	global static API_Application.ShortForm newShortForm(String jsonForm){ 
+        API_Application.ShortForm shortForm = (API_Application.ShortForm)JSON.deserialize(jsonForm, API_Application.ShortForm.class);
+		/*	if (shortForm.appRTType == MULTI_RT_DEVELOPER_NAME ) {
+		shortForm = (API_Application.ShortForm)JSON.deserialize(jsonForm, API_Application.Multi_ShortForm.class);
+			
+		}else if sf.appRTType == MULTI_RT_DEVELOPER_NAME 
+			ShortForm shortForm = (ShortForm)JSON.deserialize(JSON, ShortForm.class);
+			we do not write this out as bmr is the default shortform
+		*/ 
+		return shortForm;
+	}
+	// the default form is the bmr short form or - just "short form"  all others are derivatives
+	global virtual class ShortForm {
+		global String appRTType;
 		global String id;
 		global String name;
 		global ID listingID;
 		global Person primaryApplicant;
 		global Person alternateContact;
 		global List<Person> householdMembers;
+		global List<ShortFormPreference> shortFormPreferences;
 		//global Boolean worksInSanFrancisco;
 		global String referral;
 		global Boolean agreeToTerms;
 		global String householdVouchersSubsidies;
 		global Decimal annualIncome;
 		global Decimal monthlyIncome;
-		global Boolean liveInSfPreferencePaper;
+		global Decimal totalMonthlyRent;
+		/*global Boolean liveInSfPreferencePaper;
 		global String liveInSfPreferenceNatKey;
 		global String liveInSfPreferenceID;
 		global String workInSfPreferenceNatKey;
@@ -53,7 +150,7 @@ global without sharing class API_Application {
 		global String liveInSfPreferenceProof;
 		global String workInSfPreferenceProof;
 		global Boolean liveWorkOptOut;
-		global String neighborhoodPreferenceProof;
+		global String neighborhoodPreferenceProof;*/
 		global String status;
 		global String applicationLanguage;
 		global String applicationSubmissionType;
@@ -61,6 +158,15 @@ global without sharing class API_Application {
 		global String lotteryNumber;
 		global String lotteryNumberManual;
 		global String formMetadata;
+		global String adaPrioritiesSelected;
+		global String hasPublicHousing;
+		global String hasMilitaryService;
+		global String hasDevelopmentalDisability;
+		global String answeredCommunityScreening;
+        global String externalSessionId;
+        global String didApplicantUseHousingCounselingAgency;
+		global String whichOne;
+        global String other;
 		
 		global ShortForm() {} 
 	
@@ -68,6 +174,10 @@ global without sharing class API_Application {
 			this.id = app.Id;
 			this.name = app.Name;
 			this.listingID =  app.Listing__c; 
+			if (app.recordTypeID == APPLICATION_BMR_RT_ID) {
+				appRTType = BMR_RT_DEVELOPER_NAME;
+			}
+		
 			this.primaryApplicant = app.Applicant__r == null ? null : new Person(app.Applicant__r);
 			this.alternateContact = app.Alternate_Contact__r == null ? null : new Person(app.Alternate_Contact__r);
 			this.householdMembers = new List<Person>();
@@ -76,26 +186,20 @@ global without sharing class API_Application {
 					this.householdMembers.add(new Person(am));
 				}
 			}
-			
+			this.shortFormPreferences = new List<ShortFormPreference>();
+			if (app.Application_Preferences__r != null) {
+				for (Application_Preference__c appPref : app.Application_Preferences__r) {
+					this.shortFormPreferences.add(new ShortFormPreference(appPref));
+				}
+			}
 			//this.worksInSanFrancisco = app.Work_in_SF_Preference__c;
 			this.referral = app.Referral_Source__c;
 			this.agreeToTerms = app.Terms_Acknowledged__c;
 			this.householdVouchersSubsidies = app.Housing_Voucher_or_Subsidy__c;
 			this.annualIncome = app.Annual_Income__c;
 			this.monthlyIncome = app.Monthly_Income__c;
-			this.liveInSfPreferencePaper = app.Live_Work_Preference_Paper__c;
-			this.liveInSfPreferenceID = app.Live_in_SF_Preference_Member__c;
-			this.worksInSfPreferenceID = app.Work_in_SF_Preference_Member__c;
-			this.displacedPreferenceID = app.DTHP_Preference_Member__c;
-			this.certOfPreferenceID = app.COP_Preference_Member__c;
-			this.neighborhoodPreferenceID = app.Neighborhood_Preference_Member__c;
-			this.liveWorkOptOut = app.Live_Work_Opt_Out__c;
-			this.displacedPreferenceOptOut = app.DTHP_Opt_Out__c;
-			this.certOfPreferenceOptOut = app.COP_Opt_Out__c;
-			this.neighborhoodPreferenceOptOut = app.NRHP_Opt_Out__c;
-			this.liveInSfPreferenceProof = app.Live_in_SF_Preference_Proof__c;
-			this.workInSfPreferenceProof = app.Work_in_SF_Preference_Proof__c;
-			this.neighborhoodPreferenceProof = app.Neighborhood_Preference_Proof__c;
+			this.totalMonthlyRent = app.Total_Monthly_Rent__c;
+            this.externalSessionId = app.Third_Party_External_ID__c != null ?  app.Third_Party_External_ID__c : '';
 			this.status = app.Status__c;
 			this.applicationLanguage = app.Application_Language__c;
 			this.applicationSubmissionType = app.Application_Submission_Type__c;
@@ -103,9 +207,17 @@ global without sharing class API_Application {
 			this.lotteryNumber = app.Lottery_Number__c;
 			this.lotteryNumberManual = app.Lottery_Number_Manual__c;
 			this.formMetadata = app.Form_Metadata__c;
-		}
+			this.adaPrioritiesSelected = app.Has_ADA_Priorities_Selected__c;
+			this.hasPublicHousing = app.Has_Rent_Burden_HUD__c;
+			this.hasMilitaryService = app.Has_Military_Service__c;
+			this.hasDevelopmentalDisability = app.Has_DevelopmentalDisability__c;
+			this.answeredCommunityScreening = app.Answered_Community_Screening__c;
+            this.didApplicantUseHousingCounselingAgency = app.Applicant_used_housing_counseling_agency__c;
+			this.whichOne = app.Which_One__c;
+			this.other = app.Other__c;
+		} 
 
-		global Application__c toApplication() {
+		global virtual Application__c toApplication() {
 			Application__c app = new Application__c(Listing__c = this.listingID);
 			app.Id = this.id;
 			app.Applicant__c = this.primaryApplicant == null ? null : this.primaryApplicant.appMemberId;
@@ -115,26 +227,25 @@ global without sharing class API_Application {
 			app.Housing_Voucher_or_Subsidy__c = this.householdVouchersSubsidies;// == null ? false : this.householdVouchersSubsidies);
 			app.Annual_Income__c = this.annualIncome;
 			app.Monthly_Income__c = this.monthlyIncome;
-			app.Live_Work_Preference_Paper__c = (this.liveInSfPreferencePaper == null ? false : this.liveInSfPreferencePaper);
-			app.Live_in_SF_Preference_Member__c = String.isBlank(this.liveInSfPreferenceID) ? null : this.liveInSfPreferenceID;
-			app.Work_in_SF_Preference_Member__c = String.isBlank(this.worksInSfPreferenceID) ? null : this.worksInSfPreferenceID;
-			app.DTHP_Preference_Member__c = String.isBlank(this.displacedPreferenceID) ? null : this.displacedPreferenceID;
-			app.COP_Preference_Member__c = String.isBlank(this.certOfPreferenceID) ? null : this.certOfPreferenceID;
-			app.Neighborhood_Preference_Member__c = String.isBlank(this.neighborhoodPreferenceID) ? null : this.neighborhoodPreferenceID;
-			app.Live_Work_Opt_Out__c = this.liveWorkOptOut == null ? false : this.liveWorkOptOut;
-			app.DTHP_Opt_Out__c = this.displacedPreferenceOptOut == null ? false : this.displacedPreferenceOptOut;
-			app.COP_Opt_Out__c = this.certOfPreferenceOptOut == null ? false : this.certOfPreferenceOptOut;
-			app.NRHP_Opt_Out__c = this.neighborhoodPreferenceOptOut == null ? false : this.neighborhoodPreferenceOptOut;
-			app.Live_in_SF_Preference_Proof__c = this.liveInSfPreferenceProof;
-			app.Work_in_SF_Preference_Proof__c = this.workInSfPreferenceProof;
-			app.Neighborhood_Preference_Proof__c = this.neighborhoodPreferenceProof;
+			if (Schema.SObjectType.Application__c.fields.getMap().get('Total_Monthly_Rent__c').getDescribe().isUpdateable()) {
+				app.Total_Monthly_Rent__c = this.totalMonthlyRent;
+			}
 			app.Status__c = this.status;
 			app.Application_Language__c = this.applicationLanguage;
 			app.Application_Submission_Type__c = this.applicationSubmissionType;
 			app.Application_Submitted_Date__c = this.applicationSubmittedDate;
 			app.Form_Metadata__c = this.formMetadata;
-            app.Lottery_Number_Manual__c = this.lotteryNumberManual;
-			return app;
+			app.Lottery_Number_Manual__c = this.lotteryNumberManual;
+			app.Has_ADA_Priorities_Selected__c = this.adaPrioritiesSelected;
+			app.Has_Rent_Burden_HUD__c = this.hasPublicHousing;
+			app.Has_Military_Service__c = this.hasMilitaryService;
+			app.Has_DevelopmentalDisability__c = this.hasDevelopmentalDisability;
+			app.Answered_Community_Screening__c = this.answeredCommunityScreening;
+            app.Third_Party_External_ID__c = this.externalSessionId;
+            app.Applicant_used_housing_counseling_agency__c = this.didApplicantUseHousingCounselingAgency;
+    		app.Which_One__c = this.whichOne;
+    		app.Other__c = this.other;
+        	return app;
 		}
 		
 		global void validate() {
@@ -154,16 +265,49 @@ global without sharing class API_Application {
 		}
 		
 		global void validateLotteryRun() {
-			List<Listing__c> currentListing = ListingService.getListingByID(this.listingID);
-			if (currentListing[0].Lottery_Status__c == 'In Progress' || currentListing[0].Lottery_Status__c == 'Lottery Complete') {
-				throw new LotteryAlreadyRunException ();
-			}
+			Integer timeoutlooplimit = integer.valueOf(label.INSERT_RETRY_TIMEOUT);
+			//20171026_Vertiba: Updated code to try the upsert 5 times in case the Record Currently Unavailable error comes
+
+
+	        for(Integer i=0;i<=InsertRetry;i++)
+	        {
+		        System.debug('******** Try Number ' + i);
+		        try
+		        {
+                    System.debug('******** this.listingID ' + this.listingID);
+					System.debug('******** label.FOR_UPDATE_QUERY_CLAUSE ' + label.FOR_UPDATE_QUERY_CLAUSE);
+					List<Listing__c> currentListing = ListingService.getListingByID(this.listingID,label.FOR_UPDATE_QUERY_CLAUSE);
+					if (currentListing[0].Lottery_Status__c == 'In Progress' || currentListing[0].Lottery_Status__c == 'Lottery Complete')
+					{
+						throw new LotteryAlreadyRunException ();
+					}
+					break;
+		        }
+		        catch(Exception ex)
+		        {
+		        	System.debug('********Exception in Listing Query' + ex.getMessage());
+		        	if(i > 0)
+		        		timeoutlooplimit = timeoutlooplimit/10;
+		        	//20171026_Vertiba: Setting an Interval by runing a loop 100 times
+		        	if(i<InsertRetry-1)
+		        	{
+			        	for(Integer j=0;j<timeoutlooplimit;j++)
+			        	{
+
+			        	}
+		        	}
+		        	else
+		        		throw new API_ApplicationService.RecordLockException(ex.getMessage());
+		        	continue;
+		        }
+    		}
 		}
 	}
-	
+
 	global class IncompleteApplicationException extends Exception {}
 	global class LotteryAlreadyRunException extends Exception {}
-	
+	global class ListingPreferenceMissingException extends Exception {}
+	global class RecordTypeMissingException extends Exception {}
 	
 
 	global class Person {
@@ -205,7 +349,7 @@ global without sharing class API_Application {
 		global String appMemberType; //maps to household member type
 		global String alternateContactTypeOther;
 		global String hasSameAddressAsApplicant;
-		global String neighborhoodPreferenceMatch;
+		global String preferenceAddressMatch;
 		global Boolean noPhone;
 		global Boolean noEmail;
 		global Boolean noAddress;
@@ -309,7 +453,7 @@ global without sharing class API_Application {
 			this.hiv = am.Living_with_HIV_AIDS__c;
 			this.ethnicity = am.Ethnicity__c;
 			this.race = am.Race__c;
-            this.sexAtBirth = am.Sex_at_birth__c;
+            this.sexAtBirth = am.Sex_at_Birth__c;
 			this.language = am.Primary_Language__c;
 			this.languageOther = am.Other_Language__c;
 			this.relationship = am.Relationship_to_Applicant__c;
@@ -317,7 +461,7 @@ global without sharing class API_Application {
 			this.agency = am.Agency_Name__c;
 			this.alternateContactTypeOther = am.Alternate_Contact_Type_Other__c;
 			this.hasSameAddressAsApplicant = am.Same_Address_as_Applicant__c;
-			this.neighborhoodPreferenceMatch = am.Neighborhood_Preference_Match__c;
+			this.preferenceAddressMatch = am.Preference_Address_Match__c;
 			this.webappID = am.Contact_WebappID__c;
 			this.noPhone = am.No_Phone__c;
 			this.noEmail = am.No_Email__c;
@@ -393,7 +537,7 @@ global without sharing class API_Application {
 			am.Living_with_HIV_AIDS__c = (this.hiv == null ? false : this.hiv);
 			am.Ethnicity__c = this.ethnicity;
 			am.Race__c = this.race;
-            am.Sex_at_birth__c = this.sexAtBirth;
+            am.Sex_at_Birth__c = this.sexAtBirth;
 			am.Primary_Language__c = this.language;
 			am.Other_Language__c = this.languageOther;
 			am.Relationship_to_Applicant__c = this.relationship;
@@ -401,7 +545,7 @@ global without sharing class API_Application {
 			am.Agency_Name__c = this.agency;
 			am.Alternate_Contact_Type_Other__c = this.alternateContactTypeOther;
 			am.Same_Address_as_Applicant__c = this.hasSameAddressAsApplicant;// == null ? false : this.hasSameAddressAsApplicant);
-			am.Neighborhood_Preference_Match__c = this.neighborhoodPreferenceMatch;
+			am.Preference_Address_Match__c = this.preferenceAddressMatch;
 			am.No_Phone__c = this.noPhone == null ? false : this.noPhone;
 			am.No_Email__c = this.noEmail == null ? false : this.noEmail;
 			am.No_Address__c = this.noAddress == null ? false : this.noAddress;
@@ -417,4 +561,143 @@ global without sharing class API_Application {
 		
 	}
 	
+	global class ShortFormPreference {
+		global String recordTypeDevName;
+		global String shortformPreferenceID;
+		global String applicationID;
+		global String appMemberID;
+		global String naturalKey;
+		global String listingPreferenceID;
+		global String preferenceProof;
+		global String lwPreferenceProof;
+		global boolean optOut;
+		global String individualPreference;
+		global String certificateNumber;
+		global boolean requiresProof;
+        global String postLotteryValidation;
+		global String address;
+		global String city;
+		global String state;
+		global String zipCode;
+		
+		global void validate() {
+			if (isNullorBlank(this.listingPreferenceID)) {
+				throw new ListingPreferenceMissingException();
+			}
+			if (isNullorBlank(this.recordTypeDevName)) {
+				throw new RecordTypeMissingException();
+			}
+		}
+		
+		global String getKey() {
+			if (this.listingPreferenceID != null && this.appMemberId != null) {
+				return this.listingPreferenceID + '#' + this.appMemberId;
+			}
+			else return null;
+		}
+		
+		global ShortFormPreference(Application_Preference__c appPref) {
+			this.recordTypeDevName = APP_PREF_RT_ID_TO_DEVNAME.get(appPref.RecordTypeId);
+		
+			this.shortformPreferenceID = appPref.Id;
+			this.applicationID = appPref.Application__c;
+			this.appMemberID = appPref.Application_Member__c;
+			this.listingPreferenceID = appPref.Listing_Preference_ID__c;
+			this.preferenceProof = appPref.Type_of_proof__c;
+			this.lwPreferenceProof = appPref.LW_Type_of_proof__c;
+			this.optOut = appPref.Opt_Out__c;
+			this.individualPreference = appPref.Individual_preference__c;
+			this.certificateNumber = appPref.Certificate_Number__c;
+			this.requiresProof = appPref.Requires_Proof__c;
+            this.postLotteryValidation = appPref.Post_Lottery_Validation__c;
+			this.address = appPref.Street__c;
+			this.city = appPref.City__c;
+			this.state = appPref.State__c;
+			this.zipCode = appPref.Zip_Code__c;
+		}
+		
+		global Application_Preference__c toApplicationPreference() {
+			Application_Preference__c appPref = new Application_Preference__c();
+			appPref.Id = this.shortformPreferenceID;
+			
+			appPref.RecordTypeId = APP_PREF_RT_DEVNAME_TO_ID.get(this.recordTypeDevName);
+			if (this.shortformPreferenceID == null) {
+				appPref.Application__c = this.applicationID;
+			}
+			if (this.recordTypeDevName == L_W_RT_DEVELOPER_NAME || this.recordTypeDevName == RB_AHP_RT_DEVELOPER_NAME) {
+				appPref.Individual_preference__c = this.individualPreference;
+			}
+			appPref.Application_Member__c = this.appMemberID;
+			appPref.Listing_Preference_ID__c = this.listingPreferenceID;
+			appPref.Opt_Out__c = this.optOut == null ? false : this.optOut;
+			if (this.recordTypeDevName == COP_RT_DEVELOPER_NAME || this.recordTypeDevName == DTHP_RT_DEVELOPER_NAME) {
+				appPref.Certificate_Number__c = this.certificateNumber;
+			}
+			if (this.recordTypeDevName == L_W_RT_DEVELOPER_NAME || this.recordTypeDevName == NRHP_RT_DEVELOPER_NAME ||
+				this.recordTypeDevName == ADHP_RT_DEVELOPER_NAME || this.recordTypeDevName == CUSTOM_RT_DEVELOPER_NAME ||
+				this.recordTypeDevName == RB_AHP_RT_DEVELOPER_NAME) {
+				
+				appPref.Type_of_proof__c = this.preferenceProof;
+				appPref.LW_Type_of_proof__c = this.lwPreferenceProof;
+				if (this.recordTypeDevName == L_W_RT_DEVELOPER_NAME && String.isEmpty(this.preferenceProof) && !String.isEmpty(this.lwPreferenceProof)) {
+					appPref.Type_of_proof__c = this.lwPreferenceProof;
+				}
+				if (this.recordTypeDevName == L_W_RT_DEVELOPER_NAME && !String.isEmpty(this.preferenceProof) && String.isEmpty(this.lwPreferenceProof)) {
+					appPref.LW_Type_of_proof__c = this.preferenceProof;
+				}
+			
+			}
+            appPref.Post_Lottery_Validation__c = this.postLotteryValidation;
+			if (this.recordTypeDevName == AG_RT_DEVELOPER_NAME) {
+				appPref.Street__c = this.address;
+				appPref.City__c = this.city;
+				appPref.State__c = this.state;
+				appPref.Zip_Code__c = this.zipCode;
+                appPref.Type_of_proof__c = this.preferenceProof;
+			}
+			return appPref;
+		}
+		
+	}
+	
+	global class Attachment {
+		global String attachmentID;
+		global String fileID;
+		global String customAttachmentID;
+		global String ApplicationID;
+		global String ApplicationMemberID;
+		global String ApplicationPreferenceID;
+		global String DocumentType;
+		global Date uploadDate;
+		global BLOB body;
+		global Decimal BodyLength;
+		global String Description;
+		global String fileName;
+
+		global Attachment(Attachment__c customAttachment) {
+
+			this.customAttachmentID = customAttachment.Id;
+			this.ApplicationID = customAttachment.Related_Application__c;
+	        this.ApplicationMemberID = customAttachment.Related_Application_Member__c;
+	        this.ApplicationPreferenceID = customAttachment.Related_Application_Preference__c;
+	        this.uploadDate = customAttachment.Upload_Date__c;
+	        this.DocumentType = customAttachment.Document_Type__c;
+
+	        SObject att = getRelatedAttachment(customAttachment.Id);
+			this.attachmentID = att.Id;
+	        this.body = (Blob)att.get('Body');
+	        this.BodyLength = (Decimal)att.get('BodyLength');
+	        this.fileName = (String)att.get('Name');
+	        this.description = (String)att.get('Description');
+		}
+		
+		//define this to return a SObject because the code it confuses Attchment class with Attachment standard object
+		public SObject getRelatedAttachment(Id customAttachmentId) {
+			SObject att = [SELECT Id, Body, BodyLength, Description, Name FROM Attachment WHERE ParentId = :customAttachmentId];
+			if (att == null) {
+				return Schema.getGlobalDescribe().get('Attachment').newSObject();
+			}
+			return att;
+		}
+	}
 }

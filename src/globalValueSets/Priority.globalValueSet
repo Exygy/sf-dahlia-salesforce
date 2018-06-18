@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Hearing impaired</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
         <fullName>Vision impaired</fullName>
         <default>false</default>
     </customValue>
@@ -9,19 +13,7 @@
         <default>false</default>
     </customValue>
     <customValue>
-        <fullName>Mobility/hearing/vision impaired</fullName>
-        <default>false</default>
-    </customValue>
-    <customValue>
-        <fullName>Hearing impaired</fullName>
-        <default>false</default>
-    </customValue>
-    <customValue>
-        <fullName>Hearing/Vision impaired</fullName>
-        <default>false</default>
-    </customValue>
-    <customValue>
-        <fullName>Developmental disabilities</fullName>
+        <fullName>None</fullName>
         <default>false</default>
     </customValue>
     <customValue>
@@ -30,6 +22,18 @@
     </customValue>
     <customValue>
         <fullName>Veteran</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Developmental disabilities</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Mobility/hearing/vision impaired</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Hearing/Vision impaired</fullName>
         <default>false</default>
     </customValue>
     <masterLabel>Priority</masterLabel>

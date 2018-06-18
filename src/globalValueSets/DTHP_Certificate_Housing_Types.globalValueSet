@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>BMR Ownership (New)</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>BMR Ownership (Re-Sale)</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>BMR Rental (New)</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>BMR Rental (Re-Rental)</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Multifamily Rental (New)</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Multifamily Rental (Re-Rental)</fullName>
+        <default>false</default>
+    </customValue>
+    <masterLabel>DTHP - Certificate Housing Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

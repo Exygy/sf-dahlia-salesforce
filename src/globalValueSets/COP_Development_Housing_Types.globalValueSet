@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Multifamily</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Inclusionary</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>OCII</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>Waitlist</fullName>
+        <default>false</default>
+    </customValue>
+    <customValue>
+        <fullName>MOHCD - Unknown</fullName>
+        <default>false</default>
+    </customValue>
+    <masterLabel>COP - Development Housing Types</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

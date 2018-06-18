@@ -20,6 +20,10 @@
                 <field>Property__c</field>
             </layoutItems>
             <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Building_Name__c</field>
+            </layoutItems>
+            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>of_AMI_for_Pricing_Unit__c</field>
             </layoutItems>
@@ -54,10 +58,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>Listing__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Maximum_Household_Size__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
@@ -180,7 +180,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h21000000ETMe</masterLabel>
+        <masterLabel>00hU000000U3Lfj</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
