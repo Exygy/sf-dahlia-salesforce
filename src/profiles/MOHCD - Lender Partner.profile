@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?><Profile xmlns="http://soap.sforce.com/2006/04/metadata"><custom>true</custom><userLicense>Partner Community</userLicense><layoutAssignments>
+<?xml version="1.0" encoding="utf-8"?><Profile xmlns="http://soap.sforce.com/2006/04/metadata"><custom>true</custom><userLicense>Partner Community</userLicense><layoutAssignments>
         <layout>AMI_Chart__mdt-AMI Chart Layout</layout>
     </layoutAssignments><layoutAssignments>
         <layout>API_Service_Log__c-API Service Log Layout</layout>
