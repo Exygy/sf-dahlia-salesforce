@@ -20,11 +20,11 @@ public class AppPrefPreLotteryValidation {
     
     public static void SetPreLotteryValidation() {
         
-        List<Application_Preference__c> appPrefList = [SELECT Id, Application__r.Total_Monthly_Rent__c, Application__r.Annual_Income__c, Lottery_Status__c, Type_of_proof__c,
+        List<Application_Preference__c> appPrefList = [SELECT Id, Application__r.Total_Monthly_Rent__c, Application__r.Annual_Income__c, Lottery_Status__c, Type_of_proof__c, Opt_Out__c,
                                                        RecordTypeId, Application_Member__c, Application_Member__r.Preference_Address_Match__c, LW_Type_of_Proof__c , Individual_preference__c 
                                                        FROM Application_Preference__c WHERE ID IN : trigger.new];
         for(Application_Preference__c appPref : appPrefList) {
-            
+           if(appPref.Opt_Out__c != true) {
             if(appPref.RecordTypeId == RT_RB_AHP) {
                 if(appPref.Application__r.Total_Monthly_Rent__c != null && appPref.Application__r.Annual_Income__c != null && appPref.Application__r.Total_Monthly_Rent__c > ((appPref.Application__r.Annual_Income__c)/12)/2 && 
                    appPref.Individual_preference__c == 'Rent Burdened' && (appPref.Lottery_Status__c == null || appPref.Lottery_Status__c == None || appPref.Lottery_Status__c == Unconfirmed)) {
@@ -48,17 +48,19 @@ public class AppPrefPreLotteryValidation {
             }
             
             if(appPref.RecordTypeId == RT_NRHP || appPref.RecordTypeId == RT_ADHP) {
-                System.debug('************AppPrefID************** ' + appPref);
                 if(appPref.Application_Member__c != null) {
                     if(appPref.Application_Member__r.Preference_Address_Match__c == 'Matched') {
                         appPref.Lottery_Status__c = Valid_for_Lottery;
                     }
-                    else if((appPref.Lottery_Status__c == null || appPref.Lottery_Status__c == None || appPref.Lottery_Status__c == Valid_for_Lottery)){
+                    else {
                         appPref.Lottery_Status__c = Unconfirmed;
                     }
                 }
                 else if(appPref.Application_Member__c == null && appPref.RecordTypeId == RT_NRHP) {
                     	appPref.Lottery_Status__c = null;
+                }
+                else if(appPref.Application_Member__c == null && appPref.RecordTypeId == RT_ADHP) {
+                    	appPref.Lottery_Status__c = Unconfirmed;
                 }
             }
             
@@ -86,6 +88,7 @@ public class AppPrefPreLotteryValidation {
             }
                         
         }
+      }
         update appPrefList;
     }
 
