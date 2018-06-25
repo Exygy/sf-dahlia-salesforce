@@ -30,7 +30,7 @@ public class AppPrefPreLotteryValidation {
                    appPref.Individual_preference__c == 'Rent Burdened' && (appPref.Lottery_Status__c == null || appPref.Lottery_Status__c == None || appPref.Lottery_Status__c == Unconfirmed)) {
                        appPref.Lottery_Status__c = Valid_for_Lottery;
                    }
-                else if(appPref.Individual_preference__c == 'Rent Burdened' && (appPref.Lottery_Status__c == null || appPref.Lottery_Status__c == None)) {
+                else if(appPref.Individual_preference__c == 'Rent Burdened' && (appPref.Lottery_Status__c == null || appPref.Lottery_Status__c == None || appPref.Lottery_Status__c == Valid_for_Lottery)) {
                     	appPref.Lottery_Status__c = Unconfirmed;
                 }
                 else if(appPref.Individual_preference__c == 'Assisted Housing') {
