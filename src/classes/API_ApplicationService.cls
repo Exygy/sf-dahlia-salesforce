@@ -472,7 +472,7 @@ delete toBeDeletedApplicationMembers;
         app = sf.toApplication();
         upsert app; // insert it here to get the app id. if its a new record
         
-        app = getApplicationById(app.Id);
+        //app = getApplicationById(app.Id);
         
         
         Map<String, Application_Member__c> keyToAppMember = new Map<String, Application_Member__c>();

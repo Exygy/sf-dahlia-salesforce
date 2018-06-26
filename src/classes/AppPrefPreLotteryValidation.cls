@@ -14,7 +14,7 @@ public class AppPrefPreLotteryValidation {
     public static final String Confirmed = 'Confirmed';
     public static final String Valid_for_Lottery = 'Valid for Lottery';
     public static final String Invalid_for_Lottery = 'Invalid for Lottery';
-    public static final String Valid_Added = 'Valid-Added';
+    public static final String Valid_Added = 'Valid - Added';
     
     private static List<Application_Preference__c> oldTriggerVal = trigger.new;
     
@@ -49,10 +49,10 @@ public class AppPrefPreLotteryValidation {
             
             if(appPref.RecordTypeId == RT_NRHP || appPref.RecordTypeId == RT_ADHP) {
                 if(appPref.Application_Member__c != null) {
-                    if(appPref.Application_Member__r.Preference_Address_Match__c == 'Matched') {
+                    if(appPref.Application_Member__r.Preference_Address_Match__c == 'Matched' && (appPref.Lottery_Status__c != Valid_Added && appPref.Lottery_Status__c != Invalid_for_Lottery)) {
                         appPref.Lottery_Status__c = Valid_for_Lottery;
                     }
-                    else {
+                    else if(appPref.Application_Member__r.Preference_Address_Match__c != 'Matched' && (appPref.Lottery_Status__c != Valid_Added && appPref.Lottery_Status__c != Invalid_for_Lottery)){
                         appPref.Lottery_Status__c = Unconfirmed;
                     }
                 }
