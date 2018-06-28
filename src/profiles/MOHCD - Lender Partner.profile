@@ -182,4 +182,6 @@
         <layout>Unit__c-BMR Rental Unit Layout</layout>
     </layoutAssignments><layoutAssignments>
         <layout>User-User Layout</layout>
+    </layoutAssignments><layoutAssignments>
+        <layout>System_Deploy_Calendar__c-System Deploy Calendar Layout</layout>
     </layoutAssignments></Profile>

@@ -2164,6 +2164,8 @@
         <layout>ScorecardMetric-Scorecard Metric Layout</layout>
     </layoutAssignments><layoutAssignments>
         <layout>Staff_Profile__mdt-Staff Profile Layout</layout>
+    </layoutAssignments><layoutAssignments>
+        <layout>System_Deploy_Calendar__c-System Deploy Calendar Layout</layout>
     </layoutAssignments><recordTypeVisibilities>
         <default>false</default>
         <recordType>Application__c.Rental_Short_Form</recordType>

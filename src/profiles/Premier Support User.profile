@@ -2769,6 +2769,8 @@
         <layout>ScorecardMetric-Scorecard Metric Layout</layout>
     </layoutAssignments><layoutAssignments>
         <layout>Staff_Profile__mdt-Staff Profile Layout</layout>
+    </layoutAssignments><layoutAssignments>
+        <layout>System_Deploy_Calendar__c-System Deploy Calendar Layout</layout>
     </layoutAssignments><objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
