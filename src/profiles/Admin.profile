@@ -1114,6 +1114,9 @@
     </pageAccesses><pageAccesses>
         <apexPage>CustomMetadataRecordUploader</apexPage>
         <enabled>true</enabled>
+    </pageAccesses><pageAccesses>
+        <apexPage>AG_System_Deploy_Test_c</apexPage>
+        <enabled>true</enabled>
     </pageAccesses><fieldPermissions>
         <editable>true</editable>
         <field>API_Service_Log__c.Body__c</field>
