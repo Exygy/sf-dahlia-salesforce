@@ -26,6 +26,6 @@ trigger ContactTrigger on Contact (before delete, before insert, before update, 
     public void purgeSharingRecords(String objectToPurge, Set<Id> userIds) {
         List<Sobject> purgeRecords = Database.query('SELECT Id, RowCause, UserOrGroupId FROM ' + objectToPurge + ' WHERE RowCause = \'Leasing_Agent_Listing_Share__c\' AND UserOrGroupId IN :userIds');
         System.debug(purgeRecords);
-        Database.delete(purgeRecords);
+        Database.delete(purgeRecords,false);
     }
 }
