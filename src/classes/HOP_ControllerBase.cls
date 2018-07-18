@@ -33,7 +33,7 @@ global with sharing virtual class HOP_ControllerBase {
     	} else if (sfdcURL.containsIgnoreCase('-qa')) {
     		return new PageReference('https://dahlia-lap-qa.herokuapp.com/');
     	}
-    	return new PageReference('https://dahlia-lap-production.herokuapp.com/');
+    	return new PageReference('https://partner.housing.sfgov.org/');
     }
     
     @RemoteAction
