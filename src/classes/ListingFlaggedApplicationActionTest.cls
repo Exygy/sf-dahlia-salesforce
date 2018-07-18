@@ -85,7 +85,6 @@ public class ListingFlaggedApplicationActionTest {
 		member1.Identify_as_Lesbian_Gay_Bisexual__c = false;
 		member1.Living_with_HIV_AIDS__c = false;
 		member1.Email__c = 'test@test.com';
-		member1.Neighborhood_Preference__c = false;
 		member1.Primary_Language__c = 'English';
 		member1.No_Address__c = false;
 		member1.No_Email__c = false;
@@ -110,7 +109,6 @@ public class ListingFlaggedApplicationActionTest {
 		member2.Identify_as_Lesbian_Gay_Bisexual__c = false;
 		member2.Living_with_HIV_AIDS__c = false;
 		member2.Email__c = 'test@test.com';
-		member2.Neighborhood_Preference__c = false;
 		member2.Primary_Language__c = 'English';
 		member2.No_Address__c = false;
 		member2.No_Email__c = false;
@@ -131,7 +129,6 @@ public class ListingFlaggedApplicationActionTest {
 		member3.Identify_as_Lesbian_Gay_Bisexual__c = false;
 		member3.Living_with_HIV_AIDS__c = false;
 		member3.Email__c = 'test@test.com';
-		member3.Neighborhood_Preference__c = false;
 		member3.Primary_Language__c = 'English';
 		member3.No_Address__c = false;
 		member3.No_Email__c = false;
@@ -152,7 +149,6 @@ public class ListingFlaggedApplicationActionTest {
 		member4.Identify_as_Lesbian_Gay_Bisexual__c = false;
 		member4.Living_with_HIV_AIDS__c = false;
 		member4.Email__c = 'test@test.com';
-		member4.Neighborhood_Preference__c = false;
 		member4.Primary_Language__c = 'English';
 		member4.No_Address__c = false;
 		member4.No_Email__c = false;
@@ -260,7 +256,6 @@ public class ListingFlaggedApplicationActionTest {
 		member1.Identify_as_Lesbian_Gay_Bisexual__c = false;
 		member1.Living_with_HIV_AIDS__c = false;
 		member1.Email__c = 'test@test.com';
-		member1.Neighborhood_Preference__c = false;
 		member1.Primary_Language__c = 'English';
 		member1.No_Address__c = false;
 		member1.No_Email__c = false;
@@ -280,7 +275,6 @@ public class ListingFlaggedApplicationActionTest {
 		member2.Identify_as_Lesbian_Gay_Bisexual__c = false;
 		member2.Living_with_HIV_AIDS__c = false;
 		member2.Email__c = 'test@test.com';
-		member2.Neighborhood_Preference__c = false;
 		member2.Primary_Language__c = 'English';
 		member2.No_Address__c = false;
 		member2.No_Email__c = false;

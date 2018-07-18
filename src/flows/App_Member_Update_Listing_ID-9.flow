@@ -28,7 +28,7 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnector>
-            <targetReference>myDecision3</targetReference>
+            <targetReference>myDecision2</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
@@ -44,7 +44,7 @@
             <connector>
                 <targetReference>myRule_1_A1</targetReference>
             </connector>
-            <label>DOB field has a value</label>
+            <label>Execute for Listing ID</label>
         </rules>
     </decisions>
     <decisions>
@@ -54,75 +54,68 @@
                 <numberValue>1.0</numberValue>
             </value>
         </processMetadataValues>
-        <name>myDecision3</name>
-        <label>myDecision3</label>
+        <name>myDecision2</name>
+        <label>myDecision2</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
-            <name>myRule_4</name>
+            <name>myRule_3</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>formula_myRule_4</leftValueReference>
+                <leftValueReference>formula_myRule_3</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>myRule_4_A1</targetReference>
+                <targetReference>myRule_3_A1</targetReference>
             </connector>
-            <label>Delete DOB as Text if Date of Birth Deleted</label>
+            <label>Execute for DOB</label>
         </rules>
     </decisions>
-    <description>Non visible field to copy and convert DOB to text for global searches per S. McDaniel request</description>
+    <description>Capture related application listing ID to store in text field for matching/duplicate rules</description>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>TEXT  (MONTH ([COP_App_and_Rec__c].COP_Applicant_Date_of_Birth__c)) &amp; &apos;/&apos; &amp;
-TEXT  (DAY ([COP_App_and_Rec__c].COP_Applicant_Date_of_Birth__c)) &amp; &apos;/&apos; &amp;
-TEXT ( YEAR ([COP_App_and_Rec__c].COP_Applicant_Date_of_Birth__c))</stringValue>
+                <stringValue>TEXT([Application_Member__c].Date_of_Birth__c )</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A1_7884535639</name>
+        <name>formula_4_myRule_3_A1_8363480965</name>
         <dataType>String</dataType>
-        <expression>TEXT  (MONTH ({!myVariable_current.COP_Applicant_Date_of_Birth__c})) &amp; &apos;/&apos; &amp;
-TEXT  (DAY ({!myVariable_current.COP_Applicant_Date_of_Birth__c})) &amp; &apos;/&apos; &amp;
-TEXT ( YEAR ({!myVariable_current.COP_Applicant_Date_of_Birth__c}))</expression>
+        <expression>TEXT({!myVariable_current.Date_of_Birth__c} )</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>NOT(Isblank([COP_App_and_Rec__c].COP_Applicant_Date_of_Birth__c )) &amp;&amp; !$Permission.Bypass_All_Validation_Rules
-
-</stringValue>
+                <stringValue>!$Permission.Bypass_All_Validation_Rules &amp;&amp; NOT(ISBLANK([Application_Member__c].Application__c.Listing__c )) </stringValue>
             </value>
         </processMetadataValues>
         <name>formula_myRule_1</name>
         <dataType>Boolean</dataType>
-        <expression>NOT(Isblank({!myVariable_current.COP_Applicant_Date_of_Birth__c} )) &amp;&amp; !{!$Permission.Bypass_All_Validation_Rules}</expression>
+        <expression>!{!$Permission.Bypass_All_Validation_Rules} &amp;&amp; NOT(ISBLANK({!myVariable_current.Application__r.Listing__c} ))</expression>
     </formulas>
     <formulas>
         <processMetadataValues>
             <name>originalFormula</name>
             <value>
-                <stringValue>Isblank([COP_App_and_Rec__c].COP_Applicant_Date_of_Birth__c ) &amp;&amp; !$Permission.Bypass_All_Validation_Rules
-
+                <stringValue>!$Permission.Bypass_All_Validation_Rules &amp;&amp; NOT(ISBLANK([Application_Member__c].Date_of_Birth__c )) 
 </stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_myRule_4</name>
+        <name>formula_myRule_3</name>
         <dataType>Boolean</dataType>
-        <expression>Isblank({!myVariable_current.COP_Applicant_Date_of_Birth__c} ) &amp;&amp; !{!$Permission.Bypass_All_Validation_Rules}</expression>
+        <expression>!{!$Permission.Bypass_All_Validation_Rules} &amp;&amp; NOT(ISBLANK({!myVariable_current.Date_of_Birth__c} ))</expression>
     </formulas>
-    <interviewLabel>COP_Convert_DOB_to_Text_for_Searches-1_InterviewLabel</interviewLabel>
-    <label>COP: Convert DOB to Text for Searches</label>
+    <interviewLabel>App_Member_Update_Listing_ID-9_InterviewLabel</interviewLabel>
+    <label>App Member - Update Listing ID NEW</label>
     <processMetadataValues>
         <name>ObjectType</name>
         <value>
-            <stringValue>COP_App_and_Rec__c</stringValue>
+            <stringValue>Application_Member__c</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -148,7 +141,7 @@ TEXT ( YEAR ({!myVariable_current.COP_Applicant_Date_of_Birth__c}))</expression>
         <processMetadataValues>
             <name>evaluationType</name>
             <value>
-                <stringValue>criteria</stringValue>
+                <stringValue>always</stringValue>
             </value>
         </processMetadataValues>
         <processMetadataValues>
@@ -160,62 +153,16 @@ TEXT ( YEAR ({!myVariable_current.COP_Applicant_Date_of_Birth__c}))</expression>
         <processMetadataValues>
             <name>reference</name>
             <value>
-                <stringValue>[COP_App_and_Rec__c]</stringValue>
+                <stringValue>[Application_Member__c]</stringValue>
             </value>
         </processMetadataValues>
         <name>myRule_1_A1</name>
-        <label>Set DOB as Text field</label>
+        <label>Update Application Member Listing D</label>
         <locationX>100</locationX>
         <locationY>200</locationY>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>inputDataType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Date of Birth</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>operatorDataType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>COP_Applicant_Date_of_Birth__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </filters>
+        <connector>
+            <targetReference>myDecision2</targetReference>
+        </connector>
         <filters>
             <processMetadataValues>
                 <name>implicit</name>
@@ -245,13 +192,75 @@ TEXT ( YEAR ({!myVariable_current.COP_Applicant_Date_of_Birth__c}))</expression>
             <processMetadataValues>
                 <name>leftHandSideLabel</name>
                 <value>
-                    <stringValue>DOB Field as Text for Searches</stringValue>
+                    <stringValue>Listing ID</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
+                <name>rightHandSideType</name>
                 <value>
-                    <stringValue></stringValue>
+                    <stringValue>Reference</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>Listing_ID__c</field>
+            <value>
+                <elementReference>myVariable_current.Application__r.Listing__r.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Application_Member__c</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Application_Member__c]</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>myRule_3_A1</name>
+        <label>Update Application Member DOB</label>
+        <locationX>300</locationX>
+        <locationY>200</locationY>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>String</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>DOB Text</stringValue>
                 </value>
             </processMetadataValues>
             <processMetadataValues>
@@ -260,132 +269,12 @@ TEXT ( YEAR ({!myVariable_current.COP_Applicant_Date_of_Birth__c}))</expression>
                     <stringValue>Formula</stringValue>
                 </value>
             </processMetadataValues>
-            <field>DOB_Field_as_Text_for_Searches__c</field>
+            <field>DOB_Text__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A1_7884535639</elementReference>
+                <elementReference>formula_4_myRule_3_A1_8363480965</elementReference>
             </value>
         </inputAssignments>
-        <object>COP_App_and_Rec__c</object>
-    </recordUpdates>
-    <recordUpdates>
-        <processMetadataValues>
-            <name>evaluationType</name>
-            <value>
-                <stringValue>criteria</stringValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>isChildRelationship</name>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </processMetadataValues>
-        <processMetadataValues>
-            <name>reference</name>
-            <value>
-                <stringValue>[COP_App_and_Rec__c]</stringValue>
-            </value>
-        </processMetadataValues>
-        <name>myRule_4_A1</name>
-        <label>Delete DOB as Text Entry</label>
-        <locationX>400</locationX>
-        <locationY>200</locationY>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>inputDataType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>Date of Birth</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>operatorDataType</name>
-                <value>
-                    <stringValue>Date</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>Boolean</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>COP_Applicant_Date_of_Birth__c</field>
-            <operator>IsNull</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </filters>
-        <filters>
-            <processMetadataValues>
-                <name>implicit</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </processMetadataValues>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>myVariable_current.Id</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <processMetadataValues>
-                <name>dataType</name>
-                <value>
-                    <stringValue>String</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>isRequired</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideLabel</name>
-                <value>
-                    <stringValue>DOB Field as Text for Searches</stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>leftHandSideReferenceTo</name>
-                <value>
-                    <stringValue></stringValue>
-                </value>
-            </processMetadataValues>
-            <processMetadataValues>
-                <name>rightHandSideType</name>
-                <value>
-                    <stringValue>GlobalConstant</stringValue>
-                </value>
-            </processMetadataValues>
-            <field>DOB_Field_as_Text_for_Searches__c</field>
-        </inputAssignments>
-        <object>COP_App_and_Rec__c</object>
+        <object>Application_Member__c</object>
     </recordUpdates>
     <startElementReference>myVariable_waitStartTimeAssignment</startElementReference>
     <variables>
@@ -394,7 +283,7 @@ TEXT ( YEAR ({!myVariable_current.COP_Applicant_Date_of_Birth__c}))</expression>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>true</isOutput>
-        <objectType>COP_App_and_Rec__c</objectType>
+        <objectType>Application_Member__c</objectType>
     </variables>
     <variables>
         <name>myVariable_old</name>
@@ -402,7 +291,7 @@ TEXT ( YEAR ({!myVariable_current.COP_Applicant_Date_of_Birth__c}))</expression>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
-        <objectType>COP_App_and_Rec__c</objectType>
+        <objectType>Application_Member__c</objectType>
     </variables>
     <variables>
         <name>myVariable_waitStartTimeVariable</name>

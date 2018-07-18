@@ -25,22 +25,18 @@ private class LOT_RandomDrawBatchTest {
 
         ap = new Application__c();
         ap.Listing__c = listing.Id;
-        ap.COP_Preference_Manual__c = 'Confirmed - Added';
         apps.add(ap);
 
         ap = new Application__c();
         ap.Listing__c = listing.Id;
-        ap.Neighborhood_Preference_Manual__c = 'Confirmed - Added';
         apps.add(ap);
 
         ap = new Application__c();
         ap.Listing__c = listing.Id;
-        ap.Live_Work_Preference_Paper__c = true;
         apps.add(ap);
 
         ap = new Application__c();
         ap.Listing__c = listing.Id;
-        ap.DTHP_Preference_Manual__c = 'Confirmed - Added';
         apps.add(ap); 
 
         insert apps;

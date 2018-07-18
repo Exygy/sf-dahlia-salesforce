@@ -6,7 +6,13 @@ trigger ApplicationPreference on Application_Preference__c (before delete, befor
     RollUpSummaryAction.runHandler('Application_Preference__c', 'Auto_Grant_Count__c','Application_Preference__c','Auto_Grants_Preference__c', 'Id','Receives_Preference__c = true', new List<String>{'Receives_Preference__c'});
             
     RollUpSummaryAction.runHandler('Application__c', 'Preferences_Received_Count__c','Application_Preference__c','Application__c', 'Id','Receives_Preference__c = true', new List<String>{'Receives_Preference__c'});
-	AppPrefPreLotteryValidation.runHandler();
-    ApplicationPreferenceSetAutoGrantAction.runHandler();
+	
+    Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    system.debug('isEnabled:::' + isEnabled);
+	if(!isEnabled) {
+    	AppPrefPreLotteryValidation.runHandler();
+    	ApplicationPreferenceSetAutoGrantAction.runHandler();
+    }
+    
 
 }

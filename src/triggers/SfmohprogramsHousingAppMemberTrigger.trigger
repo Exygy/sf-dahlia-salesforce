@@ -9,6 +9,9 @@ trigger SfmohprogramsHousingAppMemberTrigger on Housing_Application_Member__c (a
 	SfmohprogramsHousingAppMemberTriggerHand handler = new SfmohprogramsHousingAppMemberTriggerHand();
 
     if(trigger.isAfter && trigger.isInsert){
-        handler.afterInsert(Trigger.new);
+        Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    	if(!isEnabled) {
+        	handler.afterInsert(Trigger.new);
+        }
     }
 }

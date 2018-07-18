@@ -9,6 +9,9 @@ trigger SfmohprogramsFinAppAssetTrigger on Financial_Application_Asset__c (befor
 	SfmohprogramsFinAppAssetTriggerHandler handler = new SfmohprogramsFinAppAssetTriggerHandler();
 	
     if(trigger.isBefore && trigger.isInsert){
-    	handler.beforeInsert(Trigger.new);
+        Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    	if(!isEnabled) {
+    		handler.beforeInsert(Trigger.new);
+        }
     }
 }

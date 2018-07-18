@@ -9,6 +9,9 @@
     SfmohprgramsContactTriggerHandler handler = new SfmohprgramsContactTriggerHandler();
 
     if(trigger.isAfter && trigger.isUpdate){
-        handler.afterUpdate(Trigger.new);
+        Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    	if(!isEnabled) {
+        	handler.afterUpdate(Trigger.new);
+        }
     }
 }

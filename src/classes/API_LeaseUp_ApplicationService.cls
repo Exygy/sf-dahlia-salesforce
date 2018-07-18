@@ -55,11 +55,11 @@ global without sharing class API_LeaseUp_ApplicationService {
 		', ' +
 		prefixQuery('Alternate_Contact__r.', APPLICATION_MEMBER_FIELDLIST) +
 		', Status__c, Is_Resident__c, Snapshot_ID__c, Referral_Source__c, Housing_Voucher_or_Subsidy__c, Total_Monthly_Rent__c, Number_of_Dependents__c ' +
-		', Terms_Acknowledged__c, Name, Application_Submission_Type__c, Primary_Applicant__c, Live_Work_Preference_Paper__c, Reserved_Senior__c, Applicant_used_housing_counseling_agency__c, Which_One__c, Other__c ' +
-		', Live_Work_Opt_Out__c, DTHP_Opt_Out__c, COP_Opt_Out__c, NRHP_Opt_Out__c, Household_Assets__c, Processing_Status__c, HH_Total_Income_with_Assets_Annual__c' +
-		', COP_Preference_Member__c, DTHP_Preference_Member__c, Neighborhood_Preference_Member__c, Lottery_Number__c, Lottery_Number_Manual__c, Form_Metadata__c' +
-		', Work_in_SF_Preference_Member__c, Live_in_SF_Preference_Member__c, Total_Household_Gross_Income__c, Application_Language__c, Application_Submitted_Date__c ' +
-		', Live_in_SF_Preference_Proof__c, Neighborhood_Preference_Proof__c, Work_in_SF_Preference_Proof__c, Annual_Income__c, Monthly_Income__c, Third_Party_External_ID__c' +
+		', Terms_Acknowledged__c, Name, Application_Submission_Type__c, Primary_Applicant__c, Reserved_Senior__c, Applicant_used_housing_counseling_agency__c, Which_One__c, Other__c ' +
+		', Household_Assets__c, Processing_Status__c, HH_Total_Income_with_Assets_Annual__c' +
+		', Lottery_Number__c, Lottery_Number_Manual__c, Form_Metadata__c' +
+		', Application_Language__c, Application_Submitted_Date__c ' +
+		', Annual_Income__c, Monthly_Income__c, Third_Party_External_ID__c' +
 		', Has_Military_Service__c, Has_Rent_Burden_HUD__c, Has_DevelopmentalDisability__c, Answered_Community_Screening__c, Has_ADA_Priorities_Selected__c, ' +
 		'(SELECT ' + SHORTFORM_PREFERENCE_FIELDLIST + ' FROM Application_Preferences__r)';
 	
@@ -68,10 +68,10 @@ global without sharing class API_LeaseUp_ApplicationService {
 		prefixQuery('Applicant__r.Contact__r.', CONTACT_FIELDLIST) +
 		', ' +
 		prefixQuery('Alternate_Contact__r.Contact__r.', CONTACT_FIELDLIST) +
-		', Live_Work_Opt_Out__c, DTHP_Opt_Out__c, COP_Opt_Out__c, NRHP_Opt_Out__c, Total_Monthly_Rent__c, Household_Assets__c, Processing_Status__c, HH_Total_Income_with_Assets_Annual__c' + 
+		', Total_Monthly_Rent__c, Household_Assets__c, Processing_Status__c, HH_Total_Income_with_Assets_Annual__c' + 
 		', Status__c, Is_Resident__c, Referral_Source__c, Housing_Voucher_or_Subsidy__c , Application_Submitted_Date__c' +
-		', Terms_Acknowledged__c, Total_Household_Gross_Income__c, Application_Language__c, Application_Submission_Type__c, Lottery_Number__c, Lottery_Number_Manual__c, Form_Metadata__c' +
-		', Annual_Income__c, Monthly_Income__c, Primary_Applicant__c, Live_Work_Preference_Paper__c';
+		', Terms_Acknowledged__c, Application_Language__c, Application_Submission_Type__c, Lottery_Number__c, Lottery_Number_Manual__c, Form_Metadata__c' +
+		', Annual_Income__c, Monthly_Income__c, Primary_Applicant__c';
 	
 	private static String prefixQuery(String prefix, String query) {
 		return prefix + query.replaceAll(', ', ', ' + prefix);

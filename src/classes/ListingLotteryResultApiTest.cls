@@ -49,11 +49,6 @@ public with sharing class ListingLotteryResultApiTest {
 		Application_Member__c appM = new Application_Member__c(Application__c = app.Id, First_Name__c = 'Test', Last_Name__c = 'lastName', Date_of_Birth__c = date.today().addYears(-20));
 		insert appM;
 		
-		app.Live_in_SF_Preference_Member__c = appM.Id;
-		app.DTHP_Preference_Member__c = appM.Id;
-		app.COP_Preference_Member__c = appM.Id;
-		app.Neighborhood_Preference_Member__c = appM.Id;
-		app.Work_in_SF_Preference_Member__c = appM.Id;
 		update app;
 		
 		listingID = listing.id;

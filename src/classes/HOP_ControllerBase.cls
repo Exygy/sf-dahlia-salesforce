@@ -25,6 +25,17 @@ global with sharing virtual class HOP_ControllerBase {
         myUser = [SELECT Id, Contact.AccountId, Profile.UserLicense.Name,TimeZoneSidKey FROM User WHERE Id = :UserInfo.getUserId()];
     	system.debug('user license:::'+myUser.Profile.UserLicense.Name);
     }
+    
+    public static PageReference redirectToLAP() {
+    	String sfdcURL = URL.getSalesforceBaseUrl().toExternalForm();
+    	if (sfdcURL.containsIgnoreCase('-leaseup') || sfdcURL.containsIgnoreCase('-full')) {
+    		return new PageReference('https://dahlia-lap-full.herokuapp.com/');
+    	} else if (sfdcURL.containsIgnoreCase('-qa')) {
+    		return new PageReference('https://dahlia-lap-qa.herokuapp.com/');
+    	}
+    	return new PageReference('https://dahlia-lap-production.herokuapp.com/');
+    }
+    
     @RemoteAction
     global static dataTableResponse getRecords(string objectName,string fieldList,string whereClause) {
         User myUser = [SELECT Id, Contact.AccountId, Profile.UserLicense.Name,TimeZoneSidKey  FROM User WHERE Id = :UserInfo.getUserId()];

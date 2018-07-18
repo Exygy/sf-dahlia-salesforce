@@ -1,4 +1,4 @@
-public without sharing class HOP_ApplicationController {
+global without sharing class HOP_ApplicationController {
 
     public Application__c app {get; set;}
     public Application_Member__c primaryApplicant {get; set;}
@@ -25,9 +25,8 @@ public without sharing class HOP_ApplicationController {
     private void queryAppAndPrimaryApplicant(String pAppId) {
         List<Application__c> apps = [
             SELECT
-                Id, Name, Annual_Income__c, Terms_Acknowledged__c, Live_Work_Preference_Paper__c,
-                Housing_Voucher_or_Subsidy__c, Application_Language__c, Applicant__c,
-                Neighborhood_Preference_Member__c, DTHP_Preference_Member__c, COP_Preference_Member__c
+                Id, Name, Annual_Income__c, Terms_Acknowledged__c, 
+                Housing_Voucher_or_Subsidy__c, Application_Language__c, Applicant__c
             FROM Application__c
             WHERE Id = :pAppId
         ];
@@ -92,7 +91,7 @@ public without sharing class HOP_ApplicationController {
     }
     
     @RemoteAction
-    public static List<Application_Member__c> getApplicationMembers(String query) {
+    global static List<Application_Member__c> getApplicationMembers(String query) {
         String nameLike = '%' + query + '%';
         return [SELECT Id, Name__c FROM Application_Member__c WHERE Name__c LIKE :nameLike ORDER BY Name__c];
     }

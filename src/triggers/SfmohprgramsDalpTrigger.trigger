@@ -7,10 +7,14 @@
 trigger SfmohprgramsDalpTrigger on DALP_Request__c (before insert, before update, after insert, after update) {
 
 	SfmohprgramsDalpTriggerHandler handler = new SfmohprgramsDalpTriggerHandler();
+    
+    Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    if(!isEnabled) {
 
-    if((trigger.isAfter && trigger.isInsert)){
-        handler.afterInsert(Trigger.new);
-    } else if((trigger.isAfter && trigger.isUpdate)){
-        handler.afterUpdate(Trigger.oldMap,Trigger.new);
+    	if((trigger.isAfter && trigger.isInsert)){
+        	handler.afterInsert(Trigger.new);
+    	} else if((trigger.isAfter && trigger.isUpdate)){
+        	handler.afterUpdate(Trigger.oldMap,Trigger.new);
+    	}
     }
 }

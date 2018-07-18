@@ -95,12 +95,9 @@ public with sharing class HOP_ApplicationViewController extends HOP_ControllerBa
 				Id, Name, Applicant__c, Alternate_Contact__c, Listing__c, Listing__r.Name, Listing__r.Account__c, Status__c,
 				Listing__r.Reserved_community_type__c,
 				Total_Household_Size__c, Application_Submission_Type__c, Application_Submitted_Date__c, CreatedBy.Name,
-				DTHP_Preference__c, DTHP_Preference_Member__r.Name__c, COP_Preference__c, COP_Preference_Member__r.Name__c,
-				Neighborhood_Preference__c, Neighborhood_Preference_Member__r.Name__c, Neighborhood_Preference_Address__c,
-				Live_Work_Preference__c, Live_in_SF_Preference_Member__r.Name__c, Work_in_SF_Preference_Member__r.Name__c,
 				Annual_Income__c, Monthly_Income__c, Is_Lottery_Complete__c, Housing_Voucher_or_Subsidy__c, Referral_Source__c,
-				Application_Language__c, DTHP_Preference_Manual__c, COP_Preference_Manual__c, Neighborhood_Preference_Manual__c,
-				Live_in_SF_Preference_Proof__c, Work_in_SF_Preference_Proof__c, Neighborhood_Preference_Proof__c, Lottery_Rank__c,
+				Application_Language__c,
+				Lottery_Rank__c,
 				Lottery_Number_Manual__c, Lottery_Number__c, Total_Monthly_Rent__c, General_Lottery__c, General_Lottery_Rank__c,
 				Answered_Community_Screening__c, Has_Military_Service__c, Has_DevelopmentalDisability__c, Has_ADA_Priorities_Selected__c
 			FROM Application__c

@@ -167,15 +167,7 @@ private class HOP_ApplicationFormControllerTest {
             Application_Preference__c appPref4 = new Application_Preference__c(Application__c = someApplication.Id, Listing_Preference_ID__c = listingPrefList[3].Id, Application_Member__c = primaryApplicant.Id);
             List<Application_Preference__c> appPrefs = new List<Application_Preference__c>{appPref,appPref2,appPref3,appPref4};
             insert appPrefs;
-			
-			/*someApplication.Applicant__c = primaryApplicant.Id;
-			someApplication.Alternate_Contact__c = alternateContact.Id;
-			someApplication.Neighborhood_Preference_Member__c = householdMember.Id;
-			someApplication.DTHP_Preference_Member__c = householdMember.Id;
-			someApplication.COP_Preference_Member__c = householdMember.Id;
-			someApplication.Live_in_SF_Preference_Member__c = householdMember.Id;
-			someApplication.Work_in_SF_Preference_Member__c = householdMember.Id;
-			update someApplication;*/
+
 			
 			ApexPages.currentPage().getParameters().put('id', someApplication.Id);
 			HOP_ApplicationFormController cnt = new HOP_ApplicationFormController();

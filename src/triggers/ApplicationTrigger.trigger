@@ -11,8 +11,16 @@
 // 
 // *****************************************************************************
 trigger ApplicationTrigger on Application__c (before update, after update, after insert, after delete) {
-    ListingApplicationStatusChangeAction.runHandler(); 
-    ApplicationCreateAppPreferenceAction.runHandler();
+    Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    if(!isEnabled) {
+    	ListingApplicationStatusChangeAction.runHandler(); 
+    	ApplicationCreateAppPreferenceAction.runHandler();
+        
+        						//runHandler(String shareObject, String objToQuery, String whereClause, String parentField, String targetField)
+    	if (trigger.isAfter && trigger.isInsert || trigger.isAfter && trigger.isDelete) {
+			ApexSharingRuleClass.runHandler('Application__Share', 'Application__c', 'Id', 'Account__c', 'Listing_Shared__c');
+    	}
+    }
     
     rollUpSummaryAction.runHandler('Listing_Lottery_Preference__c', 'Total_Submitted_Apps__c','Application_Preference__c', 'Listing_Preference_ID__c','Id','Application_Is_Submitted__c = true AND Receives_Preference__c = true', 'Application__c', 'Status__c',
                                    new List<String>{'Application_Is_Submitted__c','Receives_Preference__c'});
@@ -31,10 +39,7 @@ trigger ApplicationTrigger on Application__c (before update, after update, after
     rollUpSummaryAction.runHandler('Listing__c', 'Lease_Signed_Application__c','Application__c', 'Listing__c','Id','Processing_Status__c = \'Lease Signed\'',
                                    new List<String>{'Processing_Status__c'});
     
-    						//runHandler(String shareObject, String objToQuery, String whereClause, String parentField, String targetField)
-    if (trigger.isAfter && trigger.isInsert || trigger.isAfter && trigger.isDelete) {
-		ApexSharingRuleClass.runHandler('Application__Share', 'Application__c', 'Id', 'Account__c', 'Listing_Shared__c');
-    }
+    						
     
  //  ApplicationStatusChangeAction.runHandler(); 
 

@@ -1,4 +1,4 @@
-<apex:page applyBodyTag="false" applyHtmlTag="false" id="HOP_Listing" controller="HOP_ListingController"
+<apex:page applyBodyTag="false" applyHtmlTag="false" id="HOP_Listing" controller="HOP_ListingController" action="{!redirectToLAP}"
            docType="HTML-5.0" showChat="false" showHeader="false" sidebar="false" standardStylesheets="false">
       <apex:composition template="HOP_Template">
         <apex:define name="title">View Listing</apex:define>
@@ -281,24 +281,24 @@
 </div>
 </div>
 </div> -->
-								</div>
-								<div class="row">
-									<!-- <div class="col-sm-6">
-										<div class="form-group">
-											<label class="col-sm-6 control-label">Neighborhood Preference PDF URL</label>
-											<div class="col-sm-6">
-												<apex:outputPanel layout="none" rendered="{! editMode }">
-													<apex:inputField value="{!lst.NeighborHoodPreferenceUrl__c}" styleClass="form-control" />
-												</apex:outputPanel>
-												<apex:outputPanel layout="none" rendered="{! !editMode }">
-													<p class="form-control-static"><apex:outputField value="{!lst.NeighborHoodPreferenceUrl__c}" /></p>
-												</apex:outputPanel>
-											</div>
-										</div>
-									</div> -->
+                                </div>
+                                <div class="row">
+                                 <!--   <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label class="col-sm-6 control-label">Neighborhood Preference PDF URL</label>
+                                            <div class="col-sm-6">
+                                                <apex:outputPanel layout="none" rendered="{! editMode }">
+                                                    <apex:inputField value="{!lst.NeighborHoodPreferenceUrl__c}" styleClass="form-control" />
+                                                </apex:outputPanel>
+                                                <apex:outputPanel layout="none" rendered="{! !editMode }">
+                                                    <p class="form-control-static"><apex:outputField value="{!lst.NeighborHoodPreferenceUrl__c}" /></p>
+                                                </apex:outputPanel>
+                                            </div>
+                                        </div>
+                                    </div> -->
 									
-								</div>
-								<!-- <div class="row">
+                                </div>
+                                <!-- <div class="row">
 
 </div> -->
                             </div>
@@ -703,38 +703,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="row">
-<div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Lottery URL</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Lottery_URL__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static ellipsis">
-<apex:outputLink value="{!lst.Lottery_URL__c}">
-<apex:outputField value="{!lst.Lottery_URL__c}" />
-</apex:outputLink>
-</p>
-</apex:outputPanel>
-</div>
-</div>
-</div>
-<div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Draw ID</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Draw_ID__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Draw_ID__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div>
-</div> -->
+
                             </div>
                             <div class="form-group">
                                 <div class="col-xs-12 sectionHeader">
@@ -784,19 +753,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Office Open</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Office_Open__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Office_Open__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div> -->
+                                    
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -812,19 +769,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Office Closed</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Office_Closed__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Office_Closed__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div> -->
+
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -872,18 +817,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Organization URL</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Organization_URL__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div> -->
+
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
@@ -960,81 +894,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <!--
-<div class="section" style="padding-bottom: 0;">
-<div class="row">
-<div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Preference Detail</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Preference_Detail__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Preference_Detail__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Rental History</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Eviction_History__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Eviction_History__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div>
-<div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Criminal Background</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Criminal_History__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Criminal_History__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div>
-</div>
-<div class="row">
-<div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Rental Assistance</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Rental_Assistance__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Rental_Assistance__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div>
-<div class="col-sm-6">
-<div class="form-group">
-<label class="col-sm-6 control-label">Credit History</label>
-<div class="col-sm-6">
-<apex:outputPanel layout="none" rendered="{! editMode }">
-<apex:inputField value="{!lst.Credit_Rating__c}" styleClass="form-control" />
-</apex:outputPanel>
-<apex:outputPanel layout="none" rendered="{! !editMode }">
-<p class="form-control-static"><apex:outputField value="{!lst.Credit_Rating__c}" /></p>
-</apex:outputPanel>
-</div>
-</div>
-</div>
-</div>
-</div>
--->
+
                             <div class="form-group">
                                 <div class="col-xs-12 sectionHeader">
                                     <h4>Additional Eligibility Rules</h4>
@@ -1233,7 +1093,7 @@
                 Visualforce.remoting.Manager.invokeAction(
                     '{!$RemoteAction.HOP_ListingController.getRecords}', 
                     "Listing_Lottery_Preference__c",
-					"Id,Preference_Name__c, Description__c, PDF_URL__c, Order__c, Available_Units__c",
+                    "Id,Preference_Name__c, Description__c, Order__c, Available_Units__c",
                     "Listing__c = '" + lstId + "'",                        
                     function(result, event){
                         debugger;

@@ -9,6 +9,9 @@ trigger SfmohprogramsFinAppIncomeTrigger on Financial_Application_Income__c (bef
 	SfmohprogramsFinAppIncomeTriggerHandler handler = new SfmohprogramsFinAppIncomeTriggerHandler();
 	
     if(trigger.isBefore && trigger.isInsert){
-    	handler.beforeInsert(Trigger.new);
+        Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    	if(!isEnabled) {
+    		handler.beforeInsert(Trigger.new);
+        }
     }
 }

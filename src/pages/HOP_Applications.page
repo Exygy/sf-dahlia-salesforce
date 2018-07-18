@@ -1,4 +1,4 @@
-<apex:page applyBodyTag="false" applyHtmlTag="false" id="HOP_Applications" controller="HOP_ApplicationsController"
+<apex:page applyBodyTag="false" applyHtmlTag="false" id="HOP_Applications" controller="HOP_ApplicationsController" action="{!redirectToLAP}"
            docType="HTML-5.0" showChat="false" showHeader="false" sidebar="false" standardStylesheets="false">
     <apex:composition template="HOP_Template">
         <apex:define name="title">Applications</apex:define>
@@ -90,7 +90,7 @@
                     Visualforce.remoting.Manager.invokeAction(
                         '{!$RemoteAction.HOP_ApplicationsController.getRecords}', 
                         "Application__c",
-                        "Name, Listing__c,Listing__r.Name, Last_Name__c, First_Name__c, Application_Submitted_Date__c, Application_Submission_Type__c",/*, COP_Preference__c, DTHP_Preference__c, Neighborhood_Preference__c, Live_Work_Preference__c*/
+                        "Name, Listing__c,Listing__r.Name, Last_Name__c, First_Name__c, Application_Submitted_Date__c, Application_Submission_Type__c",
                         getWhereClause(),                        
                         function(result, event){
                             debugger;

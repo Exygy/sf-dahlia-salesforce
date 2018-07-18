@@ -9,6 +9,9 @@ trigger SfmohprgramsPersonalIncomeTrigger on Personal_Income__c (before insert) 
 	SfmohprgramsPersonalIncomeTriggerHandler handler = new SfmohprgramsPersonalIncomeTriggerHandler();
 	
     if(trigger.isBefore && trigger.isInsert){
-    	handler.beforeInsert(Trigger.new);
+        Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    	if(!isEnabled) {
+    		handler.beforeInsert(Trigger.new);
+        }
     }
 }

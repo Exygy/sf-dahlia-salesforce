@@ -9,6 +9,9 @@ trigger SfmohprgramsPersonalAssetTrigger on Personal_Asset__c (before insert) {
 	SfmohprgramsPersonalAssetTriggerHandler handler = new SfmohprgramsPersonalAssetTriggerHandler();
 
     if(trigger.isBefore && trigger.isInsert){
-    	handler.beforeInsert(Trigger.new);
+        Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    	if(!isEnabled) {
+    		handler.beforeInsert(Trigger.new);
+        }
     }
 }

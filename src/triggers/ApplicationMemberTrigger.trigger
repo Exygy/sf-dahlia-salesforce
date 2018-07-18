@@ -11,6 +11,11 @@
 // 
 // *****************************************************************************
 trigger ApplicationMemberTrigger on Application_Member__c (before insert, before update) {
-	ListingApplicationMemberDuplicateAction.runHandler();
+    Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    system.debug('isEnabled:::' + isEnabled);
+	if(!isEnabled) {
+    	system.debug('isEnabled:::' + isEnabled);
+		ListingApplicationMemberDuplicateAction.runHandler();
+    }
 	//ApplicationMemberDuplicateAction.runHandler(); 
 }

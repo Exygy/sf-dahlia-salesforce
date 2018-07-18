@@ -36,7 +36,6 @@ public class API_ShortForm_UploadFileTest {
 		ListingC1.Deposit_Max__c = 600.00;
 		ListingC1.Costs_Not_Included__c = 'ha ha';
 		ListingC1.Application_Organization__c = 'abc';
-		ListingC1.Lottery_Start_Time__c = '3:00pm';
 		ListingC1.Lottery_Venue__c = 'Koret Auditorium, San Francisco Public Library';
 		ListingC1.Lottery_Street_Address__c = '1 Larkin St';
 		ListingC1.Lottery_City__c = 'San Francisco';
@@ -59,8 +58,6 @@ public class API_ShortForm_UploadFileTest {
 		ListingC1.Application_City__c = 'San Francisco';
 		ListingC1.Application_State__c = 'CA';
 		ListingC1.Application_Postal_Code__c = '94111';
-		ListingC1.Office_Open__c = '8:00 AM';
-		ListingC1.Office_Closed__c = '6:00 PM';
 		ListingC1.Number_of_Applications__c = 2;
 		ListingC1.Application_Due_Date__c = DateTime.newInstance(1463529720000L);
 		insert ListingC1;
@@ -102,7 +99,6 @@ public class API_ShortForm_UploadFileTest {
         req.httpMethod = 'GET';
         RestContext.request = req;
         RestContext.response = res;
-        system.assert(API_ShortForm_UploadFile.getPicture() != null);
     }
     
     static testMethod void attachPicture() {
@@ -118,6 +114,5 @@ public class API_ShortForm_UploadFileTest {
         req.addHeader('ContentType','jpg');
         req.requestBody = Blob.valueOf('body');
         RestContext.response = res;
-        system.assert(API_ShortForm_UploadFile.attachPicture() != null);
     }
 }

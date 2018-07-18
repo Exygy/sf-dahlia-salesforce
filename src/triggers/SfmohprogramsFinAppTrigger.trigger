@@ -8,9 +8,12 @@ trigger SfmohprogramsFinAppTrigger on Financial_Application__c (before insert,af
 
 	SfmohprogramsFinAppTriggerHandler handler = new SfmohprogramsFinAppTriggerHandler();
 	
-    if(trigger.isBefore && trigger.isInsert){
-    	handler.beforeInsert(Trigger.new);
-    } else if((trigger.isAfter && trigger.isInsert)){
-    	handler.afterInsert(Trigger.new);
+    Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    if(!isEnabled) {
+    	if(trigger.isBefore && trigger.isInsert){
+    		handler.beforeInsert(Trigger.new);
+    	} else if((trigger.isAfter && trigger.isInsert)){
+    		handler.afterInsert(Trigger.new);
+    	}
     }
 }

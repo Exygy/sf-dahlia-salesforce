@@ -13,6 +13,9 @@
 // *****************************************************************************
 trigger DuplicateRecordItemTrigger on DuplicateRecordItem (After insert, Before delete) {
 
-    ListingFlaggedApplicationAction.runHandler();       
+    Boolean isEnabled = FeatureManagement.checkPermission('Bypass_All_Validation_Rules');
+    if(!isEnabled) {
+    	ListingFlaggedApplicationAction.runHandler(); 
+    }
     
 }
