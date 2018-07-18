@@ -1,4 +1,4 @@
-<apex:page applyBodyTag="false" applyHtmlTag="false" id="HOP_Listing" controller="HOP_ListingController" action="{!redirectToLAP}"
+<apex:page applyBodyTag="false" applyHtmlTag="false" id="HOP_Listing" controller="HOP_ListingController"
            docType="HTML-5.0" showChat="false" showHeader="false" sidebar="false" standardStylesheets="false">
       <apex:composition template="HOP_Template">
         <apex:define name="title">View Listing</apex:define>
